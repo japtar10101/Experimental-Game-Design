@@ -9,7 +9,7 @@ function prototypeSceneScript.onKeyboardKeyUp ( kKeyCode )
 --------------------------------------------------------------------------------
 	
 	local hObj = this.getObject ( )
-    object.sendEvent ( hObj, "CharAI", "onKeyboardKeyUp", kKeyCode )
+    --object.sendEvent ( hObj, "CharAI", "onKeyboardKeyUp", kKeyCode )
 
 --------------------------------------------------------------------------------
 end

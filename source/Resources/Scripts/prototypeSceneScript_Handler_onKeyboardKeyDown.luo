@@ -14,7 +14,7 @@ local b=not this.bGameMode()
 object.sendEvent(hObj,"CharAI","onCaptureInput",b)
 this.bGameMode(b)
 else
-object.sendEvent(hObj,"CharAI","onKeyboardKeyDown",kKeyCode)
+
 end
 
 end

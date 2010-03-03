@@ -14,7 +14,7 @@ function prototypeSceneScript.onKeyboardKeyDown ( kKeyCode )
         object.sendEvent ( hObj, "CharAI", "onCaptureInput", b )
         this.bGameMode ( b )
     else
-        object.sendEvent ( hObj, "CharAI", "onKeyboardKeyDown", kKeyCode )
+        --object.sendEvent ( hObj, "CharAI", "onKeyboardKeyDown", kKeyCode )
     end
 --------------------------------------------------------------------------------
 end
