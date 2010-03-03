@@ -1,20 +1,18 @@
 --------------------------------------------------------------------------------
---  Handler.......... : onInit
+--  Handler.......... : onKeyboardKeyDown
 --  Author........... : 
 --  Description...... : 
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
-function tutorialScript.onInit (  )
+function prototypeSwordScript.onKeyboardKeyDown ( kKeyCode )
 --------------------------------------------------------------------------------
 	
 	--
 	-- Write your code here, using 'this' as current AI instance.
-	-- This handler is called once, at AI instance initialization.
+	-- This handler is called when a keyboard key is pressed.
 	--
-	application.setCurrentUserScene ( "prototype" )
-    --object.sendEvent ( application.getCurrentUserActiveCamera ( ), “CharAI”, “onCaptureInput”, true )
-
+	
 --------------------------------------------------------------------------------
 end
 --------------------------------------------------------------------------------

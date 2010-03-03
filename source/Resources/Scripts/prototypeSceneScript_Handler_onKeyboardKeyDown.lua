@@ -1,20 +1,21 @@
 --------------------------------------------------------------------------------
---  Handler.......... : onInit
+--  Handler.......... : onKeyboardKeyDown
 --  Author........... : 
 --  Description...... : 
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
-function tutorialScript.onInit (  )
+function prototypeSceneScript.onKeyboardKeyDown ( kKeyCode )
 --------------------------------------------------------------------------------
-	
-	--
-	-- Write your code here, using 'this' as current AI instance.
-	-- This handler is called once, at AI instance initialization.
-	--
-	application.setCurrentUserScene ( "prototype" )
-    --object.sendEvent ( application.getCurrentUserActiveCamera ( ), “CharAI”, “onCaptureInput”, true )
-
+	-- At Esc, quit this game --
+    local hObj = this.getObject ( )
+    if ( kKeyCode == input.kKeyEscape ) then
+        local b = not this.bGameMode ( )
+        object.sendEvent ( hObj, "CharAI", "onCaptureInput", b )
+        this.bGameMode ( b )
+    else
+        object.sendEvent ( hObj, "CharAI", "onKeyboardKeyDown", kKeyCode )
+    end
 --------------------------------------------------------------------------------
 end
 --------------------------------------------------------------------------------

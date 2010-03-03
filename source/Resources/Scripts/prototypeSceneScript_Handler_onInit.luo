@@ -1,0 +1,19 @@
+
+
+
+
+
+
+
+function prototypeSceneScript.onInit()
+
+
+
+
+
+
+application.setCurrentUserScene("prototype")
+object.sendEvent(application.getCurrentUserActiveCamera(),"CharAI","onCaptureInput",true)
+
+
+end

@@ -1,20 +1,17 @@
 --------------------------------------------------------------------------------
---  Handler.......... : onInit
+--  State............ : cameraState
 --  Author........... : 
 --  Description...... : 
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
-function tutorialScript.onInit (  )
+function prototypeCameraScript.cameraState_onLeave ( )
 --------------------------------------------------------------------------------
 	
 	--
 	-- Write your code here, using 'this' as current AI instance.
-	-- This handler is called once, at AI instance initialization.
 	--
-	application.setCurrentUserScene ( "prototype" )
-    --object.sendEvent ( application.getCurrentUserActiveCamera ( ), “CharAI”, “onCaptureInput”, true )
-
+	
 --------------------------------------------------------------------------------
 end
 --------------------------------------------------------------------------------

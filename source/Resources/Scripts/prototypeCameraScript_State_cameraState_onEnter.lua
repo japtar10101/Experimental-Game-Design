@@ -1,20 +1,19 @@
 --------------------------------------------------------------------------------
---  Handler.......... : onInit
+--  State............ : cameraState
 --  Author........... : 
 --  Description...... : 
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
-function tutorialScript.onInit (  )
+function prototypeCameraScript.cameraState_onEnter ( )
 --------------------------------------------------------------------------------
 	
 	--
 	-- Write your code here, using 'this' as current AI instance.
-	-- This handler is called once, at AI instance initialization.
 	--
-	application.setCurrentUserScene ( "prototype" )
-    --object.sendEvent ( application.getCurrentUserActiveCamera ( ), “CharAI”, “onCaptureInput”, true )
-
+	object.setTranslation ( this.getObject(), 0, 0, 0, object.kGlobalSpace )
+    object.lookAt ( this.getObject(), 0, 0, -1, object.kGlobalSpace, 1 )
+    
 --------------------------------------------------------------------------------
 end
 --------------------------------------------------------------------------------

@@ -1,0 +1,19 @@
+
+
+
+
+
+
+
+function cameraFollowModel.onInit()
+
+
+
+
+
+
+local hCam=application.getCurrentUserActiveCamera()
+object.translateTo(hCam,0,1.5,5,object.kGlobalSpace,1)
+object.lookAt(hCam,0,1.5,0,object.kGlobalSpace,1)
+
+end

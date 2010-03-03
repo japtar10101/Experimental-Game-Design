@@ -5,7 +5,7 @@
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
-function tutorialScript.onInit (  )
+function prototypeSceneScript.onInit (  )
 --------------------------------------------------------------------------------
 	
 	--
@@ -13,7 +13,7 @@ function tutorialScript.onInit (  )
 	-- This handler is called once, at AI instance initialization.
 	--
 	application.setCurrentUserScene ( "prototype" )
-    --object.sendEvent ( application.getCurrentUserActiveCamera ( ), “CharAI”, “onCaptureInput”, true )
+    object.sendEvent( application.getCurrentUserActiveCamera(), "CharAI", "onCaptureInput", true )
 
 --------------------------------------------------------------------------------
 end

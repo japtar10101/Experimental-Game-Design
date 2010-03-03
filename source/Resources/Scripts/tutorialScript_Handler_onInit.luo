@@ -12,7 +12,8 @@ function tutorialScript.onInit()
 
 
 
-application.setCurrentUserScene("tutorial")
+application.setCurrentUserScene("prototype")
+
 
 
 end

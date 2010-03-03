@@ -1,19 +1,16 @@
 --------------------------------------------------------------------------------
---  Handler.......... : onInit
+--  Handler.......... : onMouseMove
 --  Author........... : 
 --  Description...... : 
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
-function tutorialScript.onInit (  )
+function prototypeSceneScript.onMouseMove ( nPointX, nPointY, nDeltaX, nDeltaY, nRayPntX, nRayPntY, nRayPntZ, nRayDirX, nRayDirY, nRayDirZ )
 --------------------------------------------------------------------------------
-	
-	--
-	-- Write your code here, using 'this' as current AI instance.
-	-- This handler is called once, at AI instance initialization.
-	--
-	application.setCurrentUserScene ( "prototype" )
-    --object.sendEvent ( application.getCurrentUserActiveCamera ( ), “CharAI”, “onCaptureInput”, true )
+	local hObj = this.getObject ( )
+    object.sendEvent ( hObj, "CharAI", "onMouseMove", nPointX, nPointY,
+        nDeltaX, nDeltaY, nRayPntX, nRayPntY, nRayPntZ, nRayDirX,
+        nRayDirY, nRayDirZ )
 
 --------------------------------------------------------------------------------
 end
