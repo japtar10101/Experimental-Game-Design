@@ -1,6 +1,6 @@
 var speed = 900.0;
 var rotateAround : Transform;
-var toRotate : Transform;
+var toRotate : GameObject;
 var defaultPosition : Vector3 = new Vector3(0,0,-10);
 var defaultAngle : Vector3 = new Vector3(90,0,0);
 
@@ -38,14 +38,16 @@ function Update () {
 		angle -= 1;
 		isAnimated = true;
 	}
+	toRotate.GetComponent( Renderer ).enabled = isAnimated;
 	angle *= speed;
 }
 
 function setupAnimation() {
 	angle = 0;
 	totalAngle = 0;
-	toRotate.position = rotateAround.TransformPoint( defaultPosition );
-	toRotate.localEulerAngles = defaultAngle;
+	var rotateThis = toRotate.GetComponent( Transform );
+	rotateThis.position = rotateAround.TransformPoint( defaultPosition );
+	rotateThis.localEulerAngles = defaultAngle;
 }
 
 function animateSwing() {
@@ -54,6 +56,6 @@ function animateSwing() {
 	if( totalAngle > 360 || totalAngle < -360 ) {
 		isAnimated = false;
 	} else {
-		toRotate.RotateAround( rotateAround.position, rotateAxis, incAngle);
+		toRotate.GetComponent( Transform ).RotateAround( rotateAround.position, rotateAxis, incAngle);
 	}
 }

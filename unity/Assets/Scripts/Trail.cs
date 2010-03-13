@@ -5,21 +5,22 @@ using System.Collections;
 The Trail script was written by Nick Gronow, under the UnifyCommunity wiki:
 http://www.unifycommunity.com/wiki/index.php?title=OptimizedTrailRenderer
 As such, all credits goes to him for creating a wonderful piece of work.
+
+...However, I had to change a few things, such as making it emit multiple times.
 */
 public class Trail : MonoBehaviour 
 {
     // Material - Must be a particle material that has the "Tint Color" property
+	public Renderer checkVisible;
     public Material material;
     Material instanceMaterial;
     
     // Emit
     public bool emit = true;
-    bool emittingDone = false;
     
     // Lifetime of each segment
     public float lifeTime = 1;
     float lifeTimeRatio = 1;
-    float fadeOutRatio;
 
     // Colors
     public Color[] colors;
@@ -54,18 +55,15 @@ public class Trail : MonoBehaviour
         mesh = meshFilter.mesh;
        trailObj.AddComponent(typeof(MeshRenderer));
         instanceMaterial = new Material(material);
-        fadeOutRatio = 1f / instanceMaterial.GetColor("_TintColor").a;
         trailObj.renderer.material = instanceMaterial;
     }
     
     void Update ()
     {
         // Emitting - Designed for one-time use
-        if( ! emit )
-            emittingDone = true;
-        if(emittingDone)
-            emit = false;
-            
+		if( checkVisible )
+			emit = checkVisible.enabled;
+		
         // Remove expired points
         for(int i = pointCnt-1; i >=0; i--)
         {
@@ -127,23 +125,6 @@ public class Trail : MonoBehaviour
         
         Color[] meshColors;
         lifeTimeRatio = 1 / lifeTime;
-
-        // Do we fade it out?
-        if( ! emit )
-        {
-            if(pointCnt == 0)
-                return;
-            Color color = instanceMaterial.GetColor("_TintColor");
-            color.a -= fadeOutRatio * lifeTimeRatio * Time.deltaTime;
-            if(color.a > 0)
-                instanceMaterial.SetColor("_TintColor", color);
-            else
-            {
-                Destroy(trailObj);
-                Destroy(this);
-            }
-            return;
-        }
 
         // Rebuild it
         Vector3[] vertices = new Vector3[pointCnt * 2];
