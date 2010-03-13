@@ -1,27 +1,34 @@
-var speed = 6.0;
+var speed = 100.0;
+var rotateAround : Transform;
+var toRotate : Transform;
+
 private var isAnimated = false;
-private var rotation = Vector3.zero;
-private var verticalRotation = 0;
-private var horizontalRotation = 0;
+private var rotateAxis = Vector3.zero;
+private var angle = 0;
+
 function Update () {
-	if( Input.GetKey( KeyCode.UpArrow ) ) {
-		verticalRotation += 1;
-	} else if( Input.GetKey( KeyCode.DownArrow ) ) {
-		verticalRotation -= 1;
-	} else if( Input.GetKey( KeyCode.RightArrow ) ) {
-		horizontalRotation += 1;
-	} else if( Input.GetKey( KeyCode.LeftArrow ) ) {
-		horizontalRotation -= 1;
+	if( !rotateAround || !toRotate ) {
+		return;
 	}
-	/*
-	moveDirection = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
-	moveDirection = transform.TransformDirection(moveDirection);
-	moveDirection *= speed;
+	// Figure out the direction to rotate in
+	angle = 0;
+	if( Input.GetKey( KeyCode.UpArrow ) ) {
+		rotateAxis = Vector3.right;
+		angle -= 1;
+	} else if( Input.GetKey( KeyCode.DownArrow ) ) {
+		rotateAxis = Vector3.right;
+		angle += 1;
+	} else if( Input.GetKey( KeyCode.RightArrow ) ) {
+		rotateAxis = Vector3.up;
+		angle += 1;
+	} else if( Input.GetKey( KeyCode.LeftArrow ) ) {
+		rotateAxis = Vector3.up;
+		angle -= 1;
+	}
 	
 	// Move the controller
-	var controller : CharacterController = GetComponent(CharacterController);
-	var flags = controller.Move(moveDirection * Time.deltaTime);
-	*/
+	angle *= speed;
+	toRotate.RotateAround( rotateAround.position, rotateAxis, angle * Time.deltaTime);
 }
 
-//@script RequireComponent(CharacterController)
+@script RequireComponent(Transform)
