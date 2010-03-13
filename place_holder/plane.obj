@@ -1,0 +1,11 @@
+# Blender3D v2.52 (sub 0) OBJ File: .B25.blend
+# www.blender3d.org
+mtllib plane.mtl
+o Mesh
+v 3.769943 -0.000000 -3.769943
+v 3.769943 0.000000 3.769943
+v -3.769943 0.000000 3.769942
+v -3.769942 -0.000000 -3.769944
+usemtl (null)
+s off
+f 1 4 3 2
