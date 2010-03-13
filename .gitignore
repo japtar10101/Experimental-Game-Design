@@ -7,10 +7,10 @@
 *.blend5
 
 # ignore Window files 
-Temp
+Thumbs.db
 
 # ignore Unity files
-Thumbs.db
-cache
-metadata
+Temp
+#cache
+#metadata
 
