@@ -1,4 +1,4 @@
-var speed = 100.0;
+var speed = 250.0;
 var rotateAround : Transform;
 var toRotate : Transform;
 
