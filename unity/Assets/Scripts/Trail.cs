@@ -1,7 +1,11 @@
 using UnityEngine;
-
 using System.Collections;
 
+/*
+The Trail script was written by Nick Gronow, under the UnifyCommunity wiki:
+http://www.unifycommunity.com/wiki/index.php?title=OptimizedTrailRenderer
+As such, all credits goes to him for creating a wonderful piece of work.
+*/
 public class Trail : MonoBehaviour 
 {
     // Material - Must be a particle material that has the "Tint Color" property
