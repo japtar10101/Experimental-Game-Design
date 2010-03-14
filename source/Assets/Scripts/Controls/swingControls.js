@@ -1,35 +1,32 @@
-var sword : GameObject;
-var upSwing : Animation;
-var downSwing : Animation;
-var rightSwing : Animation;
-var leftSwing : Animation;
+var swordRenderer : Renderer;
+var swordAnimation : Animation;
+var upSwing : String;
+var downSwing : String;
+var rightSwing : String;
+var leftSwing : String;
 
 function Update () {
-	if( !sword || !upSwing || !downSwing || !rightSwing || !leftSwing ) {
-		// If Transforms aren't defined, halt
+	if( !swordAnimation || !swordRenderer ) {
+		// If variables aren't defined, halt
 		return;
 	}
 		
 	// Figure out the animation to play
 	queueAnimation();
-	sword.GetComponent( Renderer ).enabled = isAnimated();
+	swordRenderer.enabled = swordAnimation.isPlaying;
 }
 
 function queueAnimation() {
 	if( Input.GetKey( KeyCode.UpArrow ) ) {
-		upSwing.PlayQueued();
+		swordAnimation.PlayQueued(upSwing);
 	}
 	if( Input.GetKey( KeyCode.DownArrow ) ) {
-		downSwing.PlayQueued();
+		swordAnimation.PlayQueued(downSwing);
 	}
 	if( Input.GetKey( KeyCode.RightArrow ) ) {
-		rightSwing.PlayQueued();
+		swordAnimation.PlayQueued(rightSwing);
 	}
 	if( Input.GetKey( KeyCode.LeftArrow ) ) {
-		leftSwing.PlayQueued();
+		swordAnimation.PlayQueued(leftSwing);
 	}
-}
-
-function isAnimated() {
-	return upSwing.isPlaying || downSwing.isPlaying || leftSwing.isPlaying || rightSwing.isPlaying;
 }
