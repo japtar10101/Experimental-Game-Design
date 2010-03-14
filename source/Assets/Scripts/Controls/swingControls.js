@@ -27,11 +27,9 @@ function queueAnimation() {
 	} else if( Input.GetKey( KeyCode.LeftArrow ) ) {
 		playThis = leftSwing;
 	}
-	if( playThis ) {
+	if( playThis && !swordAnimation.isPlaying) {
 		//swordAnimation.Stop();
 		swordAnimation.Play( playThis );
-		swordAnimation.CrossFade( playThis );
-	} else {
-	
+		//swordAnimation.Blend( playThis );
 	}
 }
