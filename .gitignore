@@ -11,6 +11,6 @@ Thumbs.db
 
 # ignore Unity files
 Temp
-#cache
-#metadata
+cache
+metadata
 
