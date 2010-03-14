@@ -17,16 +17,21 @@ function Update () {
 }
 
 function queueAnimation() {
+	var playThis : String = null;
 	if( Input.GetKey( KeyCode.UpArrow ) ) {
-		swordAnimation.PlayQueued(upSwing);
+		playThis = upSwing;
+	} else if( Input.GetKey( KeyCode.DownArrow ) ) {
+		playThis = downSwing;
+	} else if( Input.GetKey( KeyCode.RightArrow ) ) {
+		playThis = rightSwing;
+	} else if( Input.GetKey( KeyCode.LeftArrow ) ) {
+		playThis = leftSwing;
 	}
-	if( Input.GetKey( KeyCode.DownArrow ) ) {
-		swordAnimation.PlayQueued(downSwing);
-	}
-	if( Input.GetKey( KeyCode.RightArrow ) ) {
-		swordAnimation.PlayQueued(rightSwing);
-	}
-	if( Input.GetKey( KeyCode.LeftArrow ) ) {
-		swordAnimation.PlayQueued(leftSwing);
+	if( playThis ) {
+		//swordAnimation.Stop();
+		swordAnimation.Play( playThis );
+		swordAnimation.CrossFade( playThis );
+	} else {
+	
 	}
 }
