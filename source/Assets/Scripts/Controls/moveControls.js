@@ -1,7 +1,9 @@
-var speed : int = 8.5;
+var speed : float = 8.5;
+
 private var moveDirection = Vector3.zero;
 private var verticalDirection = 0;
 private var horizontalDirection = 0;
+
 function Update () {
 	// Detect the controls
 	verticalDirection = 0;
