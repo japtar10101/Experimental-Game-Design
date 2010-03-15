@@ -5,6 +5,7 @@ var upSwing : String;
 var downSwing : String;
 var rightSwing : String;
 var leftSwing : String;
+var circleSwing : String;
 
 function Update () {
 	if( !swordAnimation || !swordRenderer ) {
@@ -27,11 +28,11 @@ function queueAnimation() {
 		playThis = rightSwing;
 	} else if( Input.GetKey( KeyCode.LeftArrow ) ) {
 		playThis = leftSwing;
+	} else if( Input.GetKey( KeyCode.Space ) ) {
+		playThis = circleSwing;
 	}
 	if( playThis && !swordAnimation.isPlaying) {
-		//swordAnimation.Stop();
 		swordAnimation.Play( playThis );
 		swordSound.Play();
-		//swordAnimation.Blend( playThis );
 	}
 }
