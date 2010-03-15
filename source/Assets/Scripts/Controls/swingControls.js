@@ -1,5 +1,6 @@
 var swordRenderer : Renderer;
 var swordAnimation : Animation;
+var swordSound : AudioSource;
 var upSwing : String;
 var downSwing : String;
 var rightSwing : String;
@@ -30,6 +31,7 @@ function queueAnimation() {
 	if( playThis && !swordAnimation.isPlaying) {
 		//swordAnimation.Stop();
 		swordAnimation.Play( playThis );
+		swordSound.Play();
 		//swordAnimation.Blend( playThis );
 	}
 }
