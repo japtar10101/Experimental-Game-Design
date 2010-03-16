@@ -1,0 +1,1 @@
+var health = 100;
