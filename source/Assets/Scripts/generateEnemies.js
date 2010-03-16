@@ -10,19 +10,26 @@ var zLimit : float = 5;
 var spawn : GameObject[];
 // Maximum number of objects to spawn
 var spawnMax : int = 4;
-// A value from 0 to 1, with 1 = 100%
-var spawnProbability : float = 0.2;
+// Minimum number of time it takes to spawn an enemy
+var spawnInterval : float = 3;
+// Maxiumum number of time it takes to spawn an enemy
+var spawnDelay : float = 8;
 
 private var pos = Vector3(0,0,0);
 private var relativeLocation : Transform;
+private var numCoroutines = 0;
 
 function Update () {
-	// Do we want to generate a new enemy?
-	if( GameObject.FindGameObjectsWithTag("Destructable").length > spawnMax ) {
-		return;
-	} else if( Random.Range( 0, 1 ) > spawnProbability ) {
-		return;
+	// Generate a random enemy
+	if( numCoroutines < spawnMax ) {
+		GenerateDestructable();
 	}
+}
+
+function GenerateDestructable() {
+	// Wait first
+	numCoroutines += 1;
+	yield WaitForSeconds( Random.Range( spawnInterval, spawnDelay ) );
 	
 	// Generate a random position to create a destructable enemy
 	RandomPosition();
@@ -31,6 +38,7 @@ function Update () {
 	// Generate a random enemy
 	var index = Random.Range( 0, spawn.length );
 	Instantiate( spawn[index], pos, Quaternion.identity );
+	numCoroutines -= 1;
 }
 
 function Start() {
@@ -53,10 +61,10 @@ function Start() {
 	}
 	
 	// Make sure all parameters are positive
-	if( xLimit < 0 || yLimit < 0 || zStart < 0 || zLimit < 0 ) {
+	if( xLimit < 0 || yLimit < 0 || zStart < 0 || zLimit < 0 || spawnInterval < 0 || spawnDelay < 0 ) {
 		Destroy( this );
 		return;
-	} else if( spawnMax < 1 || spawnProbability <= 0 ) {
+	} else if( spawnMax < 1 || spawnInterval > spawnDelay ) {
 		Destroy( this );
 		return;
 	}
