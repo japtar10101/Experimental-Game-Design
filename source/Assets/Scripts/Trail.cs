@@ -51,11 +51,23 @@ public class Trail : MonoBehaviour
         trailObj.transform.position = Vector3.zero;
         trailObj.transform.rotation = Quaternion.identity;
         trailObj.transform.localScale = Vector3.one;
+		
+		//Add Mesh filter
         MeshFilter meshFilter = (MeshFilter) trailObj.AddComponent(typeof(MeshFilter));
         mesh = meshFilter.mesh;
-       trailObj.AddComponent(typeof(MeshRenderer));
+		
+		//Add Mesh renderer
+        trailObj.AddComponent(typeof(MeshRenderer));
         instanceMaterial = new Material(material);
         trailObj.renderer.material = instanceMaterial;
+		
+		//Add RigidBody
+		/*
+		trailObj.AddComponent<RigidBody>();
+		trailObj.rigidbody.useGravity = false;
+		trailObj.rigidbody.isKinematic = true;
+		*/
+		trailObj.tag = "Sword";
     }
     
     void Update ()

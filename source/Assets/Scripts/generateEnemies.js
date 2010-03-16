@@ -37,7 +37,8 @@ function GenerateDestructable() {
 	
 	// Generate a random enemy
 	var index = Random.Range( 0, spawn.length );
-	Instantiate( spawn[index], pos, Quaternion.identity );
+	var newClone = Instantiate( spawn[index], pos, Quaternion.identity );
+	//newClone.addComponent( );
 	numCoroutines -= 1;
 }
 
