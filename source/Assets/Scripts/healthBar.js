@@ -4,6 +4,8 @@ private var Script;
 
 function Update () {
 	guiText.text = Script.health.ToString();
+	if(Script.health<=0)
+		guiText.text = "DEAD";
 }
 
 function Start() {

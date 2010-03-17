@@ -1,11 +1,14 @@
 var speed = 8.5;
 
+var moveDir : Vector3 = Vector3.zero;
 private var moveObject : Transform;
-private var moveDir : Vector3;
+
 
 function Start() {
 	moveObject = GetComponent( Transform );
-	moveDir = Vector3.forward * speed;
+	if(moveDir == Vector3.zero) {
+		moveDir = Vector3.forward * speed;
+	}
 }
 
 function Update () {
