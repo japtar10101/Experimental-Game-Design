@@ -5,7 +5,7 @@ as her health and shield.
 
 // Health-related stuff
 var maxHealth = 100;
-private var health = 100;
+var health = 100;
 
 // Shield-related stuff
 var maxShield = 100;
@@ -13,11 +13,10 @@ private var shieldDuration = 100;
 private var shieldOn = false;
 
 //Health stuff
-//private var healthBar = GUI.Label(Rect(10,10,100,20),"Please work!");
 
 function updateHealth( changeHealth ) {
 	health += changeHealth;
-	//GUI.Label(Rect(10,10,100,20), "Hit!");
+
 	if( health > maxShield ) {
 		health = maxShield;
 	}
@@ -38,12 +37,8 @@ function isShieldOn() {
 function Start() {
 	health = maxHealth;
 	shieldDuration = maxShield;
-	//GUI.Label(Rect(10, 10, 100, 20), "Not Hit");
-	//OnGui();
-}
-
-function OnGui() {
-	GUI.Label(Rect(0,0,100,20), "health");
+	
+	
 }
 
 function OnTriggerEnter (other : Collider) {
