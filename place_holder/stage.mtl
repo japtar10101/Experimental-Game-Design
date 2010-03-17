@@ -1,0 +1,12 @@
+# Material Count: 1
+newmtl Material_stage_texture.png
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.558367 0.558367 0.558367
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\Documents and Settings\omiyat\My Documents\School\Experimental Game Design\final_project\place_holder\blender\stage_texture.png
+
+
