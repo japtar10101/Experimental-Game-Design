@@ -3,6 +3,8 @@ This script defines the attributes of the player, such
 as her health and shield.
 */
 
+var hitSound : AudioClip;
+
 // Health-related stuff
 var maxHealth = 100;
 var health = 100;
@@ -16,6 +18,8 @@ private var shieldOn = false;
 
 function updateHealth( changeHealth ) {
 	health += changeHealth;
+	
+	audio.PlayOneShot(hitSound);
 
 	if( health > maxShield ) {
 		health = maxShield;
@@ -46,7 +50,7 @@ function OnTriggerEnter (other : Collider) {
 	var collided = other.gameObject;
 	if( collided.CompareTag("Destructable") && 
 collided.renderer.enabled) {
-		if(updateHealth(-40)) {
+		if(updateHealth(-20)) {
 			Destroy(gameObject);
 			Application.Quit();
 		}
