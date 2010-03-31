@@ -1,21 +1,19 @@
 var changeAngle : float = 0;
+var turnScript : moveForward;
 
+function Start() {
+	if( !moveForward ) {
+		Destroy( this );
+	}
+}
+	
 function OnTriggerEnter (other : Collider) {
 	// First, verify what we're colliding with is a sword
 	var collided = other.gameObject;
 	if( collided.CompareTag( "Player" ) ) {
-		collided.GetComponent("MoveForward");
+		turnScript.SetTurnY( changeAngle );
+		print("Set script's angle to " + turnScript.yTurn);
 	}
 }
 
-/*
-function OnTriggerExit (other : Collider) {
-	// First, verify what we're colliding with is a sword
-	var collided = other.gameObject;
-	if( collided.CompareTag( "Sword" ) && collided.renderer.enabled ) {
-		audio.PlayOneShot(deathSound);
-		Destroy( gameObject );
-	}
-}
-*/
 @script RequireComponent(Collision)
