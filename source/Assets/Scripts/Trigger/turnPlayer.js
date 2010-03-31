@@ -1,5 +1,6 @@
-var changeAngle : float = 0;
+var rotateAround : Transform = null;
 var turnScript : moveForward;
+var rotateSpeed : float = 0;
 
 function Start() {
 	if( !moveForward ) {
@@ -8,11 +9,10 @@ function Start() {
 }
 	
 function OnTriggerEnter (other : Collider) {
-	// First, verify what we're colliding with is a sword
+	// First, verify what we're colliding with the player
 	var collided = other.gameObject;
 	if( collided.CompareTag( "Player" ) ) {
-		turnScript.SetTurnY( changeAngle );
-		print("Set script's angle to " + turnScript.yTurn);
+		turnScript.SetRotatePoint( rotateAround, rotateSpeed );
 	}
 }
 

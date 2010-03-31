@@ -1,22 +1,32 @@
 var speed = 16;
-var yTurn : float = 0;
+var rotateSpeed = 0;
+var rotateAround : Transform = null;
 
 private var moveDir : Vector3 = Vector3.zero;
+private var rotatePoint : Vector3 = Vector3.zero;
 private var moveObject : Transform;
 
 
 function Start() {
 	moveObject = GetComponent( Transform );
-	if(moveDir == Vector3.zero) {
-		moveDir = Vector3.forward * speed;
+	moveDir = Vector3.forward * speed;
+	if( rotateAround ) {
+		SetRotatePoint( rotateAround, -8 );
 	}
 }
 
 function Update () {
-	moveObject.Translate( moveDir * Time.deltaTime );
-	moveObject.Rotate( 0, yTurn * Time.deltaTime, 0 );
+	if( rotateAround ) {
+		moveObject.RotateAround( rotatePoint, Vector3.up, rotateSpeed * Time.deltaTime );
+	} else {
+		moveObject.Translate( moveDir * Time.deltaTime );
+	}
 }
 
-function SetTurnY ( turn : float ) {
-	yTurn = turn;
+function SetRotatePoint ( turn : Transform, speed : float ) {
+	rotateAround = turn;
+	if( turn ) {
+		rotatePoint = rotateAround.position;
+		rotateSpeed = speed;
+	}
 }
