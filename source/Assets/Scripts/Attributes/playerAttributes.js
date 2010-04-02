@@ -5,6 +5,8 @@ as her health and shield.
 
 var hitSound : AudioClip;
 
+var charVar :  GameObject;
+
 // Health-related stuff
 var maxHealth = 100;
 var health = 100;
@@ -52,6 +54,7 @@ function OnTriggerEnter (other : Collider) {
 collided.renderer.enabled) {
 		if(updateHealth(-20)) {
 			Destroy(gameObject);
+			Destroy(charVar);
 			Application.Quit();
 		}
 		Destroy(collided);
