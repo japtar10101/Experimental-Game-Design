@@ -1,32 +1,39 @@
 var speed = 16;
-var rotateSpeed = 0;
-var rotateAround : Transform = null;
+var moveTowards : Transform[];
 
 private var moveDir : Vector3 = Vector3.zero;
-private var rotatePoint : Vector3 = Vector3.zero;
 private var moveObject : Transform;
-
+private var index = 0;
 
 function Start() {
 	moveObject = GetComponent( Transform );
-	moveDir = Vector3.forward * speed;
-	if( rotateAround ) {
-		SetRotatePoint( rotateAround, -8 );
-	}
+	setDirection(0);
 }
 
 function Update () {
-	if( rotateAround ) {
-		moveObject.RotateAround( rotatePoint, Vector3.up, rotateSpeed * Time.deltaTime );
-	} else {
-		moveObject.Translate( moveDir * Time.deltaTime );
+	moveObject.Translate( moveDir * Time.deltaTime );
+}
+
+function FixedUpdate() {
+	if( !moveTowards[index] ) {
+		setDirection( index + 1 );
+	}
+	else if( moveObject.transform.position.z > moveTowards[index].position.z ) {
+		setDirection( index + 1 );
 	}
 }
 
-function SetRotatePoint ( turn : Transform, speed : float ) {
-	rotateAround = turn;
-	if( turn ) {
-		rotatePoint = rotateAround.position;
-		rotateSpeed = speed;
+function setDirection( nextIndex ) {
+	// If index is beyond length, set this object to simply move forward
+	if( nextIndex >= moveTowards.length ) {
+		moveDir = Vector3.forward * speed;
+		return;
+	} else {
+		index = nextIndex;
 	}
+	
+	// Otherwise, find the next point to fly to
+	moveDir = moveTowards[index].position - moveObject.transform.position;
+	moveDir.Normalize();
+	moveDir *= speed;
 }

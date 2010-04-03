@@ -5,6 +5,8 @@ private var thisPos : Transform;
 //character Game object
 private var charGame : Rigidbody;
 
+var limitX = 0;
+var limitY = 0;
 var multiple = 1000;
 
 
@@ -15,7 +17,6 @@ function Update () {
 }
 
 function Start() {
-
 	thisPos = GetComponent(Transform);
 	charGame = GetComponent(Rigidbody);
 	
@@ -23,4 +24,13 @@ function Start() {
 		Destroy(this);
 	}
 	
+}
+
+function FixedUpdate() {
+	if( thisPos.position.x > limitX ) {
+		thisPos.position.x = limitX;
+	}
+	if( thisPos.position.y > limitY ) {
+		thisPos.position.y = limitY;
+	}
 }
