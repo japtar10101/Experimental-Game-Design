@@ -15,7 +15,10 @@ function Update () {
 }
 
 function FixedUpdate() {
-	if( !moveTowards[index] ) {
+	if( nextIndex >= moveTowards.length ) {
+		return;
+	}
+	else if( !moveTowards[index] ) {
 		setDirection( index + 1 );
 	}
 	else if( moveObject.transform.position.z > moveTowards[index].position.z ) {
