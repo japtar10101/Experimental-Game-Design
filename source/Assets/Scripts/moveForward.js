@@ -4,6 +4,7 @@ var moveTowards : Transform[];
 private var moveDir : Vector3 = Vector3.zero;
 private var moveObject : Transform;
 private var index = 0;
+private var nextIndex = 0;
 
 function Start() {
 	moveObject = GetComponent( Transform );
