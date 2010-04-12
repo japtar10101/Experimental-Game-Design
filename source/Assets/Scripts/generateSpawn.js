@@ -20,7 +20,6 @@ function GenerateNewWall() {
 	
 	var newClone = Instantiate(spawnWall, pos, Quaternion.identity);
 	newClone.transform.Rotate(Vector3(90,0,0));
-	
 }
 
 function Start() {

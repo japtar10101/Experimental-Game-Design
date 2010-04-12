@@ -3,36 +3,87 @@ var swordAnimation : Animation;
 var swordSound : AudioSource;
 var upSwing : String;
 var downSwing : String;
-var rightSwing : String;
-var leftSwing : String;
 var circleSwing : String;
 
-function Update () {
+private var rotate : Transform;
+
+function Start() {
+	rotate = GetComponent(Transform);
 	if( !swordAnimation || !swordRenderer ) {
 		// If variables aren't defined, halt
-		return;
+		Destroy( this );
 	}
-		
+}
+	
+function Update () {
 	// Figure out the animation to play
 	queueAnimation();
-	swordRenderer.enabled = swordAnimation.isPlaying;
+	
+	// reorient the player, if necessary
+	var playing = swordAnimation.isPlaying;
+	swordRenderer.enabled = playing;
+	if( !playing ) {
+		rotate.localEulerAngles.y = 0;
+	}
 }
 
 function queueAnimation() {
 	var playThis : String = null;
-	if( Input.GetKey( KeyCode.UpArrow ) ) {
-		playThis = upSwing;
-	} else if( Input.GetKey( KeyCode.DownArrow ) ) {
-		playThis = downSwing;
-	} else if( Input.GetKey( KeyCode.RightArrow ) ) {
-		playThis = rightSwing;
-	} else if( Input.GetKey( KeyCode.LeftArrow ) ) {
-		playThis = leftSwing;
-	} else if( Input.GetKey( KeyCode.Space ) ) {
+	var rotateAngle = 0;
+	
+	if( Input.GetAxis ("Barrel Roll") ) {
+		// Queue Barrel roll animation
 		playThis = circleSwing;
+	} else {
+		// Check the axis that the sword is swung.
+		var verticalInput = Input.GetAxis ("Swing Vertical");
+		var horizontalInput = Input.GetAxis ("Swing Horizontal");
+		
+		if( horizontalInput == 0  ) {
+			// Do a perfectly vertical swing
+			if( verticalInput < 0 ) {
+				playThis = downSwing;
+			} else if( verticalInput > 0 ) {
+				playThis = upSwing;
+			} else {
+				return;
+			}
+		} else {
+			// There's horizontalInput, play an animation
+			// depending on input
+			if( verticalInput < 0 ) {
+				playThis = downSwing;
+			} else {
+				playThis = upSwing;
+			}
+			rotateAngle = anglePlayer( horizontalInput, verticalInput );
+		}
 	}
 	if( playThis && !swordAnimation.isPlaying) {
 		swordAnimation.Play( playThis );
 		swordSound.Play();
+		rotate.localEulerAngles.y = rotateAngle;
+	}
+}
+
+function anglePlayer( horizontalInput, verticalInput ) {
+	if( verticalInput == 0 ) {
+		if( horizontalInput > 0 ) {
+			return -90;
+		} else {
+			return 90;
+		}
+	} else if( verticalInput < 0 ) {
+		if( horizontalInput > 0 ) {
+			return 45;
+		} else {
+			return -45;
+		}
+	} else {
+		if( horizontalInput > 0 ) {
+			return -45;
+		} else {
+			return 45;
+		}
 	}
 }

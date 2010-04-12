@@ -7,12 +7,12 @@ private var thisBody : Rigidbody;
 //character position
 var charPos : Transform;
 //multiple variable
-var multiple = 50.0;
+var multiple = 1.0;
 
 function Update () {
 	if(retPos) {
 		var difVector = retPos.position - thisPos.position;
-		difVector.z = 0;
+		difVector.z = -1;
 		thisBody.AddForce(difVector*multiple);
 		//thisBody.AddRelativeForce(Vector3.forward*-5);
 		//print("moving towards player");

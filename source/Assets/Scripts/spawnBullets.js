@@ -5,9 +5,9 @@ var rocket : GameObject;
 //Types of bullet firing formations
 var bulletTypes = 2;
 //testing moving bullets
-var newClone1;
+private var newClone1;
 //testing moving rockets
-var rocketClone;
+private var rocketClone;
 //testing rigid body
 var clone1Rigid;
 //shoot time
@@ -41,11 +41,15 @@ function GenerateBullet() {
 	if(currentType == 1){
 		rocketClone = Instantiate(rocket, this.transform.position, this.transform.rotation);
 		rocketClone.transform.Rotate(Vector3(180,0,0));
+		//TODO: force the rockets to home on you.
+		//rocketClone.GetComponent("Homing Rockets").enabled = true;
+		//rocketClone.renderer.enabled = true;
 	}
 	else{
 		newClone1 = Instantiate(bullet, this.transform.position, this.transform.rotation); 
 		clone1Rigid = newClone1.GetComponent(Rigidbody);
 		newClone1.transform.Rotate(Vector3(180,0,0));
+		newClone1.renderer.enabled = true;
 	}
 }
 

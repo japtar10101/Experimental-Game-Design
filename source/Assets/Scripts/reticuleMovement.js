@@ -12,5 +12,4 @@ function Update () {
 function Start() {
 	this.transform.Rotate(Vector3(90,0,0));
 	lookPos = reticulePos.transform;
-	
 }

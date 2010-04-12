@@ -50,13 +50,19 @@ function Start() {
 function OnTriggerEnter (other : Collider) {
 	//check to make sure an enemy is colliding
 	var collided = other.gameObject;
-	if( collided.CompareTag("Destructable") && 
-collided.renderer.enabled) {
-		if(updateHealth(-20)) {
+	if( collided.CompareTag("Destructable") && collided.renderer.enabled) {
+		if(updateHealth(-10)) {
 			Destroy(gameObject);
 			Destroy(charVar);
 			Application.Quit();
 		}
 		Destroy(collided);
+	}
+	if( collided.CompareTag("Dodge")) {
+		if(updateHealth(-5)) {
+			Destroy(gameObject);
+			Destroy(charVar);
+			Application.Quit();
+		}
 	}
 }
