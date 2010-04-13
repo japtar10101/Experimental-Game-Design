@@ -55,7 +55,6 @@ function OnTriggerEnter (other : Collider) {
 		if( hitPower ) {
 			decrement = hitPower.power;
 		}
-		print( decrement );
 		if( updateHealth( decrement ) ) {
 			Destroy(gameObject);
 			Destroy(charVar);
