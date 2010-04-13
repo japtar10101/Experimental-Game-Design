@@ -23,9 +23,6 @@ function Start() {
 		guiText.text = "script deleted";
 		Destroy(this);
 	}
-	
-	//guiText.text = Script.health.ToString();
-	
 }
 
 function OnGUI() {

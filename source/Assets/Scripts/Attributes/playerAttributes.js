@@ -8,12 +8,12 @@ var hitSound : AudioClip;
 var charVar :  GameObject;
 
 // Health-related stuff
-var maxHealth = 100;
-var health = 100;
+var maxHealth = 25;
+var health = 25;
 
 // Shield-related stuff
-var maxShield = 100;
-private var shieldDuration = 100;
+var maxShield = 25;
+private var shieldDuration = 25;
 private var shieldOn = false;
 
 //Health stuff
@@ -43,26 +43,26 @@ function isShieldOn() {
 function Start() {
 	health = maxHealth;
 	shieldDuration = maxShield;
-	
-	
 }
 
 function OnTriggerEnter (other : Collider) {
 	//check to make sure an enemy is colliding
 	var collided = other.gameObject;
-	if( collided.CompareTag("Destructable") && collided.renderer.enabled) {
-		if(updateHealth(-10)) {
+	var isDestructable = collided.CompareTag("Destructable");
+	if( isDestructable || collided.CompareTag("Dodge") ) {
+		var decrement = -10;
+		var hitPower = collided.GetComponent(hitAttributes);
+		if( hitPower ) {
+			decrement = hitPower.power;
+		}
+		print( decrement );
+		if( updateHealth( decrement ) ) {
 			Destroy(gameObject);
 			Destroy(charVar);
 			Application.Quit();
 		}
-		Destroy(collided);
-	}
-	if( collided.CompareTag("Dodge")) {
-		if(updateHealth(-5)) {
-			Destroy(gameObject);
-			Destroy(charVar);
-			Application.Quit();
+		if( isDestructable ) {
+			Destroy(collided);
 		}
 	}
 }
