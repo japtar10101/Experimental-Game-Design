@@ -1,65 +1,64 @@
+// Is this script enabled?
+var startFire : boolean = true;
 //Bullet game object
 var bullet : GameObject;
-//Rocket game object
-var rocket : GameObject;
-//Types of bullet firing formations
-var bulletTypes = 2;
-//testing moving bullets
-private var newClone1;
-//testing moving rockets
-private var rocketClone;
-//testing rigid body
-var clone1Rigid;
+//variable for bullet speed
+var bulletSpeed : float = 1400;
 //shoot time
-var shootDelay : float = .001;
-//bool fired
-var fired;
+var shootDelay : float = 1;
+//number of shoots (like an automatic)
+var numShots : int = 1;
 //variable for reticule position
 var retPos : Transform;
+//TODO: add an animation parameter
+
+//testing moving bullets
+private var bulletClone;
+//testing rigid body
+private var rigidClone;
 //this object's position
 private var thisPos : Transform;
-//multiple variable
-var multiple = 50.0;
+// Number of bullets cloned
+private var fireBullet = true;
+// The delay between bullets when fired in automatic
+private var autoDelay : float = 0.1;
+
+function Start() {
+	thisPos = GetComponent(Transform);
+	if(!thisPos || !retPos || !bullet){
+		Destroy(this);
+	}
+}
 
 function Update () {
-	
-	if(newClone1) {
-		clone1Rigid.AddRelativeForce(Vector3.forward*-70);
-	}
-	
-	if(!fired) {
-		fired = true;
+	if( startFire && fireBullet ) {
 		GenerateBullet();
 	}
 }
 
 function GenerateBullet() {
-
-	var position = GetComponent(Transform);
-	var currentType = Random.Range(0, bulletTypes);
-
-	if(currentType == 1){
-		rocketClone = Instantiate(rocket, this.transform.position, this.transform.rotation);
-		rocketClone.transform.Rotate(Vector3(180,0,0));
-		//TODO: force the rockets to home on you.
-		//rocketClone.GetComponent("Homing Rockets").enabled = true;
-		//rocketClone.renderer.enabled = true;
-	}
-	else{
-		newClone1 = Instantiate(bullet, this.transform.position, this.transform.rotation); 
-		clone1Rigid = newClone1.GetComponent(Rigidbody);
-		newClone1.transform.Rotate(Vector3(180,0,0));
-		newClone1.renderer.enabled = true;
-	}
-}
-
-function Start() {
-	thisPos = GetComponent(Transform);
-	charPos = GetComponent(GameObject);
+	// Wait the user specified delay
+	fireBullet = false;
+	// TODO: add the animation
 	
-	if(!thisPos || !retPos){
-		Destroy(this);
+	// Clone several times
+	var autoClone = numShots;
+	while( autoClone > 0 ) {
+		// Clone the bullet
+		bulletClone = Instantiate( bullet, thisPos.position, thisPos.rotation );
+		bulletClone.transform.Rotate( Vector3( 180, 0, 0 ) );
+		bulletClone.renderer.enabled = true;
+		
+		// Add a constant force to it
+		rigidClone = bulletClone.GetComponent( Rigidbody );
+		rigidClone.AddRelativeForce( Vector3.forward * bulletSpeed * -1 );
+		
+		// decrement the number of clones
+		autoClone -= 1;
+		yield WaitForSeconds( autoDelay );
 	}
 	
-	fired = false;
+	// Revert the conditions
+	yield WaitForSeconds( shootDelay );
+	fireBullet = true;
 }
