@@ -17,9 +17,16 @@ function Update () {
 		return;
 	}
 	
-	// Grab all destructable gameobjects
+	// Destroy all destructable gameobjects
 	destroyObjects = GameObject.FindGameObjectsWithTag( "Destructable" );
+	destroyAll();
 	
+	// Do the same thing with health
+	destroyObjects = GameObject.FindGameObjectsWithTag( "Health" );
+	destroyAll();
+}
+
+function destroyAll() {
 	// Destroy objects who is past the z-location
 	for( var toDestroy : GameObject in destroyObjects ) {
 		if( !toDestroy.transform || !toDestroy.renderer || !toDestroy.renderer.enabled ) {
@@ -29,7 +36,6 @@ function Update () {
 		}
 	}
 }
-
 function canBeDestroyed( check ) {
 	// check behind the camera
 	var displace = cameraPos.transform.position.z + zDisplacement;
