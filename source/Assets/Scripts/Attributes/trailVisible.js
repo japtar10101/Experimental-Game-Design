@@ -12,6 +12,8 @@ function Start() {
 
 function Update () {
 	for( reveal in trail ) {
-		reveal.renderer.enabled = visible.enabled;
+		if( reveal ) {
+			reveal.renderer.enabled = visible.enabled;
+		}
 	}
 }
