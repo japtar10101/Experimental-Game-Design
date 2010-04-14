@@ -10,6 +10,8 @@ var shootDelay : float = 1;
 var numShots : int = 1;
 //variable for reticule position
 var retPos : Transform;
+// sound
+var gunSound : AudioClip;
 //TODO: add an animation parameter
 
 //testing moving bullets
@@ -55,6 +57,7 @@ function GenerateBullet() {
 		
 		// decrement the number of clones
 		autoClone -= 1;
+		audio.PlayOneShot(gunSound);
 		yield WaitForSeconds( autoDelay );
 	}
 	

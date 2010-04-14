@@ -39,6 +39,7 @@ function Update() {
 				}
 			}
 			moveEnemies = false;
+			print( "Finished Summoning" );
 		}
 		
 		// Else, move all enemies
@@ -51,11 +52,13 @@ function Update() {
 			}
 			// Increment distance
 			moveDistance += moveVector.magnitude;
+			print( moveDistance );
 		}
 	}
 }
 
-function OnTriggerEnter (other : Collider) {	
+function OnTriggerEnter (other : Collider) {
+	print( "Summon Enemies" );
 	//Check if what collided was the player
 	if( other.gameObject.CompareTag( "Player" ) ) {
 		// Reveal all enemies

@@ -20,7 +20,7 @@ function Update () {
 	queueAnimation();
 	
 	// reorient the player, if necessary
-	var playing = swordAnimation.isPlaying;
+	var playing = swordAnimation.IsPlaying( downSwing ) || swordAnimation.IsPlaying( upSwing ) || swordAnimation.IsPlaying( circleSwing );
 	swordRenderer.enabled = playing;
 	if( !playing ) {
 		rotate.localEulerAngles.y = 0;
