@@ -9,11 +9,14 @@ private var dying = false;
 private var anim : Animation;
 // Script
 private var spawn : spawnBullets;
+// Hit box
+private var collide : Collider;
 
 function Start() {
 	dying = false;
 	anim = GetComponent( Animation );
 	spawn = GetComponent( spawnBullets );
+	collide = GetComponent( Collider );
 }
 
 function Update () {
@@ -32,6 +35,7 @@ function OnTriggerEnter (other : Collider) {
 			anim.Play( deathAnim );
 			spawn.startFire = false;
 			dying = true;
+			collide.isTrigger = false;
 		} else {
 			audio.PlayOneShot(hitSound);
 		}
