@@ -52,7 +52,6 @@ function Update() {
 			}
 			// Increment distance
 			moveDistance += moveVector.magnitude;
-			print( moveDistance );
 		}
 	}
 }
