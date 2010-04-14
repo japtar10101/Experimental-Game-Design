@@ -26,5 +26,6 @@ function Start() {
 }
 
 function OnGUI() {
-	GUI.Box(Rect(30,800,Script.health*3,30), "HP~" + Script.health.ToString());
+	GUI.Box(Rect(30,760,Script.health*5,30), "HP~" + Script.health.ToString());
+	GUI.Box(Rect(30,800,Script.shieldDuration*5,30), "SP~" + Script.shieldDuration.ToString());
 }
