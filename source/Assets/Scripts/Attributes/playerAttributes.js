@@ -56,7 +56,6 @@ function updateShield( on ) {
 			shieldDuration = maxShield;
 		}
 	}
-	print( shieldDuration );
 	return isShieldOn();
 }
 
