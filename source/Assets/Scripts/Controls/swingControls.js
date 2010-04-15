@@ -39,13 +39,16 @@ function queueAnimation() {
 		var verticalInput = Input.GetAxis ("Swing Vertical");
 		var horizontalInput = Input.GetAxis ("Swing Horizontal");
 		
-		if( horizontalInput == 0  ) {
+		if( horizontalInput == 0 ) {
 			// Do a perfectly vertical swing
 			if( verticalInput < 0 ) {
 				playThis = downSwing;
 			} else if( verticalInput > 0 ) {
 				playThis = upSwing;
 			} else {
+				if( Input.GetKey( KeyCode.Joystick1Button0 ) ) {
+					print( "got input" );
+				}
 				return;
 			}
 		} else {

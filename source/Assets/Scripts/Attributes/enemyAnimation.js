@@ -1,3 +1,4 @@
+var loop : boolean = true;
 var dir : Vector3[];
 var speed : float[];
 var length : float[];
@@ -33,9 +34,10 @@ function Start() {
 }
 
 function Update () {
-	if( onFire.startFire ) {
+	if( index < 0 ) {
+		return;
+	} else if( onFire.startFire ) {
 		animate();
-		print( "playing" );
 	}
 }
 
@@ -57,7 +59,11 @@ function next() {
 	// First, increment index
 	index += 1;
 	if( index >= dir.Length ) {
-		index = 0;
+		if( loop ) {
+			index = 0;
+		} else {
+			index = -1;
+		}
 	}
 	
 	// Calculate the magnitude

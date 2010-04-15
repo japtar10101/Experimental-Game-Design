@@ -8,8 +8,6 @@ var bulletSpeed : float = 1400;
 var shootDelay : float = 1;
 //number of shoots (like an automatic)
 var numShots : int = 1;
-//variable for reticule position
-var retPos : Transform;
 // sound
 var gunSound : AudioClip;
 //TODO: add an animation parameter
@@ -27,7 +25,7 @@ private var autoDelay : float = 0.1;
 
 function Start() {
 	thisPos = GetComponent(Transform);
-	if(!thisPos || !retPos || !bullet){
+	if(!thisPos || !bullet){
 		Destroy(this);
 	}
 }
