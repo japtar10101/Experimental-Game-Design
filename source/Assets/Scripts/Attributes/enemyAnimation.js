@@ -12,10 +12,15 @@ function Start() {
 	// Check if everything is correct
 	onFire = GetComponent( spawnBullets );
 	pos = GetComponent( Transform );
-	if( dir.Length <= 0 || !onFire || !pos ) {
+	if( !onFire || !pos ) {
 		Destroy( this );
-	} else if( dir.Length != speed.Length || speed.Length != length.Length ) {
+		return;
+	} else if( dir.length == 0 || speed.length == 0  || length.length == 0 ) {
 		Destroy( this );
+		return;
+	} else if( dir.length != speed.length || speed.length != length.length ) {
+		Destroy( this );
+		return;
 	}
 	
 	// Setup variables
