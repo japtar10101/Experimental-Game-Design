@@ -9,6 +9,8 @@ var hitSound : AudioClip;
 var healthSound : AudioClip;
 // add deflect tune.
 var deflectSound : AudioClip;
+// shield generate tune.
+var shieldSound : AudioClip;
 var charVar :  GameObject;
 
 // Health-related stuff
@@ -81,6 +83,9 @@ function Start() {
 function Update() {
 	var bool = updateShield( Input.GetAxis ("Shield") > 0 );
 	if( shieldRenderer ) {
+		if( !shieldRenderer.enabled && bool ) {
+			audio.PlayOneShot(shieldSound);
+		}
 		shieldRenderer.enabled = bool;
 	}
 }

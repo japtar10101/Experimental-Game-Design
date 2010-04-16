@@ -1,6 +1,7 @@
 var hitSound : AudioClip;
 var deathSound : AudioClip;
 var deathAnim : String;
+var hitAnim : String;
 var health : int = 1;
 
 // Flag checking if you're dying
@@ -26,6 +27,11 @@ function Update () {
 }
 
 function OnTriggerEnter (other : Collider) {
+	// ignore triggering on death
+	if( dying ) {
+		return;
+	}
+	
 	// First, verify what we're colliding with is a sword
 	var collided = other.gameObject;
 	if( collided.CompareTag( "Sword" ) && collided.renderer.enabled ) {
@@ -37,6 +43,7 @@ function OnTriggerEnter (other : Collider) {
 			dying = true;
 			collide.isTrigger = false;
 		} else {
+			anim.Play( hitAnim );
 			audio.PlayOneShot(hitSound);
 		}
 	}
