@@ -5,10 +5,10 @@ as her health and shield.
 
 // Sound stuff
 var hitSound : AudioClip;
-//TODO: add health re-fill tune.
-//var healthSound : AudioClip;
-//TODO: add deflect tune.
-//var deflectSound : AudioClip;
+// add health re-fill tune.
+var healthSound : AudioClip;
+// add deflect tune.
+var deflectSound : AudioClip;
 var charVar :  GameObject;
 
 // Health-related stuff
@@ -25,9 +25,16 @@ private var shieldOn = false;
 
 //Health stuff
 function updateHealth( changeHealth ) {
-	health += changeHealth;
-	
-	audio.PlayOneShot(hitSound);
+	if( changeHealth == 0 ) {
+		audio.PlayOneShot(deflectSound);
+	} else {
+		health += changeHealth;
+		if( changeHealth > 0 ) {
+			audio.PlayOneShot(healthSound);
+		} else {
+			audio.PlayOneShot(hitSound);
+		}
+	}
 
 	if( health > maxHealth ) {
 		health = maxHealth;

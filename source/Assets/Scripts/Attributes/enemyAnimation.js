@@ -35,6 +35,7 @@ function Start() {
 
 function Update () {
 	if( index < 0 ) {
+		onFire.startFire = false;
 		return;
 	} else if( onFire.startFire ) {
 		animate();
