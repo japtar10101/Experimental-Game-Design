@@ -62,7 +62,20 @@ function Start() {
 	thisBody = GetComponent(Rigidbody);
 	visible = GetComponent( Renderer );
 	
-	if(!thisPos || !thisBody || !visible){
+	var check;
+	if( !retPos ) {
+		check = GameObject.Find("bigReticule");
+		if( check ) {
+			retPos = check.position;
+		}
+	}
+	if( !charPos ) {
+		check = GameObject.Find("character");
+		if( check ) {
+			charPos = check.position;
+		}
+	}
+	if( !retPos || !charPos || !thisPos || !thisBody || !visible){
 		Destroy(this);
 	}
 }

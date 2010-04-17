@@ -8,8 +8,18 @@ var reticuleOffset : Vector3 = Vector3.zero;
 var rotate180 : boolean = false;
 
 private var checkPos;
+
+function Start () {
+	if( !reticulePos ) {
+		reticulePos = GameObject.Find("bigReticule");
+	}
+	if( !characterPos ) {
+		characterPos = GameObject.Find("character");
+	}
+}
+
 function Update () {
-	if(reticulePos) {
+	if(reticulePos && characterPos) {
 		checkPos = reticulePos.transform.position;
 		if( checkPos.z > this.transform.position.z ) {
 			checkPos -= characterPos;
