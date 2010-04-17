@@ -20,10 +20,7 @@ function Start () {
 
 function Update () {
 	if(reticulePos && characterPos) {
-		checkPos = reticulePos.transform.position;
-		if( checkPos.z > this.transform.position.z ) {
-			checkPos -= characterPos;
-		}
+		checkPos = lookAt();
 		this.transform.LookAt(checkPos + reticuleOffset);
 		if( rotate180 ) {
 			this.transform.Rotate(0, 180, 0);
@@ -35,7 +32,7 @@ function lookAt() {
 	var tPos = this.transform.position;
 	var rPos = reticulePos.transform.position;
 	var cPos = characterPos.transform.position;
-	if( Vector3.Distance( tPos, rPos ) < Vector3.Distance( tPos, cPos ) ) {
+	if( tPos.z > rPos.z  ) {
 		return rPos;
 	} else {
 		return cPos;
