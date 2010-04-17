@@ -10,14 +10,18 @@ private var dying = false;
 private var anim : Animation;
 // Script
 private var spawn : spawnBullets;
-// Hit box
 private var collide : Collider;
 
 function Start() {
-	dying = false;
 	anim = GetComponent( Animation );
 	spawn = GetComponent( spawnBullets );
 	collide = GetComponent( Collider );
+	if( !anim || !spawn ) {
+		print( "destroyed" );
+		Destroy( this );
+		return;
+	}
+	dying = false;
 }
 
 function Update () {
@@ -35,14 +39,16 @@ function OnTriggerEnter (other : Collider) {
 	// First, verify what we're colliding with is a sword
 	var collided = other.gameObject;
 	if( collided.CompareTag( "Sword" ) && collided.renderer.enabled ) {
-		health -= 1;		
+		health -= 1;
 		if( health <= 0 ) {
-			audio.PlayOneShot(deathSound);
+			anim.Stop();
 			anim.Play( deathAnim );
+			audio.PlayOneShot(deathSound);
 			spawn.startFire = false;
-			dying = true;
 			collide.isTrigger = false;
+			dying = true;
 		} else {
+			anim.Stop();
 			anim.Play( hitAnim );
 			audio.PlayOneShot(hitSound);
 		}

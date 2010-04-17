@@ -10,6 +10,8 @@ var shootDelay : float = 1;
 var numShots : int = 1;
 // sound
 var gunSound : AudioClip;
+// The delay between bullets when fired in automatic
+var autoDelay : float = 0.1;
 //TODO: add an animation parameter
 
 //testing moving bullets
@@ -20,8 +22,6 @@ private var rigidClone;
 private var thisPos : Transform;
 // Number of bullets cloned
 private var fireBullet = true;
-// The delay between bullets when fired in automatic
-private var autoDelay : float = 0.1;
 
 function Start() {
 	thisPos = GetComponent(Transform);
@@ -31,7 +31,7 @@ function Start() {
 }
 
 function Update () {
-	if( startFire && fireBullet ) {
+	if( startFire && fireBullet && bullet ) {
 		GenerateBullet();
 	}
 }

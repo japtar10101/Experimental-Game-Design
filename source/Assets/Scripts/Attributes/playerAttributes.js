@@ -3,6 +3,8 @@ This script defines the attributes of the player, such
 as her health and shield.
 */
 
+// The character
+var charVar : GameObject;
 // Sound stuff
 var hitSound : AudioClip;
 // add health re-fill tune.
@@ -11,7 +13,9 @@ var healthSound : AudioClip;
 var deflectSound : AudioClip;
 // shield generate tune.
 var shieldSound : AudioClip;
-var charVar :  GameObject;
+var hitAnim : String;
+var healAnim : String;
+var shieldAnim : String;
 
 // Health-related stuff
 var maxHealth : int = 25;
@@ -24,60 +28,12 @@ var shieldDuration : float = 25;
 var shieldDecrementSpeed : float = 3;
 var shieldIncrementSpeed : float = 1;
 private var shieldOn = false;
-
-//Health stuff
-function updateHealth( changeHealth ) {
-	if( changeHealth == 0 ) {
-		audio.PlayOneShot(deflectSound);
-	} else {
-		health += changeHealth;
-		if( changeHealth > 0 ) {
-			audio.PlayOneShot(healthSound);
-		} else {
-			audio.PlayOneShot(hitSound);
-		}
-	}
-
-	if( health > maxHealth ) {
-		health = maxHealth;
-	}
-	return isDead();
-}
-
-function isDead() {
-	return health <= 0;
-}
-
-//Shield stuff
-function updateShield( on ) {
-	// Set the shield variables
-	shieldOn = on;
-	if( on ) {
-		// If on, decrement the duration
-		shieldDuration -= shieldDecrementSpeed * Time.deltaTime;
-		if( shieldDuration < 0 ) {
-			shieldDuration = 0;
-		}
-	} else {
-		// If off, increment the duration
-		shieldDuration += shieldDecrementSpeed * Time.deltaTime;
-		if( shieldDuration > maxShield ) {
-			shieldDuration = maxShield;
-		}
-	}
-	return isShieldOn();
-}
-
-function isShieldOn() {
-	if( shieldDuration <= 0 ) {
-		shieldOn = false;
-	}
-	return shieldOn;
-}
+private var anim : Animation;
 
 function Start() {
 	health = maxHealth;
 	shieldDuration = maxShield;
+	anim = charVar.GetComponent( Animation );
 }
 
 function Update() {
@@ -126,4 +82,57 @@ function OnTriggerEnter (other : Collider) {
 			Destroy(collided);
 		}
 	}
+}
+
+//Health stuff
+function updateHealth( changeHealth ) {
+	if( changeHealth == 0 ) {
+		anim.PlayQueued( shieldAnim );
+		audio.PlayOneShot(deflectSound);
+	} else {
+		health += changeHealth;
+		if( changeHealth > 0 ) {
+			anim.PlayQueued( healAnim );
+			audio.PlayOneShot(healthSound);
+		} else {
+			anim.PlayQueued( hitAnim );
+			audio.PlayOneShot(hitSound);
+		}
+	}
+
+	if( health > maxHealth ) {
+		health = maxHealth;
+	}
+	return isDead();
+}
+
+function isDead() {
+	return health <= 0;
+}
+
+//Shield stuff
+function updateShield( on ) {
+	// Set the shield variables
+	shieldOn = on;
+	if( on ) {
+		// If on, decrement the duration
+		shieldDuration -= shieldDecrementSpeed * Time.deltaTime;
+		if( shieldDuration < 0 ) {
+			shieldDuration = 0;
+		}
+	} else {
+		// If off, increment the duration
+		shieldDuration += shieldDecrementSpeed * Time.deltaTime;
+		if( shieldDuration > maxShield ) {
+			shieldDuration = maxShield;
+		}
+	}
+	return isShieldOn();
+}
+
+function isShieldOn() {
+	if( shieldDuration <= 0 ) {
+		shieldOn = false;
+	}
+	return shieldOn;
 }
