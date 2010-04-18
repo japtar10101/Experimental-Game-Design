@@ -26,6 +26,12 @@ function Start() {
 }
 
 function OnGUI() {
-	GUI.Box(Rect(30,760,Script.health*5,30), "HP~" + Script.health.ToString());
-	GUI.Box(Rect(30,800,Script.shieldDuration*5,30), "SP~" + Script.shieldDuration.ToString());
+	GUI.Box(Rect(30,680,Script.maxHealth*12,30), "");
+	GUI.Box(Rect(30,720,Script.maxShield*12,30), "");
+	GUI.Box(Rect(30,680,Script.health*12,30), "HP");
+	GUI.Box(Rect(30,720,Script.shieldDuration*12,30), "SP");
+	/*
+	GUI.Box(Rect(30,680,Script.health*12,30), "HP~" + Script.health.ToString());
+	GUI.Box(Rect(30,720,Script.shieldDuration*12,30), "SP~" + Script.shieldDuration.ToString());
+	*/
 }
