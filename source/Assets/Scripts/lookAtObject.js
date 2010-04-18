@@ -32,7 +32,7 @@ function lookAt() {
 	var tPos = this.transform.position;
 	var rPos = reticulePos.transform.position;
 	var cPos = characterPos.transform.position;
-	if( tPos.z > rPos.z  ) {
+	if( tPos.z > rPos.z + 2  ) {
 		return rPos;
 	} else {
 		return cPos;

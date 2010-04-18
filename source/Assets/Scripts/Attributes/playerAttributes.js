@@ -29,6 +29,7 @@ var shieldDecrementSpeed : float = 3;
 var shieldIncrementSpeed : float = 1;
 private var shieldOn = false;
 private var anim : Animation;
+private var noShield : float = 0;
 
 function Start() {
 	health = maxHealth;
@@ -122,7 +123,7 @@ function updateShield( on ) {
 		}
 	} else {
 		// If off, increment the duration
-		shieldDuration += shieldDecrementSpeed * Time.deltaTime;
+		shieldDuration += shieldIncrementSpeed * Time.deltaTime;
 		if( shieldDuration > maxShield ) {
 			shieldDuration = maxShield;
 		}
