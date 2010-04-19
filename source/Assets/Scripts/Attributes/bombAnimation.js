@@ -1,17 +1,16 @@
 var loop : boolean = true;
+var timerAnimation : String = "bombTimer";
 var dir : Vector3[];
 var speed : float[];
 var length : float[];
 
-private var onFire : spawnBullets;
 private var index : int;
 private var displace : float;
 private var mag : Vector3;
 
 function Start() {
 	// Check if everything is correct
-	onFire = GetComponent( spawnBullets );
-	if( !onFire || !transform ) {
+	if( !animation || !transform ) {
 		Destroy( this );
 		return;
 	} else if( dir.length == 0 || speed.length == 0  || length.length == 0 ) {
@@ -32,10 +31,7 @@ function Start() {
 }
 
 function Update () {
-	if( index < 0 ) {
-		onFire.startFire = false;
-		return;
-	} else if( onFire.startFire ) {
+	if( index >= 0 && animation.IsPlaying( timerAnimation ) ) {
 		animate();
 	}
 }

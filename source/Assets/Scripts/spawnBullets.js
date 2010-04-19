@@ -18,14 +18,11 @@ var autoDelay : float = 0.1;
 private var bulletClone;
 //testing rigid body
 private var rigidClone;
-//this object's position
-private var thisPos : Transform;
 // Number of bullets cloned
 private var fireBullet = true;
 
 function Start() {
-	thisPos = GetComponent(Transform);
-	if(!thisPos || !bullet){
+	if(!transform || !bullet){
 		Destroy(this);
 	}
 }
@@ -45,7 +42,7 @@ function GenerateBullet() {
 	var autoClone = numShots;
 	while( autoClone > 0 ) {
 		// Clone the bullet
-		bulletClone = Instantiate( bullet, thisPos.position, thisPos.rotation );
+		bulletClone = Instantiate( bullet, transform.position, transform.rotation );
 		bulletClone.transform.Rotate( Vector3( 180, 0, 0 ) );
 		bulletClone.renderer.enabled = true;
 		
