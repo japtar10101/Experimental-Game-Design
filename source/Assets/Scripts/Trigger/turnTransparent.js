@@ -1,24 +1,25 @@
-// Player's position
-var playerPos : Transform;
 // The material to switch to after the player passes the object
 var transparent : Material;
 
-// The location of this object
-private var thisPos : Transform;
-// The object to switch the Material of
-private var thisRen : Renderer;
-
+private var switched : boolean = false;
 function Start () {
-	if( !transparent || !playerPos ) {
+	if( !transparent || !transform ) {
 		Destroy( this );
-	} else {
-		thisPos = GetComponent( Transform );
-		thisRen = GetComponent( Renderer );
 	}
 }
 
 function Update () {
-	if( playerPos.position.z >= thisPos.position.z ) {
-		thisRen.material = transparent;
+	if( globalAttributes.charPos.transform.position.z >= transform.position.z
+			&& !switched ) {
+		renderer.material = getMaterial();
+		switched = true;
 	}
+}
+
+function getMaterial() {
+	var colorCopy = renderer.material.color;
+	var materialCopy = transparent;
+	colorCopy.a = transparent.color.a;
+	materialCopy.color = colorCopy;
+	return materialCopy;
 }
