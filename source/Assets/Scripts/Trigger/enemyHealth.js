@@ -6,17 +6,14 @@ var health : int = 1;
 
 // Flag checking if you're dying
 private var dying = false;
-// Animation
-private var anim : Animation;
 // Script
 private var spawn : spawnBullets;
 private var collide : Collider;
 
 function Start() {
-	anim = GetComponent( Animation );
 	spawn = GetComponent( spawnBullets );
 	collide = GetComponent( Collider );
-	if( !anim ) {
+	if( !animation ) {
 		print( "destroyed" );
 		Destroy( this );
 		return;
@@ -25,7 +22,7 @@ function Start() {
 }
 
 function Update () {
-	if( dying && !anim.IsPlaying( deathAnim ) ) {
+	if( dying && !animation.IsPlaying( deathAnim ) ) {
 		Destroy( gameObject );
 	}
 }
@@ -41,7 +38,7 @@ function OnTriggerEnter (other : Collider) {
 	if( collided.CompareTag( "Sword" ) && collided.renderer.enabled ) {
 		health -= 1;
 		if( health <= 0 ) {
-			anim.CrossFade( deathAnim );
+			animation.CrossFade( deathAnim );
 			audio.PlayOneShot(deathSound);
 			if( spawn ) {
 				spawn.startFire = false;
@@ -49,7 +46,7 @@ function OnTriggerEnter (other : Collider) {
 			collide.isTrigger = false;
 			dying = true;
 		} else {
-			anim.Blend( hitAnim );
+			animation.Blend( hitAnim );
 			audio.PlayOneShot(hitSound);
 		}
 	}
