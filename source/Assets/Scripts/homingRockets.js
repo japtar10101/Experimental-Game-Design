@@ -9,6 +9,8 @@ var lowestForce : float = 10;
 //If the rocket is less than switchPos distance away
 //from the player, aim for the player instead
 var switchPos : float = 10;
+// The time the rocket remains alive.
+var lifeTime : float = 2;
 
 //this object's position
 private var thisPos : Transform;
@@ -18,10 +20,12 @@ private var thisBody : Rigidbody;
 private var visible : Renderer;
 private var difVector : Vector3;
 private var forceMagn : float;
+private var aliveTime : float = 0;
 
 function Update() {
 	if( toRun() ) {
 		thisPos.LookAt( thisPos.position - thisBody.velocity );
+		aliveTime -= Time.deltaTime;
 	}
 }
 
@@ -34,6 +38,9 @@ function FixedUpdate () {
 		}
 		if( forceMagn < lowestForce ) {
 			forceMagn = lowestForce;
+		}
+		if( aliveTime < 0 ) {
+			forceMagn = 0;
 		}
 		difVector.Normalize();
 		thisBody.AddForce( difVector * forceMagn );
@@ -78,4 +85,5 @@ function Start() {
 	if( !retPos || !charPos || !thisPos || !thisBody || !visible){
 		Destroy(this);
 	}
+	aliveTime = lifeTime;
 }
