@@ -2,17 +2,15 @@ var speed = 16;
 var moveTowards : Transform[];
 
 private var moveDir : Vector3 = Vector3.zero;
-private var moveObject : Transform;
 private var index = 0;
 private var nextIndex = 0;
 
 function Start() {
-	moveObject = GetComponent( Transform );
 	setDirection(0);
 }
 
 function Update () {
-	moveObject.Translate( moveDir * Time.deltaTime );
+	transform.Translate( moveDir * Time.deltaTime );
 }
 
 function FixedUpdate() {
@@ -22,7 +20,7 @@ function FixedUpdate() {
 	else if( !moveTowards[index] ) {
 		setDirection( index + 1 );
 	}
-	else if( moveObject.transform.position.z > moveTowards[index].position.z ) {
+	else if( transform.transform.position.z > moveTowards[index].position.z ) {
 		setDirection( index + 1 );
 	}
 }
@@ -37,7 +35,7 @@ function setDirection( nextIndex ) {
 	}
 	
 	// Otherwise, find the next point to fly to
-	moveDir = moveTowards[index].position - moveObject.transform.position;
+	moveDir = moveTowards[index].position - transform.transform.position;
 	moveDir.Normalize();
 	moveDir *= speed;
 }

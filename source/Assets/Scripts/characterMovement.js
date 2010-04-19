@@ -1,5 +1,4 @@
-//reticule Position
-var retPos : Transform;
+
 // Strength of this script's force
 var multiple = 1000;
 
@@ -12,7 +11,7 @@ function Start() {
 	thisPos = GetComponent(Transform);
 	charGame = GetComponent(Rigidbody);
 	
-	if(!thisPos || !retPos || !charGame){
+	if(!thisPos || !charGame){
 		Destroy(this);
 	}
 }
@@ -26,7 +25,7 @@ function Update () {
 function retPosition() {
 	//TODO: somehow get the orthoganol back location of the reticule
 	// First, get the screen point
-	var screenPoint = Camera.main.WorldToScreenPoint( retPos.position );
+	var screenPoint = Camera.main.WorldToScreenPoint( globalAttributes.retPos.transform.position );
 	//return Camera.main.ScreenToWorldPoint( screenPoint );
-	return retPos.position;
+	return globalAttributes.retPos.transform.position;
 }

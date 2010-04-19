@@ -6,6 +6,7 @@ var dirMove : Vector3 = Vector3.up * -1;
 var speedMove : float = 10;
 // The distance to move enemies
 var distMove : float = 2;
+var bombAnimation : String = "bombTimer";
 
 // Boolean indicating to move the enemies
 private var moveEnemies;
@@ -36,6 +37,9 @@ function Update() {
 				script = reveal.GetComponent( spawnBullets );
 				if( script ) {
 					script.startFire = true;
+				} else {
+					script = reveal.GetComponent( Animation );
+					script.Play( bombAnimation );
 				}
 			}
 			moveEnemies = false;

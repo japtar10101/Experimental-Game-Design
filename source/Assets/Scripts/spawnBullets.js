@@ -24,6 +24,7 @@ private var fireBullet = true;
 function Start() {
 	if(!transform || !bullet){
 		Destroy(this);
+		return;
 	}
 }
 
@@ -40,6 +41,7 @@ function GenerateBullet() {
 	
 	// Clone several times
 	var autoClone = numShots;
+	var homeAt;
 	while( autoClone > 0 ) {
 		// Clone the bullet
 		bulletClone = Instantiate( bullet, transform.position, transform.rotation );
