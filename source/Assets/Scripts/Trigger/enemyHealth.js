@@ -16,7 +16,7 @@ function Start() {
 	anim = GetComponent( Animation );
 	spawn = GetComponent( spawnBullets );
 	collide = GetComponent( Collider );
-	if( !anim || !spawn ) {
+	if( !anim ) {
 		print( "destroyed" );
 		Destroy( this );
 		return;
@@ -41,15 +41,15 @@ function OnTriggerEnter (other : Collider) {
 	if( collided.CompareTag( "Sword" ) && collided.renderer.enabled ) {
 		health -= 1;
 		if( health <= 0 ) {
-			anim.Stop();
-			anim.Play( deathAnim );
+			anim.CrossFade( deathAnim );
 			audio.PlayOneShot(deathSound);
-			spawn.startFire = false;
+			if( spawn ) {
+				spawn.startFire = false;
+			}
 			collide.isTrigger = false;
 			dying = true;
 		} else {
-			anim.Stop();
-			anim.Play( hitAnim );
+			anim.Blend( hitAnim );
 			audio.PlayOneShot(hitSound);
 		}
 	}
