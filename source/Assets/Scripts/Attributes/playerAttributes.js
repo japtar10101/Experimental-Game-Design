@@ -38,7 +38,7 @@ function Start() {
 }
 
 function Update() {
-	var bool = updateShield( Input.GetAxis ("Shield") > 0 );
+	var bool = updateShield( Input.GetAxis ("Shield") != 0 );
 	if( shieldRenderer ) {
 		if( !shieldRenderer.enabled && bool ) {
 			audio.PlayOneShot(shieldSound);
