@@ -1,8 +1,10 @@
 var loop : boolean = true;
+var followPlayer : boolean = false;
 var dir : Vector3[];
 var speed : float[];
 var length : float[];
 
+private var playerOffset : Vector3 = Vector3.zero;
 private var onFire : spawnBullets;
 private var index : int;
 private var displace : float;
@@ -36,17 +38,25 @@ function Update () {
 		onFire.startFire = false;
 		return;
 	} else if( onFire.startFire ) {
+		if( playerOffset == Vector3.zero )
+			playerOffset = transform.position - Camera.main.transform.position;
 		animate();
 	}
 }
 
 function animate() {
-	// move the character
 	var moveVector = mag * Time.deltaTime;
-	transform.position += moveVector;
 	
 	// Increment distance
 	displace += moveVector.magnitude;
+	
+	// move the character
+	if( followPlayer ) {
+		playerOffset += moveVector;
+		transform.position = Camera.main.transform.position + playerOffset;
+	} else {
+		transform.position += moveVector;
+	}
 	
 	// Check if we want to move right into the next animation
 	if( displace >= length[index] ) {

@@ -4,6 +4,7 @@ var dir : Vector3[];
 var speed : float[];
 var length : float[];
 
+private var playerOffset : Vector3 = Vector3.zero;
 private var index : int;
 private var displace : float;
 private var mag : Vector3;
@@ -32,6 +33,8 @@ function Start() {
 
 function Update () {
 	if( index >= 0 && animation.IsPlaying( timerAnimation ) ) {
+		if( playerOffset == Vector3.zero )
+				playerOffset = transform.position - Camera.main.transform.position;
 		animate();
 	}
 }
@@ -39,7 +42,8 @@ function Update () {
 function animate() {
 	// move the character
 	var moveVector = mag * Time.deltaTime;
-	transform.position += moveVector;
+	playerOffset += moveVector;
+	transform.position = Camera.main.transform.position + playerOffset;
 	
 	// Increment distance
 	displace += moveVector.magnitude;

@@ -37,13 +37,11 @@ function Update() {
 				script = reveal.GetComponent( spawnBullets );
 				if( script ) {
 					script.startFire = true;
-				} else {
-					script = reveal.GetComponent( Animation );
-					script.Play( bombAnimation );
+				} else if( reveal.animation ) {
+					reveal.animation.Play( bombAnimation );
 				}
 			}
 			moveEnemies = false;
-			print( "Finished Summoning" );
 		}
 		
 		// Else, move all enemies
@@ -61,7 +59,6 @@ function Update() {
 }
 
 function OnTriggerEnter (other : Collider) {
-	print( "Summon Enemies" );
 	//Check if what collided was the player
 	if( other.gameObject.CompareTag( "Player" ) ) {
 		// Reveal all enemies
