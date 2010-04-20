@@ -1,8 +1,7 @@
 var speed : float= 16;
 var maxSpeed : float = 24;
 var minSpeed : float = 10;
-var speedUp : float = 100;
-var speedDown : float = 100;
+var changeSpeed : float = 10;
 var moveTowards : Transform[];
 
 private var moveDir : Vector3 = Vector3.zero;
@@ -47,9 +46,9 @@ function setSpeed( speedInput ) {
 	if( Mathf.Approximately( targetSpeed, currentSpeed ) )
 		currentSpeed = targetSpeed;
 	else if( targetSpeed > currentSpeed )
-		currentSpeed += Time.deltaTime * speedUp;
+		currentSpeed += Time.deltaTime * changeSpeed;
 	else
-		currentSpeed -= Time.deltaTime * speedDown;
+		currentSpeed -= Time.deltaTime * changeSpeed;
 }
 
 function setDirection( nextIndex ) {
