@@ -5,21 +5,19 @@ private var switched : boolean = false;
 function Start () {
 	if( !transparent || !transform ) {
 		Destroy( this );
+		return;
 	}
+	
+	var colorCopy = renderer.material.color;
+	colorCopy.a = transparent.color.a;
+	transparent.color = colorCopy;
+	return transparent;
 }
 
 function Update () {
 	if( globalAttributes.charPos.transform.position.z >= transform.position.z
 			&& !switched ) {
-		renderer.material = getMaterial();
+		renderer.material = transparent;
 		switched = true;
 	}
-}
-
-function getMaterial() {
-	var colorCopy = renderer.material.color;
-	var materialCopy = transparent;
-	colorCopy.a = transparent.color.a;
-	materialCopy.color = colorCopy;
-	return materialCopy;
 }
