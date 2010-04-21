@@ -18,23 +18,29 @@ var healAnim : String;
 var shieldAnim : String;
 
 // Health-related stuff
-var maxHealth : int = 25;
-var health : int = 25;
+var maxHealth : int = 22;
+static var health : int;
 
 // Shield-related stuff
 var shieldRenderer : Renderer;
-var maxShield : int = 25;
-var shieldDuration : float = 25;
-var shieldDecrementSpeed : float = 3;
-var shieldIncrementSpeed : float = 1;
+var maxShield : int = 10;
+static var shieldDuration : float;
+var shieldDecrementSpeed : float = 6;
+var shieldIncrementSpeed : float = 10;
 private var shieldOn = false;
 private var anim : Animation;
 private var noShield : float = 0;
+static var score : int;
 
 function Start() {
 	health = maxHealth;
 	shieldDuration = maxShield;
-	anim = charVar.GetComponent( Animation );
+	score = 0;
+	if( charVar ) {
+		anim = charVar.GetComponent( Animation );
+	} else {
+		anim = animation;
+	}
 }
 
 function Update() {

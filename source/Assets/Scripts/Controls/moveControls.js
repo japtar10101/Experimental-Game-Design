@@ -1,7 +1,7 @@
-var speed : float = 8.5;
+var speed : float = 8;
 
 private var moveDirection;
-var controller : CharacterController;
+private var controller : CharacterController;
 
 function Start() {
 	controller = GetComponent(CharacterController);

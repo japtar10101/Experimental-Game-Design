@@ -1,23 +1,26 @@
-
 // Strength of this script's force
 var multiple = 1000;
+var centerObject : GameObject;
 
-//this GameObject's Transform
-private var thisPos : Transform;
 //character Game object
 private var charGame : Rigidbody;
+private var offset : Vector3 = Vector3.zero;
 
 function Start() {
-	thisPos = GetComponent(Transform);
 	charGame = GetComponent(Rigidbody);
 	
-	if(!thisPos || !charGame){
+	if(!transform || !charGame){
 		Destroy(this);
+		return;
+	}
+	if( centerObject ) {
+		offset = transform.position - centerObject.transform.position;
 	}
 }
 
 function Update () {
-	var difVector = retPosition() - thisPos.position;
+	var difVector = retPosition() - transform.position;
+	difVector += offset;
 	difVector.z = 0;
 	charGame.AddForce(difVector*multiple);
 }

@@ -59,7 +59,9 @@ function queueAnimation() {
 	if( playThis && !swordAnimation.isPlaying) {
 		swordAnimation.Play( playThis );
 		swordSound.Play();
-		rotate.localEulerAngles.y = rotateAngle;
+		//TODO: once the model is implemented, switch the rotation axis to z.
+		//rotate.localEulerAngles.y = rotateAngle;
+		rotate.localEulerAngles.z = rotateAngle;
 	}
 }
 

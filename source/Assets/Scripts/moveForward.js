@@ -54,7 +54,7 @@ function setSpeed( speedInput ) {
 function setDirection( nextIndex ) {
 	// If index is beyond length, set this object to simply move forward
 	if( nextIndex >= moveTowards.length ) {
-		moveDir = Vector3.forward * speed;
+		moveDir = Vector3.forward;
 		return;
 	} else {
 		index = nextIndex;

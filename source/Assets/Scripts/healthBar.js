@@ -22,16 +22,12 @@ function Start() {
 	if(!Script) {
 		guiText.text = "script deleted";
 		Destroy(this);
+	} else {
+		guiText.text = "It's working!";
 	}
 }
 
 function OnGUI() {
-	GUI.Box(Rect(30,680,Script.maxHealth*12,30), "");
-	GUI.Box(Rect(30,720,Script.maxShield*12,30), "");
-	GUI.Box(Rect(30,680,Script.health*12,30), "HP");
-	GUI.Box(Rect(30,720,Script.shieldDuration*12,30), "SP");
-	/*
-	GUI.Box(Rect(30,680,Script.health*12,30), "HP~" + Script.health.ToString());
-	GUI.Box(Rect(30,720,Script.shieldDuration*12,30), "SP~" + Script.shieldDuration.ToString());
-	*/
+	GUI.Box( Rect(30,680,playerAttributes.health*12,30), "HP");
+	GUI.Box( Rect(30,720,playerAttributes.shieldDuration*12,30), "SP");
 }
