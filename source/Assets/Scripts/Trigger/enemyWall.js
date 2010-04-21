@@ -33,12 +33,13 @@ function Update() {
 			// Make the enemies fire
 			var script;
 			for( reveal in enemies ) {
+				if( !reveal )
+					continue;
 				script = reveal.GetComponent( spawnBullets );
-				if( script ) {
+				if( script )
 					script.startFire = true;
-				} else if( reveal.animation ) {
+				else if( reveal.animation )
 					reveal.animation.Play();
-				}
 			}
 			moveEnemies = false;
 		}
@@ -47,9 +48,10 @@ function Update() {
 		else {
 			var moveVector = moveMagn * Time.deltaTime;
 			for( reveal in enemies ) {
-				if( reveal.transform ) {
+				if( !reveal )
+					continue;
+				else if( reveal.transform )
 					reveal.transform.position += moveVector;
-				}
 			}
 			// Increment distance
 			moveDistance += moveVector.magnitude;
@@ -62,9 +64,10 @@ function OnTriggerEnter (other : Collider) {
 	if( other.gameObject.CompareTag( "Player" ) ) {
 		// Reveal all enemies
 		for( reveal in enemies ) {
-			if( reveal.renderer ) {
+			if( !reveal )
+				continue;
+			else if( reveal.renderer )
 				reveal.renderer.enabled = true;
-			}
 		}
 		moveEnemies = true;
 	}
