@@ -1,13 +1,40 @@
-var playerHealth : GameObject;
+static var playerDead;
+var playerObject : GameObject;
 var font : Font;
-private var Script;
+var healthWidth : int = 240;
+var shieldWidth : int = 120;
+var danger : int = 5;
 var deathSound :  AudioClip;
-var playerDead;
+var healthBar : Texture;
+var dangerBar : Texture;
+var shieldBar : Texture;
+var bkgBar : Texture;
+
+private var maxHealth : int;
+private var maxShield : int;
+
+function Start() {
+	guiText.font = font;
+	playerDead = false;
+	var script = playerObject.GetComponent(playerAttributes);
+	if(!script) {
+		guiText.text = "script deleted";
+		Destroy(this);
+		return;
+	}
+	maxHealth = script.maxHealth;
+	maxShield = script.maxShield;
+}
+
+function OnGUI() {
+	HealthBox();
+	ShieldBox();
+	guiText.text = "It's working!";
+}
 
 function Update () {
 	if(!playerDead) {
-		//guiText.text = Script.health.ToString();
-		if(Script.health<=0) {
+		if(playerAttributes.health<=0) {
 			guiText.text = "DEAD";
 			audio.PlayOneShot(deathSound);
 			playerDead = true;
@@ -15,19 +42,26 @@ function Update () {
 	}
 }
 
-function Start() {
-	guiText.font = font;
-	playerDead = false;
-	Script = playerHealth.GetComponent(playerAttributes);
-	if(!Script) {
-		guiText.text = "script deleted";
-		Destroy(this);
-	} else {
-		guiText.text = "It's working!";
-	}
+function HealthBox() {
+	// Render the background
+	GUI.Box( Rect( 30, 680, healthWidth , 30), bkgBar);
+	
+	// Render the health box
+	var healthTexture;
+	var guiWidth = healthWidth *
+		( playerAttributes.health / maxHealth );
+	if( playerAttributes.health <= danger )
+		healthTexture = dangerBar;
+	else
+		healthTexture = healthBar;
+	GUI.Box( Rect( 30, 680, guiWidth , 30), healthTexture);
 }
 
-function OnGUI() {
-	GUI.Box( Rect(30,680,playerAttributes.health*12,30), "HP");
-	GUI.Box( Rect(30,720,playerAttributes.shieldDuration*12,30), "SP");
+function ShieldBox() {
+	// Render the background
+	GUI.Box( Rect( 30, 720, shieldWidth , 30), bkgBar);
+	
+	var guiWidth = shieldWidth *
+		( playerAttributes.shieldDuration / maxShield );
+	GUI.Box( Rect( 30, 720, guiWidth, 30 ), shieldBar);
 }

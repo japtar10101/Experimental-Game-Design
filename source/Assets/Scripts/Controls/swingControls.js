@@ -22,7 +22,7 @@ function Update () {
 	var playing = swordAnimation.IsPlaying( downSwing ) || swordAnimation.IsPlaying( upSwing );
 	swordRenderer.enabled = playing;
 	if( !playing ) {
-		rotate.localEulerAngles.y = 0;
+		rotate.localEulerAngles.z = 0;
 	}
 }
 
@@ -59,8 +59,6 @@ function queueAnimation() {
 	if( playThis && !swordAnimation.isPlaying) {
 		swordAnimation.Play( playThis );
 		swordSound.Play();
-		//TODO: once the model is implemented, switch the rotation axis to z.
-		//rotate.localEulerAngles.y = rotateAngle;
 		rotate.localEulerAngles.z = rotateAngle;
 	}
 }
