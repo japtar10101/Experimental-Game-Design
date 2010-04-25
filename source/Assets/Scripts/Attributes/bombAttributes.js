@@ -22,7 +22,6 @@ private var dying = false;
 
 function Start() {
 	if( !animation || !rocket ) {
-		print( "destroyed" );
 		Destroy( this );
 		return;
 	}

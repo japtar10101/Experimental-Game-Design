@@ -23,6 +23,7 @@ private var fireBullet = true;
 
 function Start() {
 	if(!transform || !bullet){
+		print("was destroyed");
 		Destroy(this);
 		return;
 	}
