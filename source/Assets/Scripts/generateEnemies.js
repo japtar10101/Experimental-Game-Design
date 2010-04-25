@@ -14,6 +14,10 @@ var spawnMax : int = 4;
 var spawnInterval : float = 3;
 // Maxiumum number of time it takes to spawn an enemy
 var spawnDelay : float = 8;
+//player variable
+var player : GameObject;
+//z position to spawn after
+var zSpawn : float = 2730;
 
 private var pos = Vector3(0,0,0);
 private var relativeLocation : Transform;
@@ -21,8 +25,10 @@ private var numCoroutines = 0;
 
 function Update () {
 	// Generate a random enemy
-	if( numCoroutines < spawnMax ) {
-		GenerateDestructable();
+	if(relativeLocation.position.z >= zSpawn){
+		if( numCoroutines < spawnMax ) {
+			GenerateDestructable();
+		}
 	}
 }
 
@@ -39,6 +45,7 @@ function GenerateDestructable() {
 	var index = Random.Range( 0, spawn.length );
 	var newClone = Instantiate( spawn[index], pos, Quaternion.identity );
 	newClone.renderer.enabled = true;
+	newClone.tag = "Destructable";
 	//newClone.addComponent( );
 	numCoroutines -= 1;
 }
@@ -56,7 +63,7 @@ function Start() {
 	
 	// Check spawn's values
 	for( var i in spawn ) {
-		if( !i.CompareTag("Destructable") ) {
+		if( !i.CompareTag("Untagged") ) {
 			Destroy( this );
 			return;
 		}
@@ -72,11 +79,13 @@ function Start() {
 	}
 	
 	// Grab the relative location to spawn enemies
-	relativeLocation = GetComponent( Transform );
+	relativeLocation = player.GetComponent( Transform );
+	
 	if( !relativeLocation ) {
 		Destroy( this );
 		return;
 	}
+	
 }
 
 function RandomPosition() {

@@ -1,7 +1,7 @@
 //force variable
-var highestForce : float = 200;
+var highestForce : float = 100;
 //force variable
-var lowestForce : float = 10;
+var lowestForce : float = 50;
 //If the rocket is less than switchPos distance away
 //from the player, aim for the player instead
 var switchPos : float = 10;
@@ -11,6 +11,7 @@ var lifeTime : float = 2;
 //this object's rigidbody
 private var thisBody : Rigidbody;
 private var difVector : Vector3;
+private var lastVector : Vector3 = Vector3.zero;
 private var forceMagn : float;
 private var aliveTime : float = 0;
 
@@ -32,7 +33,10 @@ function FixedUpdate () {
 			forceMagn = lowestForce;
 		}
 		if( aliveTime < 0 ) {
-			forceMagn = 0;
+			if( lastVector == Vector3.zero )
+				lastVector = difVector;
+			else
+				difVector = lastVector;
 		}
 		difVector.Normalize();
 		thisBody.AddForce( difVector * forceMagn );

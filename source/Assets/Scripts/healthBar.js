@@ -15,7 +15,7 @@ function Start() {
 function OnGUI() {
 	guiTexture.pixelInset.width = healthWidth *
 		( playerAttributes.health * 1.0 / globalAttributes.script.maxHealth );
-	print( guiTexture.pixelInset.width );
+	//print( guiTexture.pixelInset.width );
 	if( playerAttributes.health <= danger )
 		guiTexture.texture = dangerTexture;
 	else
