@@ -19,13 +19,13 @@ private var rocketClone;
 private var rigidClone;
 private var timerStart = false;
 private var dying = false;
-private var rocket : GameObject;
+private var trans : Transform;
 
 function Start() {
-	rocket = projectileAttributes.rocket2;
 	if( !anim )
 		anim = animation;
-	if( !anim || !rocket ) {
+	trans = transform;
+	if( !anim || !trans ) {
 		print( "destroyed" );
 		Destroy( this );
 		return;
@@ -56,7 +56,8 @@ function explode() {
 		// Create a rocket for each rotations
 		for( rot in rotations ) {
 			// Clone the bullet
-			rocketClone = Instantiate( rocket, transform.position, transform.rotation );
+			rocketClone = Instantiate( projectileAttributes.rocket2,
+				trans.position, trans.rotation );
 			rocketClone.transform.Rotate( rot );
 			rocketClone.renderer.enabled = true;
 			

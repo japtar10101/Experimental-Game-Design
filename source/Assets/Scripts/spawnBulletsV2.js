@@ -28,24 +28,12 @@ private var bulletClone : GameObject;
 private var rigidClone : Rigidbody;
 // Number of bullets cloned
 private var fireBullet : boolean = true;
-//Bullet game object
-private var bullet : GameObject;
+private var trans : Transform;
 
 function Start() {
-	switch(bulletID) {
-		case 1:
-			bullet = projectileAttributes.rocket1;
-			break;
-		case 2:
-			bullet = projectileAttributes.rocket2;
-			break;
-		default:
-			bullet = projectileAttributes.bullet;
-	}
-	if(!transform || !bullet){
+	trans = transform;
+	if(!trans){
 		print( "destroyed" );
-		if( !bullet ) print( "bullet is null" );
-		else print( "transform is null" );
 		Destroy(this);
 		return;
 	}
@@ -71,11 +59,22 @@ function GenerateBullet() {
 	}
 	
 	// Clone several times
-	var autoClone = numShots;
-	var homeAt;
+	var autoClone : int = numShots;
 	while( autoClone > 0 ) {
 		// Clone the bullet
-		bulletClone = Instantiate( bullet, transform.position, transform.rotation );
+		switch(bulletID) {
+		case 1:
+			bulletClone = Instantiate( projectileAttributes.rocket1,
+				trans.position, trans.rotation );
+			break;
+		case 2:
+			bulletClone = Instantiate( projectileAttributes.rocket2,
+				trans.position, trans.rotation );
+			break;
+		default:
+			bulletClone = Instantiate( projectileAttributes.bullet,
+				trans.position, trans.rotation );
+		}
 		bulletClone.transform.Rotate( Vector3( 180, 0, 0 ) );
 		bulletClone.renderer.enabled = true;
 		
