@@ -19,16 +19,21 @@ function Fadeout( level : String, text : String ) {
 }
 
 function hold() {
+	print( "fading" );
 	toFadeout = false;
-	yield WaitForSeconds( holdTime );
+	//Time.timeScale = 0;
+	//yield WaitForSeconds( holdTime );
+	Time.timeScale = 1;
 	Application.LoadLevel (loadLevel);
 }
 
 function fade() {
+	/*
 	while( alpha < 1 ) {
 		alpha += Mathf.Clamp01(Time.deltaTime / fadeoutTime);
 		if( alpha > 1 )
 			alpha = 1;
+		print( alpha );
 
 		GUI.color = fadeout;
 		GUI.color.a = alpha;
@@ -36,5 +41,10 @@ function fade() {
 		GUI.Label(Rect(Screen.width / 2, Screen.height / 2, Screen.width, Screen.height), line);
 		yield;
 	}
+	*/
+	
+	//GUI.color = fadeout;
+	//GUI.DrawTexture( new Rect(0, 0, Screen.width, Screen.height ), fadeTo );
+	//GUI.Label(Rect(Screen.width / 2, Screen.height / 2, Screen.width, Screen.height), line);
 	hold();
 }

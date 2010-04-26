@@ -1,4 +1,4 @@
-static var playerDead : boolean;
+//static var playerDead : boolean;
 
 var danger : int = 5;
 var dangerTexture : Texture;
@@ -23,7 +23,9 @@ function OnGUI() {
 }
 
 function Update () {
+/*
 	if(!playerDead)
 		if(playerAttributes.health<=0)
 			playerDead = true;
+*/
 }
