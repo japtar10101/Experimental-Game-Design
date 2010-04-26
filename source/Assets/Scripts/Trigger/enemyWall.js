@@ -35,7 +35,7 @@ function Update() {
 			for( reveal in enemies ) {
 				if( !reveal )
 					continue;
-				script = reveal.GetComponent( spawnBullets );
+				script = reveal.GetComponent( spawnBulletsV2 );
 				if( script )
 					script.startFire = true;
 				else if( reveal.animation )

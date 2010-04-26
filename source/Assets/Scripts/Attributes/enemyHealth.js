@@ -8,11 +8,11 @@ var health : int = 1;
 // Flag checking if you're dying
 private var dying : boolean = false;
 // Script
-private var spawn : spawnBullets;
+private var spawn : spawnBulletsV2;
 private var collide : Collider;
 
 function Start() {
-	spawn = GetComponent( spawnBullets );
+	spawn = GetComponent( spawnBulletsV2 );
 	collide = GetComponent( Collider );
 	if( !anim ) anim = animation;
 	if( !anim ) {
