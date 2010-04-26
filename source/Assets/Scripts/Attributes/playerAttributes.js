@@ -3,6 +3,7 @@ This script defines the attributes of the player, such
 as her health and shield.
 */
 
+var atDeathGoTo : String = "level";
 // The character
 var charVar : GameObject;
 // Sound stuff
@@ -27,7 +28,7 @@ var maxShield : int = 10;
 static var shieldDuration : float;
 var shieldDecrementSpeed : float = 6;
 var shieldIncrementSpeed : float = 10;
-private var shieldOn = false;
+private var shieldOn : boolean= false;
 private var anim : Animation;
 private var noShield : float = 0;
 static var score : int;
@@ -44,7 +45,7 @@ function Start() {
 }
 
 function Update() {
-	var bool = updateShield( Input.GetAxis ("Shield") != 0 );
+	var bool : boolean= updateShield( Input.GetAxis ("Shield") != 0 );
 	if( shieldRenderer ) {
 		if( !shieldRenderer.enabled && bool ) {
 			audio.PlayOneShot(shieldSound);
@@ -55,20 +56,20 @@ function Update() {
 
 function OnTriggerEnter (other : Collider) {
 	//check to make sure an enemy is colliding
-	var collided = other.gameObject;
-	var isDestructable = collided.CompareTag("Destructable");
-	var isHealth = collided.CompareTag("Health");
-	var shielded = isShieldOn();
+	var collided : GameObject = other.gameObject;
+	var isDestructable : boolean = collided.CompareTag("Destructable");
+	var isHealth : boolean = collided.CompareTag("Health");
+	var shielded : boolean = isShieldOn();
 	if( isDestructable || collided.CompareTag("Dodge") || isHealth ) {
 	
 		// Figure out how much health we want to increment/decrement
-		var decrement;
+		var decrement : int;
 		if( isDestructable && shielded ) {
 			// Shield on, do nothing
 			decrement = 0;
 		} else {
 			// health refill, barriers, or no shield, affect the player
-			var hitPower = collided.GetComponent(hitAttributes);
+			var hitPower : hitAttributes = collided.GetComponent(hitAttributes);
 			if( hitPower ) {
 				decrement = hitPower.power;
 			} else {
@@ -79,9 +80,7 @@ function OnTriggerEnter (other : Collider) {
 		// Update helth
 		if( updateHealth( decrement ) ) {
 			// Player died
-			Destroy(gameObject);
-			Destroy(charVar);
-			Application.Quit();
+			hudAttributes.Gameover( atDeathGoTo );
 		}
 		
 		// Destroy the destructable
@@ -109,6 +108,8 @@ function updateHealth( changeHealth ) {
 
 	if( health > maxHealth ) {
 		health = maxHealth;
+	} else if( health < 0 ) {
+		health = 0;
 	}
 	return isDead();
 }
