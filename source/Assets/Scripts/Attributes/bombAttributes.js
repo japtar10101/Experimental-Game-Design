@@ -1,3 +1,4 @@
+var hackAnimation : float = 1;
 var anim : Animation;
 var timerAnimation : String = "bombTimer";
 var deathAnimation : String = "bombDeath";
@@ -30,6 +31,7 @@ function Start() {
 		Destroy( this );
 		return;
 	}
+	anim[timerAnimation].speed = hackAnimation;
 }
 
 function Update () {

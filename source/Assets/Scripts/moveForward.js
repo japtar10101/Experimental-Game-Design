@@ -4,10 +4,10 @@ var minSpeed : float = 10;
 var changeSpeed : float = 10;
 var moveTowards : Transform[];
 
-private var moveDir : Vector3 = Vector3.zero;
+static var moveDir : Vector3 = Vector3.zero;
+static var currentSpeed : float;
 private var index = 0;
 private var nextIndex = 0;
-private var currentSpeed : float;
 
 function Start() {
 	currentSpeed = speed;
@@ -42,7 +42,7 @@ function setSpeed( speedInput ) {
 		targetSpeed = minSpeed;
 	}
 	
-	//TODO: "home" to this speed
+	//"home" to this speed
 	if( Mathf.Approximately( targetSpeed, currentSpeed ) )
 		currentSpeed = targetSpeed;
 	else if( targetSpeed > currentSpeed )
