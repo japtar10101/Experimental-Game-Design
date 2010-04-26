@@ -1,8 +1,7 @@
 // These values are all fraction values from 0 to 1
-var xOffset : float = 0.95;
-var yOffset : float = 0.95;
-var width : float = 0.1;
-var height : float = 0.05;
+var xOffset : float = 0.1;
+var yOffset : float = 0.8;
+var screenProportion : float = 0.2;
 
 // Textures
 var background : Texture;
@@ -15,12 +14,12 @@ var faceDanger : Texture;
 var faceHit : Texture;
 
 // positions
-var healthOffsetX : int;
-var healthOffsetY : int;
-var shieldOffsetX : int;
-var shieldOffsetY : int;
-var faceOffsetX : int;
-var faceOffsetY : int;
+var healthOffsetX : int = 205;
+var healthOffsetY : int = 90;
+var shieldOffsetX : int = 205;
+var shieldOffsetY : int = 174;
+var faceOffsetX : int = 38;
+var faceOffsetY : int = 35;
 
 // animation times
 var timeHit : float = 0.5;
@@ -35,26 +34,42 @@ private var shieldWidth : int;
 private var shieldHeight : int;
 private var faceWidth : int;
 private var faceHeight : int;
+private var x : int;
+private var y : int;
 
 function Start() {
-	// First, set the variables to their actual width and height
-	bkgWidth = background.width;
-	bkgHeight = background.height;
-	healthWidth = healthBar.width;
-	healthHeight = healthBar.height;
-	shieldWidth = shieldBar.width;
-	shieldHeight = shieldBar.height;
-	faceWidth = faceDefault.width;
-	faceHeight = faceDefault.height;
+	// Find the proportion to resize all textures to
+	var hudHeight : float = Screen.height * screenProportion;
+	var proportion : float = hudHeight / background.height;
+	
+	// set the variables
+	bkgWidth = background.width * proportion;
+	bkgHeight = background.height * proportion;
+	healthWidth = healthBar.width * proportion;
+	healthHeight = healthBar.height * proportion;
+	shieldWidth = shieldBar.width * proportion;
+	shieldHeight = shieldBar.height * proportion;
+	faceWidth = faceDefault.width * proportion;
+	faceHeight = faceDefault.height * proportion;
+	healthOffsetX *= proportion;
+	healthOffsetY *= proportion;
+	shieldOffsetX *= proportion;
+	shieldOffsetY *= proportion;
+	faceOffsetX *= proportion;
+	faceOffsetY *= proportion;
+	
+	// shift the coordinates by the offsets
+	x = xOffset * Screen.width;
+	y = yOffset * Screen.height;
 }
 
 function OnGUI() {
-	GUI.DrawTexture( new Rect(0, 0, bkgWidth, bkgHeight ),
+	GUI.DrawTexture( new Rect(x, y, bkgWidth, bkgHeight ),
 		background );
-	GUI.DrawTexture( new Rect(healthOffsetX, healthOffsetY,
+	GUI.DrawTexture( new Rect(healthOffsetX + x, healthOffsetY + y,
 		healthWidth, healthHeight ), healthBar );
-	GUI.DrawTexture( new Rect(shieldOffsetX, shieldOffsetY,
+	GUI.DrawTexture( new Rect(shieldOffsetX + x, shieldOffsetY + y,
 		shieldWidth, shieldHeight ), shieldBar );
-	GUI.DrawTexture( new Rect(faceOffsetX, faceOffsetY,
+	GUI.DrawTexture( new Rect(faceOffsetX + x, faceOffsetY + y,
 		faceWidth, faceHeight ),  faceDefault );
 }
