@@ -5,15 +5,17 @@ var speed : float[];
 var length : float[];
 
 private var playerOffset : Vector3 = Vector3.zero;
-private var onFire : spawnBullets;
+private var onFire : spawnBulletsV2;
 private var index : int;
 private var displace : float;
 private var mag : Vector3;
+private var pos : Transform;
 
 function Start() {
 	// Check if everything is correct
-	onFire = GetComponent( spawnBullets );
-	if( !onFire || !transform ) {
+	onFire = GetComponent( spawnBulletsV2 );
+	pos = transform;
+	if( !onFire || !pos ) {
 		Destroy( this );
 		return;
 	} else if( dir.length == 0 || speed.length == 0  || length.length == 0 ) {
@@ -39,7 +41,7 @@ function Update () {
 		return;
 	} else if( onFire.startFire ) {
 		if( playerOffset == Vector3.zero )
-			playerOffset = transform.position - Camera.main.transform.position;
+			playerOffset = pos.position - Camera.main.transform.position;
 		animate();
 	}
 }
@@ -53,9 +55,9 @@ function animate() {
 	// move the character
 	if( followPlayer ) {
 		playerOffset += moveVector;
-		transform.position = Camera.main.transform.position + playerOffset;
+		pos.position = Camera.main.transform.position + playerOffset;
 	} else {
-		transform.position += moveVector;
+		pos.position += moveVector;
 	}
 	
 	// Check if we want to move right into the next animation
