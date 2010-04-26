@@ -7,12 +7,13 @@ makes GameObject "bullet" equal to...
 */
 var bulletID : int = 0;
 
+var hackAnimationMultiple : float = 3;
 // Is this script enabled?
 var startFire : boolean = true;
 //variable for bullet speed
 var bulletSpeed : float = 1400;
 //shoot time
-var shootDelay : float = 1;
+var shootDelay : float = 0.8;
 //number of shoots (like an automatic)
 var numShots : int = 1;
 // sound
@@ -37,6 +38,9 @@ function Start() {
 		Destroy(this);
 		return;
 	}
+	// Hack: make the animation faster!
+	if( anim )
+		anim[anim.clip.name].speed = hackAnimationMultiple;
 }
 
 function Update () {
@@ -51,10 +55,10 @@ function GenerateBullet() {
 	// play an animation
 	if( appendReverseAnimation ) {
 		print( "Playing animation" );
-		anim.Play( anim.clip.name );
+		anim.Blend( anim.clip.name );
 		
 		// Wait for the animation to have finished
-		yield WaitForSeconds ( anim.clip.length );
+		yield WaitForSeconds ( anim.clip.length / hackAnimationMultiple );
 		anim.Stop( anim.clip.name );
 	}
 	
@@ -91,10 +95,10 @@ function GenerateBullet() {
 			print( "Rewinding animation" );
 			anim.Rewind( anim.clip.name );
 		} else
-			anim.Play( anim.clip.name );
+			anim.Blend( anim.clip.name );
 		
 		// Wait for the animation to have finished
-		yield WaitForSeconds ( anim.clip.length );
+		yield WaitForSeconds ( anim.clip.length / hackAnimationMultiple );
 		anim.Stop( anim.clip.name );
 	}
 	

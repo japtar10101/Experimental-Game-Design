@@ -8,6 +8,10 @@ var yDistance : float = 100;
 
 private var destroyObjects : GameObject[];
 
+function Start() {
+	destroyObjects = new GameObject[512];
+}
+
 function FixedUpdate () {
 	destroyByTags();
 }

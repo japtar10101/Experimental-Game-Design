@@ -38,8 +38,11 @@ function Update() {
 				script = reveal.GetComponent( spawnBulletsV2 );
 				if( script )
 					script.startFire = true;
-				else if( reveal.animation )
-					reveal.animation.Play();
+				else {
+					script = reveal.GetComponent( bombAttributes );
+					if( script )
+						script.anim.Blend(script.timerAnimation);
+				}
 			}
 			moveEnemies = false;
 		}
@@ -62,6 +65,7 @@ function Update() {
 function OnTriggerEnter (other : Collider) {
 	//Check if what collided was the player
 	if( other.gameObject.CompareTag( "Player" ) ) {
+		print( "Hit!" );
 		// Reveal all enemies
 		for( reveal in enemies ) {
 			if( !reveal )

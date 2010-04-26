@@ -1,34 +1,46 @@
 // Strength of this script's force
-var multiple = 1000;
+var multiple : float= 1000;
 var centerObject : GameObject;
 
 //character Game object
 private var charGame : Rigidbody;
 private var offset : Vector3 = Vector3.zero;
+private var trans : Transform;
+private var retRay : Ray;
+private var difVector : Vector3;
 
 function Start() {
 	charGame = GetComponent(Rigidbody);
-	
-	if(!transform || !charGame){
+	trans = transform;
+	if(!trans || !charGame){
 		Destroy(this);
 		return;
 	}
 	if( centerObject ) {
-		offset = transform.position - centerObject.transform.position;
+		offset = trans.position - centerObject.transform.position;
 	}
 }
 
 function Update () {
-	var difVector = retPosition() - transform.position;
+	addForce();
+}
+
+function addForce() {
+	difVector = retPosition() - trans.position;
 	difVector += offset;
 	difVector.z = 0;
 	charGame.AddForce(difVector*multiple);
 }
 
 function retPosition() {
+	difVector = Camera.main.transform.position -
+		globalAttributes.retPos.transform.position;
+	difVector.Normalize();
+	retRay = new Ray(globalAttributes.retPos.transform.position, difVector );
 	//TODO: somehow get the orthoganol back location of the reticule
 	// First, get the screen point
-	var screenPoint = Camera.main.WorldToScreenPoint( globalAttributes.retPos.transform.position );
+	//var screenPoint = Camera.main.WorldToScreenPoint( globalAttributes.retPos.transform.position );
 	//return Camera.main.ScreenToWorldPoint( screenPoint );
-	return globalAttributes.retPos.transform.position;
+	//return globalAttributes.retPos.transform.position;
+	return retRay.GetPoint( 10 );
 }

@@ -2,8 +2,8 @@ static var maxHealth : int;
 static var maxShield : int;
 
 // These values are all fraction values from 0 to 1
-var xOffset : float = 0.1;
-var yOffset : float = 0.8;
+var xOffset : float = 0.05;
+var yOffset : float = 0.75;
 var screenProportion : float = 0.2;
 
 // Textures
@@ -30,6 +30,9 @@ var timeAttack : float = 0.5;
 var danger : int = 8;
 
 //TODO: add a variable to track face conditions
+private var awesome : int;
+
+// Coordinates
 private var bkgWidth : int;
 private var bkgHeight : int;
 private var healthFullWidth : int;
