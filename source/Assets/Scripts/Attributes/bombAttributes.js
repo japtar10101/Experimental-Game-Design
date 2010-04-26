@@ -1,8 +1,8 @@
+var anim : Animation;
 var timerAnimation : String = "bombTimer";
 var deathAnimation : String = "bombDeath";
 var explodeAnimation : String = "bombExplode";
 var deathSound : AudioClip;
-var rocket : GameObject;
 var initForce : float = 1000;
 var rotations : Vector3[] = [
 	Vector3( 0, 0, 0 ),
@@ -19,9 +19,13 @@ private var rocketClone;
 private var rigidClone;
 private var timerStart = false;
 private var dying = false;
+private var rocket : GameObject;
 
 function Start() {
-	if( !animation || !rocket ) {
+	rocket = projectileAttributes.rocket2;
+	if( !anim )
+		anim = animation;
+	if( !anim || !rocket ) {
 		print( "destroyed" );
 		Destroy( this );
 		return;
@@ -30,11 +34,11 @@ function Start() {
 
 function Update () {
 	// If the animation started playing, flag the animation as started
-	if( animation.IsPlaying( timerAnimation ) )
+	if( anim.IsPlaying( timerAnimation ) )
 		timerStart = true;
 	
 	// If the death Animation is playing, reset timer
-	else if( animation.IsPlaying( deathAnimation ) )
+	else if( anim.IsPlaying( deathAnimation ) )
 		timerStart = false;
 	
 	// If neither animation are running,
@@ -46,7 +50,7 @@ function Update () {
 function explode() {
 	if( !dying ) {
 		dying = true;
-		animation.CrossFade( explodeAnimation );
+		anim.CrossFade( explodeAnimation );
 		audio.PlayOneShot( deathSound );
 		
 		// Create a rocket for each rotations
@@ -60,7 +64,7 @@ function explode() {
 			rigidClone = rocketClone.GetComponent( Rigidbody );
 			rigidClone.AddRelativeForce( Vector3.forward * initForce * -1 );
 		}
-	} else if( !animation.IsPlaying( explodeAnimation ) ) {
+	} else if( !anim.IsPlaying( explodeAnimation ) ) {
 		Destroy( gameObject );
 	}
 }

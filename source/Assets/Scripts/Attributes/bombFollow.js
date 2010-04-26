@@ -1,4 +1,5 @@
 var loop : boolean = true;
+var anim : Animation;
 var timerAnimation : String = "bombTimer";
 var dir : Vector3[];
 var speed : float[];
@@ -8,16 +9,23 @@ private var playerOffset : Vector3 = Vector3.zero;
 private var index : int;
 private var displace : float;
 private var mag : Vector3;
+private var trans : Transform;
 
 function Start() {
 	// Check if everything is correct
-	if( !animation || !transform ) {
-		Destroy( this );
-		return;
-	} else if( dir.length == 0 || speed.length == 0  || length.length == 0 ) {
+	if( !anim )
+		anim = animation;
+	trans = transform;
+	if( !anim || !trans ) {
+		print( "destroyed animation" );
 		Destroy( this );
 		return;
 	} else if( dir.length != speed.length || speed.length != length.length ) {
+		print( "destroyed animation" );
+		Destroy( this );
+		return;
+	} else if( dir.length != speed.length || speed.length != length.length ) {
+		print( "destroyed animation" );
 		Destroy( this );
 		return;
 	}
@@ -28,13 +36,16 @@ function Start() {
 	}
 	index = 0;
 	displace = 0;
-	mag = dir[0] * speed[0];
+	if( dir.length == 0 )
+		mag = Vector3.zero;
+	else
+		mag = dir[0] * speed[0];
 }
 
 function Update () {
-	if( index >= 0 && animation.IsPlaying( timerAnimation ) ) {
+	if( index >= 0 && anim.IsPlaying( timerAnimation ) ) {
 		if( playerOffset == Vector3.zero )
-				playerOffset = transform.position - Camera.main.transform.position;
+			playerOffset = trans.position - Camera.main.transform.position;
 		animate();
 	}
 }
@@ -43,7 +54,7 @@ function animate() {
 	// move the character
 	var moveVector = mag * Time.deltaTime;
 	playerOffset += moveVector;
-	transform.position = Camera.main.transform.position + playerOffset;
+	trans.position = Camera.main.transform.position + playerOffset;
 	
 	// Increment distance
 	displace += moveVector.magnitude;
@@ -66,7 +77,10 @@ function next() {
 	}
 	
 	// Calculate the magnitude
-	mag = dir[index] * speed[index];
+	if( dir.length == 0 )
+		mag = Vector3.zero;
+	else
+		mag = dir[0] * speed[0];
 	
 	// reset displacement
 	displace = 0;
