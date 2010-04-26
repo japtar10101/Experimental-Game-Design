@@ -14,6 +14,14 @@ var faceAttack : Texture;
 var faceDanger : Texture;
 var faceHit : Texture;
 
+// positions
+var healthOffsetX : int;
+var healthOffsetY : int;
+var shieldOffsetX : int;
+var shieldOffsetY : int;
+var faceOffsetX : int;
+var faceOffsetY : int;
+
 // animation times
 var timeHit : float = 0.5;
 var timeAttack : float = 0.5;
@@ -41,8 +49,12 @@ function Start() {
 }
 
 function OnGUI() {
-	GUI.DrawTexture( new Rect(0, 0, bkgWidth, bkgHeight ), background );
-	GUI.DrawTexture( new Rect(0, 0, healthWidth, healthHeight ), healthBar );
-	GUI.DrawTexture( new Rect(0, 0, shieldWidth, shieldHeight ), shieldBar );
-	GUI.DrawTexture( new Rect(0, 0, faceWidth, faceHeight ), faceDefault );
+	GUI.DrawTexture( new Rect(0, 0, bkgWidth, bkgHeight ),
+		background );
+	GUI.DrawTexture( new Rect(healthOffsetX, healthOffsetY,
+		healthWidth, healthHeight ), healthBar );
+	GUI.DrawTexture( new Rect(shieldOffsetX, shieldOffsetY,
+		shieldWidth, shieldHeight ), shieldBar );
+	GUI.DrawTexture( new Rect(faceOffsetX, faceOffsetY,
+		faceWidth, faceHeight ),  faceDefault );
 }

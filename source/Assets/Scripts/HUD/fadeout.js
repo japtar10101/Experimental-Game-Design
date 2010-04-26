@@ -18,6 +18,12 @@ function Fadeout( level : String, text : String ) {
 	fade();
 }
 
+function OnGUI() {
+	if( toFadeout ) {
+		fade();
+	}
+}
+
 function hold() {
 	print( "fading" );
 	toFadeout = false;
@@ -43,8 +49,8 @@ function fade() {
 	}
 	*/
 	
-	//GUI.color = fadeout;
-	//GUI.DrawTexture( new Rect(0, 0, Screen.width, Screen.height ), fadeTo );
-	//GUI.Label(Rect(Screen.width / 2, Screen.height / 2, Screen.width, Screen.height), line);
+	GUI.color = fadeout;
+	GUI.DrawTexture( new Rect(0, 0, Screen.width, Screen.height ), fadeTo );
+	GUI.Label(Rect(Screen.width / 2, Screen.height / 2, Screen.width, Screen.height), line);
 	hold();
 }
