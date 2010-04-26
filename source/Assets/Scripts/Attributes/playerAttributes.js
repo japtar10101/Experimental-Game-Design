@@ -36,6 +36,8 @@ static var score : int;
 function Start() {
 	health = maxHealth;
 	shieldDuration = maxShield;
+	bars.maxHealth = maxHealth;
+	bars.maxShield = maxShield;
 	score = 0;
 	if( charVar ) {
 		anim = charVar.GetComponent( Animation );

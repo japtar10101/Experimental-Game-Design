@@ -1,3 +1,6 @@
+static var maxHealth : int;
+static var maxShield : int;
+
 // These values are all fraction values from 0 to 1
 var xOffset : float = 0.1;
 var yOffset : float = 0.8;
@@ -26,10 +29,13 @@ var timeHit : float = 0.5;
 var timeAttack : float = 0.5;
 var danger : int = 8;
 
+//TODO: add a variable to track face conditions
 private var bkgWidth : int;
 private var bkgHeight : int;
+private var healthFullWidth : int;
 private var healthWidth : int;
 private var healthHeight : int;
+private var shieldFullWidth : int;
 private var shieldWidth : int;
 private var shieldHeight : int;
 private var faceWidth : int;
@@ -61,15 +67,61 @@ function Start() {
 	// shift the coordinates by the offsets
 	x = xOffset * Screen.width;
 	y = yOffset * Screen.height;
+	healthOffsetX += x;
+	healthOffsetY += y;
+	shieldOffsetX += x;
+	shieldOffsetY += y;
+	faceOffsetX += x;
+	faceOffsetY += y;
+	
+	// Store the full width of each texture
+	healthFullWidth = healthWidth;
+	shieldFullWidth = shieldWidth;
 }
 
 function OnGUI() {
 	GUI.DrawTexture( new Rect(x, y, bkgWidth, bkgHeight ),
 		background );
-	GUI.DrawTexture( new Rect(healthOffsetX + x, healthOffsetY + y,
-		healthWidth, healthHeight ), healthBar );
-	GUI.DrawTexture( new Rect(shieldOffsetX + x, shieldOffsetY + y,
+	drawHealth();
+	drawShield();
+	drawFace();
+}
+
+function drawHealth() {
+	// Decide on which texture to draw
+	var draw : Texture;
+	if( playerAttributes.health <= danger )
+		draw = dangerBar;
+	else
+		draw = healthBar;
+	
+	// Calculate the texture width
+	var health : float = playerAttributes.health;
+	health /= maxHealth;
+	healthWidth = health * healthFullWidth;
+	
+	// draw the bar
+	GUI.DrawTexture( new Rect(healthOffsetX, healthOffsetY,
+		healthWidth, healthHeight ), draw );
+}
+
+function drawShield() {
+	// Calculate the texture width
+	var shield : float = playerAttributes.shieldDuration;
+	shield /= maxShield;
+	shieldWidth = shield * shieldFullWidth;
+	
+	GUI.DrawTexture( new Rect(shieldOffsetX, shieldOffsetY,
 		shieldWidth, shieldHeight ), shieldBar );
-	GUI.DrawTexture( new Rect(faceOffsetX + x, faceOffsetY + y,
-		faceWidth, faceHeight ),  faceDefault );
+}
+
+function drawFace() {
+	// Decide on which texture to draw
+	var draw : Texture;
+	if( playerAttributes.health <= danger )
+		draw = faceDanger;
+	else
+		draw = faceDefault;
+	GUI.DrawTexture( new Rect(faceOffsetX, faceOffsetY,
+		faceWidth, faceHeight ),  draw );
 }
