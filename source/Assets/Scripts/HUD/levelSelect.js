@@ -1,7 +1,7 @@
 var levels : String[] = ["level", "infinite"];
 var texts : GameObject[];
-var popUp : String = "menuPopup";
-var popDown : String = "menuDown";
+var popUp : float = 5;
+var popDown : float = 4;
 private var index : int = 0;
 
 function Start() {
@@ -14,9 +14,14 @@ function Start() {
 	print( "level select not deleted" );
 }
 
-function Update () {
+function Update() {
+	print( "workign!" );
+}
+
+function FixedUpdate () {
 	if( menu.faceID == 1 ) {
-		var input : int = Input.GetAxis("Vertical") + Input.GetAxis("Swing Vertical");
+		var input : int = Input.GetAxis("Vertical");// + Input.GetAxis("Swing Vertical");
+		print( input );
 		if( input > 0 ) changeIndex( true );
 		else if( input < 0 ) changeIndex( false );
 	} else if( !menu.animated && menu.faceID >= 3 )
@@ -33,7 +38,8 @@ function changeIndex( up : boolean ) {
 	else if( index >= levels.length )
 		index = levels.length - 1;
 	print( "Updated index" );
+	
 	// Run the animations
-	texts[past].animation.PlayQueued( popDown );
-	texts[index].animation.PlayQueued( popUp );
+	texts[past].transform.localPosition.z = popDown;
+	texts[index].transform.localPosition.z = popUp;
 }

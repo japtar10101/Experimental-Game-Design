@@ -27,8 +27,7 @@ function rotateMenu( forward : boolean ) {
 		return;
 	else if( !forward && faceID <= 0 )
 		return;
-	print( "Trying to rotate" );
-	
+
 	// Figure out the target angle
 	var target : float;
 	if( forward )
