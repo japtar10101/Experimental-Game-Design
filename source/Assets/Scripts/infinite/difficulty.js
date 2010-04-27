@@ -1,9 +1,14 @@
-var enemies : GameObject[];
-var probability : float[];
+var changeAfter : int = 8;
 var minNum : int = 1;
 var maxNum : int = 1;
+var enemies : GameObject[];
+var probability : float[];
 
 private var num : int;
+
+function Start() {
+	maxNum += 1;
+}
 
 function GetEnemies( upperRightLimit : Transform,
 		lowerLeftLimit : Transform ) : GameObject[] {

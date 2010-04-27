@@ -2,10 +2,10 @@ var wall : GameObject;
 var playPos : Transform;
 var minInterval : float = 3;
 var maxInterval : float = 8;
-var changeDifficulty : int;
 var difficulties : difficulty[];
 var offset : Vector3;
 
+private var changeDifficulty : int;
 private var index : int = 0;
 private var nextInterval : float;
 private var intervalTime : float;
@@ -17,6 +17,7 @@ private var points : corners;
 function Start() {
 	nextInterval = Random.Range( minInterval, maxInterval );
 	intervalTime = 0;
+	changeDifficulty = difficulties[0].changeAfter;
 }
 
 function Update () {
@@ -29,7 +30,16 @@ function Update () {
 		intervalCount += 1;
 		nextInterval = Random.Range( minInterval, maxInterval );
 	}
-	// TODO: increase index when necessary
+	
+	// increase index when necessary
+	if( intervalCount > changeDifficulty ) {
+		intervalCount = 0;
+		if( index < difficulties.length - 1 ) {
+			print( "Changed difficulty" );
+			index += 1;
+			changeDifficulty = difficulties[index].changeAfter;
+		}
+	}
 }
 
 function GenerateDifficulty() {
