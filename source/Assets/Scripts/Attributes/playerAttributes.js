@@ -57,6 +57,7 @@ function Update() {
 }
 
 function OnTriggerEnter (other : Collider) {
+	if( isDead() ) return;
 	//check to make sure an enemy is colliding
 	var collided : GameObject = other.gameObject;
 	var isDestructable : boolean = collided.CompareTag("Destructable");

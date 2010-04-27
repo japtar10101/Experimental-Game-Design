@@ -45,6 +45,8 @@ function Update() {
 				}
 			}
 			moveEnemies = false;
+			// Destroy this object
+			Destroy( gameObject );
 		}
 		
 		// Else, move all enemies

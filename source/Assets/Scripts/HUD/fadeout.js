@@ -5,14 +5,15 @@ private static var line : String;
 private static var toHold : boolean;
 
 // The color to fadeout as
-var fadeoutTime : float = 5;
+var fadeoutTime : float = 3;
 var holdTime : float = 5;
 var fadeTo : Texture;
 
 private var height : int;
 private var hold : float = 0;
 
-static function startFade( level : String, text : String, slowDown : boolean, hold : boolean) : void {
+static function startFade( level : String, text : String,
+		slowDown : boolean, hold : boolean) : void {
 	toFadeout = true;
 	loadLevel = level;
 	line = text;
@@ -47,12 +48,12 @@ function fadeIn() {
 function fadeOut() : void {
 	// hold if height is large enough
 	if( height >= Screen.height ) {
-		if( !toHold ) return;
+		GUI.skin.label.alignment = TextAnchor.MiddleCenter; 
 		GUI.DrawTexture( new Rect(0, 0, Screen.width, Screen.height ), fadeTo );	
 		GUI.Label(Rect(Screen.width / 2, Screen.height / 2,
 			Screen.width, Screen.height), line);
 		hold += Time.deltaTime;
-		if( hold >= holdTime ) {
+		if( !toHold && hold >= holdTime ) {
 			toFadeout = false;
 			Time.timeScale = 1;
 			Application.LoadLevel (loadLevel);
