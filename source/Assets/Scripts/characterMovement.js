@@ -10,8 +10,7 @@ private var retRay : Ray;
 private var difVector : Vector3;
 
 function Start() {
-	retRay = new Ray(globalAttributes.retPos.transform.position,
-		Vector3.forward );
+	retRay = new Ray(Vector3.zero, Vector3.forward );
 	charGame = GetComponent(Rigidbody);
 	trans = transform;
 	if(!trans || !charGame){
