@@ -1,4 +1,3 @@
-static var fade : fadeout;
 static var hud : bars;
 
 function Start() {
@@ -9,9 +8,9 @@ function Start() {
 }
 
 static function Gameover( level : String ) {
-	fade.Fadeout( level, "Game Over" );
+	fadeout.startFade( level, "Game Over", true, true );
 }
 
 static function Complete( level : String ) {
-	fade.Fadeout( level, "" );
+	fadeout.startFade( level, "", false, false );
 }

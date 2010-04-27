@@ -1,56 +1,77 @@
+private static var toFadeout : boolean = false;
+private static var toFadein : boolean = true;
+private static var loadLevel : String;
+private static var line : String;
+private static var toHold : boolean;
+
 // The color to fadeout as
-var fadeout : Color = Color.black;
 var fadeoutTime : float = 5;
 var holdTime : float = 5;
 var fadeTo : Texture;
 
-private var alpha : float = 0;
-private var loadLevel : String;
-private var line : String;
-private var toFadeout : boolean = false;
+private var height : int;
+private var hold : float = 0;
 
-function Fadeout( level : String, text : String ) {
+static function startFade( level : String, text : String, slowDown : boolean, hold : boolean) : void {
 	toFadeout = true;
 	loadLevel = level;
 	line = text;
-	alpha = 0;
-	Time.timeScale = 0.1;
-	fade();
+	toHold = hold;
+	if( slowDown )
+		Time.timeScale = 0.4;
+}
+
+function Start() {
+	toFadein = true;
+	toFadeout = false;
+	height = Screen.height;
 }
 
 function OnGUI() {
-	if( toFadeout ) {
-		fade();
+	if( toFadein ) fadeIn();
+	else if( toFadeout ) fadeOut();
+}
+
+function fadeIn() {
+	print( "fading in" );
+	GUI.DrawTexture( new Rect(0, 0, Screen.width, height ), fadeTo );
+	height -= Mathf.RoundToInt( fadeSpeed() );
+	yield;
+	if( height <= 0 ) {
+		print( "done fading" );
+		height = 0;
+		toFadein = false;
 	}
 }
 
-function hold() {
-	print( "fading" );
-	toFadeout = false;
-	//Time.timeScale = 0;
-	//yield WaitForSeconds( holdTime );
-	Time.timeScale = 1;
-	Application.LoadLevel (loadLevel);
-}
-
-function fade() {
-	/*
-	while( alpha < 1 ) {
-		alpha += Mathf.Clamp01(Time.deltaTime / fadeoutTime);
-		if( alpha > 1 )
-			alpha = 1;
-		print( alpha );
-
-		GUI.color = fadeout;
-		GUI.color.a = alpha;
-		GUI.DrawTexture( new Rect(0, 0, Screen.width, Screen.height ), fadeTo );
-		GUI.Label(Rect(Screen.width / 2, Screen.height / 2, Screen.width, Screen.height), line);
-		yield;
+function fadeOut() : void {
+	// hold if height is large enough
+	if( height >= Screen.height ) {
+		if( !toHold ) return;
+		GUI.DrawTexture( new Rect(0, 0, Screen.width, Screen.height ), fadeTo );	
+		GUI.Label(Rect(Screen.width / 2, Screen.height / 2,
+			Screen.width, Screen.height), line);
+		hold += Time.deltaTime;
+		if( hold >= holdTime ) {
+			toFadeout = false;
+			Time.timeScale = 1;
+			Application.LoadLevel (loadLevel);
+		}
 	}
-	*/
 	
-	GUI.color = fadeout;
-	GUI.DrawTexture( new Rect(0, 0, Screen.width, Screen.height ), fadeTo );
-	GUI.Label(Rect(Screen.width / 2, Screen.height / 2, Screen.width, Screen.height), line);
-	hold();
+	// Otherwise, fade in
+	else {
+		GUI.DrawTexture( new Rect(0, 0, Screen.width, height ), fadeTo );
+		height += Mathf.RoundToInt( fadeSpeed() );
+		if( height >= Screen.height )
+			height = Screen.height;
+	}
+}
+
+private function fadeSpeed() : float {
+	var check : float = Time.deltaTime * Screen.height / fadeoutTime;
+	if( check < 1 )
+		return 1;
+	else
+		return Time.deltaTime * Screen.height / fadeoutTime;
 }
