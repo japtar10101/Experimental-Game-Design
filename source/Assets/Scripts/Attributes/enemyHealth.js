@@ -11,7 +11,7 @@ private var dying : boolean = false;
 // Script
 private var spawn : spawnBulletsV2;
 private var collide : Collider;
-private static var initForce : float = 200;
+private static var initForce : float = 1000;
 
 function Start() {
 	spawn = GetComponent( spawnBulletsV2 );
