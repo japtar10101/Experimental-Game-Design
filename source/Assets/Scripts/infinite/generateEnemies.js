@@ -35,8 +35,8 @@ function Update () {
 	if( intervalCount > changeDifficulty ) {
 		intervalCount = 0;
 		if( index < difficulties.length - 1 ) {
-			print( "Changed difficulty" );
 			index += 1;
+			print( "Changed difficulty to " + index );
 			changeDifficulty = difficulties[index].changeAfter;
 		}
 	}

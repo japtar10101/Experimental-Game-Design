@@ -6,7 +6,7 @@ private static var toHold : boolean;
 
 // The color to fadeout as
 var fadeoutTime : float = 3;
-var holdTime : float = 5;
+var holdTime : float = 1;
 var fadeTo : Texture;
 
 private var height : int;
@@ -49,11 +49,10 @@ function fadeOut() : void {
 	// hold if height is large enough
 	if( height >= Screen.height ) {
 		GUI.skin.label.alignment = TextAnchor.MiddleCenter; 
-		GUI.DrawTexture( new Rect(0, 0, Screen.width, Screen.height ), fadeTo );	
-		GUI.Label(Rect(Screen.width / 2, Screen.height / 2,
-			Screen.width, Screen.height), line);
+		GUI.DrawTexture( new Rect(0, -1, Screen.width, Screen.height ), fadeTo );	
+		GUI.Label(Rect(0, 0, Screen.width, Screen.height), line);
 		hold += Time.deltaTime;
-		if( !toHold && hold >= holdTime ) {
+		if( !toHold || hold >= holdTime ) {
 			toFadeout = false;
 			Time.timeScale = 1;
 			Application.LoadLevel (loadLevel);
@@ -62,7 +61,7 @@ function fadeOut() : void {
 	
 	// Otherwise, fade in
 	else {
-		GUI.DrawTexture( new Rect(0, 0, Screen.width, height ), fadeTo );
+		GUI.DrawTexture( new Rect(0, -1, Screen.width, height ), fadeTo );
 		height += Mathf.RoundToInt( fadeSpeed() );
 		if( height >= Screen.height )
 			height = Screen.height;
