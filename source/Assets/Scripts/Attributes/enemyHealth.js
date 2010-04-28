@@ -3,8 +3,10 @@ var anim : Animation;
 var deathSound : AudioClip;
 var deathAnim : String;
 var hitAnim : String;
+var textVariable : TextMesh;
 var health : int = 1;
 var score : int = 1;
+
 
 // Flag checking if you're dying
 private var dying : boolean = false;
@@ -12,6 +14,7 @@ private var dying : boolean = false;
 private var spawn : spawnBulletsV2;
 private var collide : Collider;
 private static var initForce : float = 1500;
+private var comboText : TextMesh;
 
 function Start() {
 	spawn = GetComponent( spawnBulletsV2 );
@@ -27,6 +30,8 @@ function Start() {
 
 function Update () {
 	if( dying && !anim.IsPlaying( deathAnim ) ) {
+		comboText = Instantiate(textVariable, gameObject.transform.position, Quaternion.identity);
+		comboText.text = swingControls.incrementer.ToString();
 		Destroy( gameObject );
 	}
 }

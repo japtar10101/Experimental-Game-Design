@@ -28,6 +28,11 @@ var scoreOffsetY : int = 200;
 var scoreWidth : int = 205;
 var scoreHeight : int = 50;
 
+var comboOffsetX : int = 500;
+var comboOffsetY : int = 200;
+var comboWidth : int = 205;
+var comboHeight : int = 50;
+
 // animation times
 var timeHit : float = 0.5;
 var timeAttack : float = 0.5;
@@ -71,6 +76,8 @@ function Start() {
 	faceHeight = faceDefault.height * proportion;
 	scoreWidth = scoreWidth * proportion;
 	scoreHeight = scoreHeight * proportion;
+	comboWidth = comboWidth * proportion;
+	comboHeight = comboHeight * proportion;
 	healthOffsetX *= proportion;
 	healthOffsetY *= proportion;
 	shieldOffsetX *= proportion;
@@ -79,6 +86,8 @@ function Start() {
 	faceOffsetY *= proportion;
 	scoreOffsetX *= proportion;
 	scoreOffsetY *= proportion;
+	comboOffsetX *= proportion;
+	comboOffsetY *= proportion;
 	
 	// shift the coordinates by the offsets
 	x = xOffset * Screen.width;
@@ -91,6 +100,8 @@ function Start() {
 	faceOffsetY += y;
 	scoreOffsetX += x;
 	scoreOffsetY += y;
+	comboOffsetX += x;
+	comboOffsetY += y;
 	
 	// Store the full width of each texture
 	healthFullWidth = healthWidth;
@@ -105,6 +116,7 @@ function OnGUI() {
 	drawShield();
 	drawFace();
 	drawScore();
+	drawIncrementer();
 }
 
 function drawHealth() {
@@ -149,4 +161,11 @@ function drawFace() {
 function drawScore() {
 	GUI.Box( new Rect(scoreOffsetX, scoreOffsetY,
 		scoreWidth, scoreHeight ),  playerAttributes.score.ToString() );
+}
+
+function drawIncrementer() {
+	if(swingControls.incrementer > 0) {
+		GUI.Box( new Rect(comboOffsetX, comboOffsetY,
+			comboWidth, comboHeight ),  swingControls.incrementer.ToString() );
+	}
 }
