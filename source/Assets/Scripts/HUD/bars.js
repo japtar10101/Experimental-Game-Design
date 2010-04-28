@@ -36,6 +36,8 @@ var danger : int = 8;
 //TODO: add a variable to track face conditions
 static var faceID : int;
 
+//TODO: make rects to store these variables.  Ugh.
+//private var bkgRect : Rect;
 // Coordinates
 private var bkgWidth : int;
 private var bkgHeight : int;
@@ -96,6 +98,7 @@ function Start() {
 }
 
 function OnGUI() {
+	GUI.depth = 1;
 	GUI.DrawTexture( new Rect(x, y, bkgWidth, bkgHeight ),
 		background );
 	drawHealth();
