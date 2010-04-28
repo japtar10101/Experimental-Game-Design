@@ -49,8 +49,11 @@ private var faceWidth : int;
 private var faceHeight : int;
 private var x : int;
 private var y : int;
+//private var prev : TextAnchor;
 
 function Start() {
+	//prev = GUI.skin.label.alignment = TextAnchor.MiddleLeft;
+	
 	// Find the proportion to resize all textures to
 	var hudHeight : float = Screen.height * screenProportion;
 	var proportion : float = hudHeight / background.height;

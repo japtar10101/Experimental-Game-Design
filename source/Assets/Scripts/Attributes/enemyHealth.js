@@ -11,7 +11,7 @@ private var dying : boolean = false;
 // Script
 private var spawn : spawnBulletsV2;
 private var collide : Collider;
-private static var initForce : float = 1000;
+private static var initForce : float = 1500;
 
 function Start() {
 	spawn = GetComponent( spawnBulletsV2 );
@@ -42,14 +42,13 @@ function decreaseHealth( collided : GameObject ) {
 	if( collided.CompareTag( "Sword" ) && collided.renderer.enabled ) {
 		health -= 1;
 		if( health <= 0 ) {
+			explosion();
 			anim.CrossFade( deathAnim );
 			audio.PlayOneShot(deathSound);
-			if( spawn ) {
+			if( spawn )
 				spawn.startFire = false;
-			}
 			collide.isTrigger = false;
 			dying = true;
-			explosion();
 		} else {
 			anim.Blend( hitAnim );
 			audio.PlayOneShot(hitSound);
@@ -64,6 +63,8 @@ function explosion() {
 	var clone : GameObject;
 	var rigidClone : Rigidbody;
 	
+	// Generate coins
+	score = swingControls.computeScore( score );
 	while( score > 0 ) {
 		clone = Instantiate( projectileAttributes.coin,
 			trans.position, trans.rotation );
@@ -78,6 +79,11 @@ function explosion() {
 		rigidClone.AddRelativeForce( Vector3.forward * initForce * -1 );
 		score -= 1;
 	}
+	
+	//Generate explosions
+	clone = Instantiate( projectileAttributes.explode,
+		trans.position, trans.rotation );
+	clone.renderer.enabled = true;
 }
 
 @script RequireComponent(Collision)

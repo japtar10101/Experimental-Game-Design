@@ -1,3 +1,7 @@
+static var multiplier : int;
+static var incrementer : int;
+static var limit : int = 16;
+
 var swordRenderer : Renderer;
 var swordAnimation : Animation;
 var swordSound : AudioSource;
@@ -5,8 +9,21 @@ var upSwing : String;
 var downSwing : String;
 
 private var rotate : Transform;
+private var revertScore : boolean;
+
+static function computeScore( score : int ) : int {
+	var result : int = score * multiplier + incrementer;
+	multiplier += 1;
+	if( result > limit )
+		return limit;
+	else
+		return result;
+}
 
 function Start() {
+	multiplier = 1;
+	incrementer = 0;
+	revertScore = false;
 	rotate = GetComponent(Transform);
 	if( !swordAnimation || !swordRenderer ) {
 		// If variables aren't defined, halt
@@ -23,6 +40,16 @@ function Update () {
 	swordRenderer.enabled = playing;
 	if( !playing ) {
 		rotate.localEulerAngles.z = 0;
+		if( revertScore ) {
+			if( multiplier > 1 )
+				// We hit something
+				incrementer += 1;
+			else
+				// Missed
+				incrementer = 0;
+			multiplier = 1;
+			revertScore = false;
+		}
 	}
 }
 
@@ -57,6 +84,7 @@ function queueAnimation() {
 		rotateAngle = anglePlayer( horizontalInput, verticalInput );
 	}
 	if( playThis && !swordAnimation.isPlaying) {
+		revertScore = true;
 		swordAnimation.Play( playThis );
 		swordSound.Play();
 		rotate.localEulerAngles.z = rotateAngle;

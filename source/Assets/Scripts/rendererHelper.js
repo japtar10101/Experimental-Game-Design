@@ -15,13 +15,13 @@ function Start() {
 }
 
 function Update () {
-	if( renderer.enabled != isRendered ) {
+	if( check.enabled != isRendered ) {
 		isRendered = check.enabled;
 		renderAll( check.enabled );
 	}
 }
 
-function renderAll( state : boolean ) {
+function renderAll( state : boolean ) : void {
 	for( var render : Renderer in allRenderers ) {
 		if( render ) render.enabled = state;
 	}

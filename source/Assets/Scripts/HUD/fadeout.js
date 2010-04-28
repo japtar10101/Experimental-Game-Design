@@ -16,7 +16,7 @@ static function startFade( level : String, text : String,
 		slowDown : boolean, hold : boolean) : void {
 	toFadeout = true;
 	loadLevel = level;
-	line = text;
+	line = text + "\nScore: " + playerAttributes.score;
 	toHold = hold;
 	if( slowDown )
 		Time.timeScale = 0.4;
@@ -48,6 +48,7 @@ function fadeIn() {
 function fadeOut() : void {
 	// hold if height is large enough
 	if( height >= Screen.height ) {
+		var prev : TextAnchor = GUI.skin.label.alignment;
 		GUI.skin.label.alignment = TextAnchor.MiddleCenter; 
 		GUI.DrawTexture( new Rect(0, 0, Screen.width, Screen.height ), fadeTo );	
 		GUI.Label(Rect(0, 0, Screen.width, Screen.height), line);
@@ -57,6 +58,7 @@ function fadeOut() : void {
 			Time.timeScale = 1;
 			Application.LoadLevel (loadLevel);
 		}
+		GUI.skin.label.alignment = prev;
 	}
 	
 	// Otherwise, fade in

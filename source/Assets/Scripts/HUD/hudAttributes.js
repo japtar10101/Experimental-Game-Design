@@ -12,5 +12,5 @@ static function Gameover( level : String ) {
 }
 
 static function Complete( level : String ) {
-	fadeout.startFade( level, "", false, false );
+	fadeout.startFade( level, "Clear", false, true );
 }
