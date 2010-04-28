@@ -14,6 +14,8 @@ var healthSound : AudioClip;
 var deflectSound : AudioClip;
 // shield generate tune.
 var shieldSound : AudioClip;
+// score generate tune.
+var scoreSound : AudioClip;
 var hitAnim : String;
 var healAnim : String;
 var shieldAnim : String;
@@ -44,14 +46,15 @@ function Start() {
 	} else {
 		anim = animation;
 	}
+	if( !scoreSound )
+		scoreSound = healthSound;
 }
 
 function Update() {
 	var bool : boolean= updateShield( Input.GetAxis ("Shield") != 0 );
 	if( shieldRenderer ) {
-		if( !shieldRenderer.enabled && bool ) {
+		if( !shieldRenderer.enabled && bool )
 			audio.PlayOneShot(shieldSound);
-		}
 		shieldRenderer.enabled = bool;
 	}
 }
@@ -60,6 +63,12 @@ function OnTriggerEnter (other : Collider) {
 	if( isDead() ) return;
 	//check to make sure an enemy is colliding
 	var collided : GameObject = other.gameObject;
+	if( collided.CompareTag("Point") ) {
+		Destroy(collided);
+		audio.PlayOneShot(scoreSound);
+		score += 1;
+		return;
+	}
 	var isDestructable : boolean = collided.CompareTag("Destructable");
 	var isHealth : boolean = collided.CompareTag("Health");
 	var shielded : boolean = isShieldOn();

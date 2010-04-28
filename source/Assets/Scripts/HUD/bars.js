@@ -23,6 +23,10 @@ var shieldOffsetX : int = 205;
 var shieldOffsetY : int = 174;
 var faceOffsetX : int = 38;
 var faceOffsetY : int = 35;
+var scoreOffsetX : int = 205;
+var scoreOffsetY : int = 200;
+var scoreWidth : int = 205;
+var scoreHeight : int = 50;
 
 // animation times
 var timeHit : float = 0.5;
@@ -30,7 +34,7 @@ var timeAttack : float = 0.5;
 var danger : int = 8;
 
 //TODO: add a variable to track face conditions
-private var awesome : int;
+static var faceID : int;
 
 // Coordinates
 private var bkgWidth : int;
@@ -60,12 +64,16 @@ function Start() {
 	shieldHeight = shieldBar.height * proportion;
 	faceWidth = faceDefault.width * proportion;
 	faceHeight = faceDefault.height * proportion;
+	scoreWidth = scoreWidth * proportion;
+	scoreHeight = scoreHeight * proportion;
 	healthOffsetX *= proportion;
 	healthOffsetY *= proportion;
 	shieldOffsetX *= proportion;
 	shieldOffsetY *= proportion;
 	faceOffsetX *= proportion;
 	faceOffsetY *= proportion;
+	scoreOffsetX *= proportion;
+	scoreOffsetY *= proportion;
 	
 	// shift the coordinates by the offsets
 	x = xOffset * Screen.width;
@@ -76,6 +84,8 @@ function Start() {
 	shieldOffsetY += y;
 	faceOffsetX += x;
 	faceOffsetY += y;
+	scoreOffsetX += x;
+	scoreOffsetY += y;
 	
 	// Store the full width of each texture
 	healthFullWidth = healthWidth;
@@ -88,6 +98,7 @@ function OnGUI() {
 	drawHealth();
 	drawShield();
 	drawFace();
+	drawScore();
 }
 
 function drawHealth() {
@@ -127,4 +138,9 @@ function drawFace() {
 		draw = faceDefault;
 	GUI.DrawTexture( new Rect(faceOffsetX, faceOffsetY,
 		faceWidth, faceHeight ),  draw );
+}
+
+function drawScore() {
+	GUI.Box( new Rect(scoreOffsetX, scoreOffsetY,
+		scoreWidth, scoreHeight ),  playerAttributes.score.ToString() );
 }

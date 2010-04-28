@@ -4,12 +4,14 @@ var deathSound : AudioClip;
 var deathAnim : String;
 var hitAnim : String;
 var health : int = 1;
+var score : int = 1;
 
 // Flag checking if you're dying
 private var dying : boolean = false;
 // Script
 private var spawn : spawnBulletsV2;
 private var collide : Collider;
+private static var initForce : float = 200;
 
 function Start() {
 	spawn = GetComponent( spawnBulletsV2 );
@@ -47,10 +49,34 @@ function decreaseHealth( collided : GameObject ) {
 			}
 			collide.isTrigger = false;
 			dying = true;
+			explosion();
 		} else {
 			anim.Blend( hitAnim );
 			audio.PlayOneShot(hitSound);
 		}
+	}
+}
+
+function explosion() {
+	// Setup variables
+	var rot : Vector3;
+	var trans : Transform = transform;
+	var clone : GameObject;
+	var rigidClone : Rigidbody;
+	
+	while( score > 0 ) {
+		clone = Instantiate( projectileAttributes.coin,
+			trans.position, trans.rotation );
+		rot.x = Random.Range( 0, 360 );
+		rot.y = Random.Range( 0, 360 );
+		rot.z = Random.Range( 0, 360 );
+		clone.transform.Rotate( rot );
+		clone.renderer.enabled = true;
+			
+		// Add a constant force to it
+		rigidClone = clone.GetComponent( Rigidbody );
+		rigidClone.AddRelativeForce( Vector3.forward * initForce * -1 );
+		score -= 1;
 	}
 }
 
