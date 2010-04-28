@@ -4,6 +4,7 @@ var minInterval : float = 3;
 var maxInterval : float = 8;
 var difficulties : difficulty[];
 var offset : Vector3;
+var bombOffset : Vector3;
 
 private var changeDifficulty : int;
 private var index : int = 0;
@@ -51,4 +52,12 @@ function GenerateDifficulty() {
 	script = cloneWall.GetComponent( enemyWall );
 	script.enemies = difficulties[index].GetEnemies(
 		points.upperRightLimit, points.lowerLeftLimit);
+	offsetBombs( script.enemies );
+}
+
+function offsetBombs( enemies : GameObject[] ) : void {
+	for( var enemy : GameObject in enemies ) {
+		if( enemy.GetComponent( bombAttributes ) )
+			enemy.transform.position += bombOffset;
+	}
 }

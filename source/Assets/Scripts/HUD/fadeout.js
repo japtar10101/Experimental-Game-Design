@@ -49,7 +49,7 @@ function fadeOut() : void {
 	// hold if height is large enough
 	if( height >= Screen.height ) {
 		GUI.skin.label.alignment = TextAnchor.MiddleCenter; 
-		GUI.DrawTexture( new Rect(0, -1, Screen.width, Screen.height ), fadeTo );	
+		GUI.DrawTexture( new Rect(0, 0, Screen.width, Screen.height ), fadeTo );	
 		GUI.Label(Rect(0, 0, Screen.width, Screen.height), line);
 		hold += Time.deltaTime;
 		if( !toHold || hold >= holdTime ) {
@@ -61,7 +61,7 @@ function fadeOut() : void {
 	
 	// Otherwise, fade in
 	else {
-		GUI.DrawTexture( new Rect(0, -1, Screen.width, height ), fadeTo );
+		GUI.DrawTexture( new Rect(0, 0, Screen.width, height ), fadeTo );
 		height += Mathf.RoundToInt( fadeSpeed() );
 		if( height >= Screen.height )
 			height = Screen.height;
