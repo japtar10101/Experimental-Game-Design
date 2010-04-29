@@ -7,9 +7,11 @@ var swordAnimation : Animation;
 var swordSound : AudioSource;
 var pressUp : String;
 var pressDown : String;
+var defaultAnim : String;
 var hackSpeedUpAnim : int = 1;
 
 var rotate : Transform;
+private var backToDefault : boolean = false;
 //private var revertScore : boolean;
 
 static function computeScore( score : int ) : int {
@@ -31,22 +33,28 @@ function Start() {
 		print( "destroyed" );
 		Destroy( this );
 	}
-	swordAnimation[pressUp].speed = 3;
-	swordAnimation[pressDown].speed = 3;
+	swordAnimation[pressUp].speed = hackSpeedUpAnim;
+	swordAnimation[pressDown].speed = hackSpeedUpAnim;
 }
 	
 function Update () {
 	// Figure out the animation to play
-	queueAnimation();
+	var playing = swordAnimation.IsPlaying( pressDown ) || swordAnimation.IsPlaying( pressUp );
+	queueAnimation( playing );
+	playing = swordAnimation.IsPlaying( pressDown ) || swordAnimation.IsPlaying( pressUp );
 	
 	// reorient the player, if necessary
-	var playing = swordAnimation.IsPlaying( pressDown ) || swordAnimation.IsPlaying( pressUp );
 	swordRenderer.enabled = playing;
-	if( !playing )
+	if( !playing ) {
 		rotate.localEulerAngles.z = 0;
+		if( backToDefault ) {
+			swordAnimation.CrossFade( defaultAnim );
+			backToDefault = false;
+		}
+	}
 }
 
-function queueAnimation() {
+function queueAnimation( playing : boolean ) {
 	var playThis : String = null;
 	var rotateAngle = 0;
 	
@@ -56,32 +64,28 @@ function queueAnimation() {
 
 	if( horizontalInput == 0 ) {
 		// Do a perfectly vertical swing
-		if( verticalInput < 0 ) {
+		if( verticalInput < 0 )
 			playThis = pressDown;
-		} else if( verticalInput > 0 ) {
+		else if( verticalInput > 0 )
 			playThis = pressUp;
-		} else {
-			if( Input.GetKey( KeyCode.Joystick1Button0 ) ) {
-				print( "got input" );
-			}
+		else
 			return;
-		}
 	} else {
 		// There's horizontalInput, play an animation
 		// depending on input
-		if( verticalInput < 0 ) {
+		if( verticalInput < 0 )
 			playThis = pressDown;
-		} else {
+		else
 			playThis = pressUp;
-		}
 		rotateAngle = anglePlayer( horizontalInput, verticalInput );
 	}
-	if( playThis && !swordAnimation.isPlaying) {
+	if( playThis && !playing) {
 		if( multiplier > 1 ) {
 			incrementer += 1;
 			multiplier = 1;
 		} else
 			incrementer = 0;
+		backToDefault = true;
 		swordAnimation.Play( playThis );
 		swordSound.Play();
 		rotate.localEulerAngles.z = rotateAngle;

@@ -16,9 +16,10 @@ var deflectSound : AudioClip;
 var shieldSound : AudioClip;
 // score generate tune.
 var scoreSound : AudioClip;
-var hitAnim : String;
-var healAnim : String;
-var shieldAnim : String;
+var hitAnim : String = "hit";
+var hitColorAnim : String = "playerHit";
+var healColorAnim : String = "playerHeal";
+var shieldAnim : String = "playerUnharmed";
 
 // Health-related stuff
 var maxHealth : int = 22;
@@ -48,6 +49,8 @@ function Start() {
 	}
 	if( !scoreSound )
 		scoreSound = healthSound;
+	anim[healColorAnim].layer = 2;
+	anim[hitColorAnim].layer = 2;
 }
 
 function Update() {
@@ -105,15 +108,16 @@ function OnTriggerEnter (other : Collider) {
 //Health stuff
 function updateHealth( changeHealth ) {
 	if( changeHealth == 0 ) {
-		anim.PlayQueued( shieldAnim );
+		anim.Blend( shieldAnim );
 		audio.PlayOneShot(deflectSound);
 	} else {
 		health += changeHealth;
 		if( changeHealth > 0 ) {
-			anim.PlayQueued( healAnim );
+			anim.Play( healColorAnim );
 			audio.PlayOneShot(healthSound);
 		} else {
-			anim.PlayQueued( hitAnim );
+			anim.Blend( hitAnim );
+			anim.Play( hitColorAnim );
 			audio.PlayOneShot(hitSound);
 		}
 	}

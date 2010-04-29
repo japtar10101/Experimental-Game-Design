@@ -24,6 +24,7 @@ function Start() {
 		Destroy( this );
 		return;
 	}
+	anim[hitAnim].layer = 2;
 	dying = false;
 }
 
@@ -51,7 +52,7 @@ function decreaseHealth( collided : GameObject ) {
 			collide.isTrigger = false;
 			dying = true;
 		} else {
-			anim.Blend( hitAnim );
+			anim.Play( hitAnim );
 			audio.PlayOneShot(hitSound);
 		}
 	}
