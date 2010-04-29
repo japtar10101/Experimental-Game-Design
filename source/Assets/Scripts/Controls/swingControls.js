@@ -9,7 +9,7 @@ var pressUp : String;
 var pressDown : String;
 var hackSpeedUpAnim : int = 1;
 
-private var rotate : Transform;
+var rotate : Transform;
 //private var revertScore : boolean;
 
 static function computeScore( score : int ) : int {
@@ -24,7 +24,8 @@ static function computeScore( score : int ) : int {
 function Start() {
 	multiplier = 1;
 	incrementer = 0;
-	rotate = GetComponent(Transform);
+	if( !rotate )
+		rotate = GetComponent(Transform);
 	if( !swordAnimation || !swordRenderer ) {
 		// If variables aren't defined, halt
 		print( "destroyed" );
