@@ -8,7 +8,7 @@ var swordSound : AudioSource;
 var pressUp : String;
 var pressDown : String;
 var defaultAnim : String;
-var hackSpeedUpAnim : int = 1;
+var hackSpeedUpAnim : float = 4;
 
 var rotate : Transform;
 private var backToDefault : boolean = false;
@@ -40,7 +40,7 @@ function Start() {
 function Update () {
 	// Figure out the animation to play
 	var playing = swordAnimation.IsPlaying( pressDown ) || swordAnimation.IsPlaying( pressUp );
-	queueAnimation( playing );
+	queueAnimation( playing );	
 	playing = swordAnimation.IsPlaying( pressDown ) || swordAnimation.IsPlaying( pressUp );
 	
 	// reorient the player, if necessary
