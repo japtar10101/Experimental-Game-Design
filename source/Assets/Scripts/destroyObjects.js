@@ -1,10 +1,10 @@
 // For this script to work correctly,
 //one has to set the camera variable
-var xDisplacement : float = 100;
-var zDisplacement : float = 0;
-var zDistance : float = 100;
-var yDisplacement : float = -10;
-var yDistance : float = 100;
+var xDisplacement : float = 200;
+var zDisplacement : float = 2;
+var zDistance : float = 200;
+var yDisplacement : float = -100;
+var yDistance : float = 200;
 
 private var destroyObjects : GameObject[];
 

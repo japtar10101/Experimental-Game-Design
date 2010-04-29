@@ -26,6 +26,25 @@ function Start() {
 }
 
 function Update() {
+	move();
+}
+
+function OnTriggerEnter (other : Collider) {
+	//Check if what collided was the player
+	if( other.gameObject.CompareTag( "Player" ) ) {
+		print( "Hit!" );
+		// Reveal all enemies
+		for( reveal in enemies ) {
+			if( !reveal )
+				continue;
+			else if( reveal.renderer )
+				reveal.renderer.enabled = true;
+		}
+		moveEnemies = true;
+	}
+}
+
+function move() {
 	// Move the enemes
 	if( moveEnemies ) {
 		// If we moved far enough, stop the movement
@@ -61,20 +80,5 @@ function Update() {
 			// Increment distance
 			moveDistance += moveVector.magnitude;
 		}
-	}
-}
-
-function OnTriggerEnter (other : Collider) {
-	//Check if what collided was the player
-	if( other.gameObject.CompareTag( "Player" ) ) {
-		print( "Hit!" );
-		// Reveal all enemies
-		for( reveal in enemies ) {
-			if( !reveal )
-				continue;
-			else if( reveal.renderer )
-				reveal.renderer.enabled = true;
-		}
-		moveEnemies = true;
 	}
 }
