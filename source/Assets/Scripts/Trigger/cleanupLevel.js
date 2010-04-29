@@ -10,5 +10,6 @@ function OnTriggerEnter (other : Collider) {
 		for( reveal in revealStage ) {
 			reveal.enabled = true;
 		}
+		print( "triggered: " + name );
 	}
 }

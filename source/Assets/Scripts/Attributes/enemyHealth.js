@@ -3,7 +3,6 @@ var anim : Animation;
 var deathSound : AudioClip;
 var deathAnim : String;
 var hitAnim : String;
-var textVariable : TextMesh;
 var health : int = 1;
 var score : int = 1;
 
@@ -29,11 +28,8 @@ function Start() {
 }
 
 function Update () {
-	if( dying && !anim.IsPlaying( deathAnim ) ) {
-		comboText = Instantiate(textVariable, gameObject.transform.position, Quaternion.identity);
-		comboText.text = swingControls.incrementer.ToString();
+	if( dying && !anim.IsPlaying( deathAnim ) )
 		Destroy( gameObject );
-	}
 }
 
 function OnTriggerEnter (other : Collider) {
