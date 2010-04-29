@@ -24,8 +24,10 @@ function Update () {
 	}
 }
 
-function renderAll( state : boolean ) : void {
+function renderAll( state : boolean ) {
 	for( var render : Renderer in allRenderers ) {
-		if( render ) render.enabled = state;
+		if( render )
+			render.enabled = state;
+		yield;
 	}
 }
