@@ -5,8 +5,9 @@ static var limit : int = 16;
 var swordRenderer : Renderer;
 var swordAnimation : Animation;
 var swordSound : AudioSource;
-var upSwing : String;
-var downSwing : String;
+var pressUp : String;
+var pressDown : String;
+var hackSpeedUpAnim : int = 1;
 
 private var rotate : Transform;
 //private var revertScore : boolean;
@@ -26,8 +27,11 @@ function Start() {
 	rotate = GetComponent(Transform);
 	if( !swordAnimation || !swordRenderer ) {
 		// If variables aren't defined, halt
+		print( "destroyed" );
 		Destroy( this );
 	}
+	swordAnimation[pressUp].speed = 3;
+	swordAnimation[pressDown].speed = 3;
 }
 	
 function Update () {
@@ -35,7 +39,7 @@ function Update () {
 	queueAnimation();
 	
 	// reorient the player, if necessary
-	var playing = swordAnimation.IsPlaying( downSwing ) || swordAnimation.IsPlaying( upSwing );
+	var playing = swordAnimation.IsPlaying( pressDown ) || swordAnimation.IsPlaying( pressUp );
 	swordRenderer.enabled = playing;
 	if( !playing )
 		rotate.localEulerAngles.z = 0;
@@ -52,9 +56,9 @@ function queueAnimation() {
 	if( horizontalInput == 0 ) {
 		// Do a perfectly vertical swing
 		if( verticalInput < 0 ) {
-			playThis = downSwing;
+			playThis = pressDown;
 		} else if( verticalInput > 0 ) {
-			playThis = upSwing;
+			playThis = pressUp;
 		} else {
 			if( Input.GetKey( KeyCode.Joystick1Button0 ) ) {
 				print( "got input" );
@@ -65,9 +69,9 @@ function queueAnimation() {
 		// There's horizontalInput, play an animation
 		// depending on input
 		if( verticalInput < 0 ) {
-			playThis = downSwing;
+			playThis = pressDown;
 		} else {
-			playThis = upSwing;
+			playThis = pressUp;
 		}
 		rotateAngle = anglePlayer( horizontalInput, verticalInput );
 	}

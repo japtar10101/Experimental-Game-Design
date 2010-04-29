@@ -1,0 +1,1 @@
+Assets/Art/Models/heroine_default.mb
