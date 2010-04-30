@@ -53,6 +53,7 @@ function Start() {
 		scoreSound = healthSound;
 	anim[hitAnim].layer = 1;
 	anim[shieldAnim].layer = 2;
+	mater.color = origColor;
 }
 
 function Update() {

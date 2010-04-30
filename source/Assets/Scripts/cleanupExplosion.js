@@ -1,5 +1,6 @@
-var allAnimations : Animation[];
 var lifeTime : float = 1;
+var ring1 : GameObject;
+var ring2 : GameObject;
 
 private var rend : Renderer;
 private var ready : boolean = true;
@@ -16,6 +17,10 @@ function FixedUpdate () {
 }
 
 function timeDestroy() {
+	ring1.transform.rotation.eulerAngles.z =
+		Random.Range( 0, 360 );
+	ring2.transform.rotation.eulerAngles.z =
+		Random.Range( 0, 360 );
 	yield WaitForSeconds( lifeTime );
 	Destroy( gameObject );
 }
