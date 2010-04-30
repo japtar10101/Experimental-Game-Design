@@ -1,4 +1,4 @@
-static private var down : Vector3 = new Vector3( 90, 0, 0 );
+//static private var down : Vector3 = new Vector3( 90, 0, 0 );
 var isEnabled : Renderer;
 private var shadow : Projector;
 private var trans : Transform;
@@ -11,5 +11,5 @@ function Start() {
 function Update () {
 	shadow.enabled = isEnabled.enabled;
 	if( shadow.enabled )
-		trans.rotation.eulerAngles = down;
+		trans.rotation.eulerAngles.x = 90;
 }
