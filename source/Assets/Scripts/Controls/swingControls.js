@@ -8,11 +8,11 @@ var swordSound : AudioSource;
 var pressUp : String;
 var pressDown : String;
 var defaultAnim : String;
-var hackSpeedUpAnim : float = 4;
+var orientLastKeyFrameToDown : boolean = true;
+var hackSpeedUpAnim : float = 3;
 
 var rotate : Transform;
 private var backToDefault : boolean = false;
-//private var revertScore : boolean;
 
 static function computeScore( score : int ) : int {
 	var result : int = score * multiplier + incrementer;
@@ -45,12 +45,35 @@ function Update () {
 	
 	// reorient the player, if necessary
 	swordRenderer.enabled = playing;
-	if( !playing ) {
-		rotate.localEulerAngles.z = 0;
-		if( backToDefault ) {
-			swordAnimation.CrossFade( defaultAnim );
-			backToDefault = false;
-		}
+	if( !playing )
+		orientPlayer();
+}
+
+function orientPlayer() {
+	rotate.localEulerAngles.z = 0;
+	if( backToDefault ) {
+		// HACK: we need to reorient the master handle back in position.
+		// To do this run the end of an animation for a full frame, then revert it
+		// back to normal
+		var animate : AnimationState;
+		if( orientLastKeyFrameToDown )
+			animate = swordAnimation[pressDown];
+		else
+			animate = swordAnimation[pressUp];
+		var enable : boolean = animate.enabled;
+		animate.enabled = true;
+		var weigh : float = animate.weight;
+		animate.weight = 1;
+		var norm : float = animate.normalizedTime;
+		animate.normalizedTime = 1;
+		yield;
+		animate.enabled = enable;
+		animate.weight = weigh;
+		animate.normalizedTime = norm;
+		
+		//Now cross-fade to the default animation
+		swordAnimation.CrossFade( defaultAnim );
+		backToDefault = false;
 	}
 }
 
