@@ -37,6 +37,7 @@ private var shieldOn : boolean= false;
 private var anim : Animation;
 private var noShield : float = 0;
 static var score : int;
+var scoreMultiplier : int = 49;
 
 function Start() {
 	health = maxHealth;
@@ -71,7 +72,7 @@ function OnTriggerEnter (other : Collider) {
 	if( collided.CompareTag("Point") ) {
 		Destroy(collided);
 		audio.PlayOneShot(scoreSound);
-		score += 1;
+		score += scoreMultiplier;
 		return;
 	}
 	var isDestructable : boolean = collided.CompareTag("Destructable");
