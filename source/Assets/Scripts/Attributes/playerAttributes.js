@@ -17,9 +17,11 @@ var shieldSound : AudioClip;
 // score generate tune.
 var scoreSound : AudioClip;
 var hitAnim : String = "hit";
-var hitColorAnim : String = "playerHit";
-var healColorAnim : String = "playerHeal";
 var shieldAnim : String = "playerUnharmed";
+var attackAnim1 : String = "up_attack";
+var attackAnim2 : String = "down_attack";
+var mater : Material;
+var origColor : Color;
 
 // Health-related stuff
 var maxHealth : int = 22;
@@ -49,16 +51,12 @@ function Start() {
 	}
 	if( !scoreSound )
 		scoreSound = healthSound;
-	anim[healColorAnim].layer = 2;
-	anim[hitColorAnim].layer = 2;
+	anim[hitAnim].layer = 1;
+	anim[shieldAnim].layer = 2;
 }
 
 function Update() {
-	var bool : boolean;
-	if( Input.GetAxis ("Speed") < 0 || Input.GetAxis ("Shield") < 0 )
-		bool = updateShield( true );
-	else
-		bool = updateShield( false );
+	var bool : boolean = updateShield( Input.GetAxis ("Shield") != 0 );
 	if( shieldRenderer ) {
 		if( !shieldRenderer.enabled && bool )
 			audio.PlayOneShot(shieldSound);
@@ -117,11 +115,12 @@ function updateHealth( changeHealth ) {
 	} else {
 		health += changeHealth;
 		if( changeHealth > 0 ) {
-			anim.Play( healColorAnim );
+			playHeal();
 			audio.PlayOneShot(healthSound);
 		} else {
-			anim.Blend( hitAnim );
-			anim.Play( hitColorAnim );
+			playHit();
+			if( !anim.IsPlaying( attackAnim1 ) && !anim.IsPlaying( attackAnim1 ) )
+				anim.Blend( hitAnim );
 			audio.PlayOneShot(hitSound);
 		}
 	}
@@ -163,4 +162,32 @@ function isShieldOn() {
 		shieldOn = false;
 	}
 	return shieldOn;
+}
+
+function playHeal() {
+	mater.color.r = 0;
+	mater.color.g = 1;
+	mater.color.b= 0;
+	yield WaitForSeconds( 0.2 );
+	mater.color = origColor;
+	yield WaitForSeconds( 0.2 );
+	mater.color.r = 0;
+	mater.color.g = 1;
+	mater.color.b= 0;
+	yield WaitForSeconds( 0.2 );
+	mater.color = origColor;
+}
+
+function playHit() {
+	mater.color.r = 1;
+	mater.color.g = 0;
+	mater.color.b= 0;
+	yield WaitForSeconds( 0.2 );
+	mater.color = origColor;
+	yield WaitForSeconds( 0.2 );
+	mater.color.r = 1;
+	mater.color.g = 0;
+	mater.color.b= 0;
+	yield WaitForSeconds( 0.2 );
+	mater.color = origColor;
 }

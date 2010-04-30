@@ -20,12 +20,7 @@ function Update () {
 
 function FixedUpdate() {
 	// Change speed
-	if( Input.GetAxis ("Speed") > 0 )
-		setSpeed( -1 );
-	else if( Input.GetAxis ("Shield") > 0 )
-		setSpeed( 1 );
-	else
-		setSpeed( 0 );
+	setSpeed( Input.GetAxis ("Speed") );
 	
 	// Change direction
 	if( nextIndex >= moveTowards.length )

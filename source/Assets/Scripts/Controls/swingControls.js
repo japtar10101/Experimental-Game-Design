@@ -8,6 +8,7 @@ var swordSound : AudioSource;
 var pressUp : String;
 var pressDown : String;
 var defaultAnim : String;
+var hitAnim : String = "hit";
 var orientLastKeyFrameToDown : boolean = true;
 var hackSpeedUpAnim : float = 3;
 
@@ -102,6 +103,7 @@ function queueAnimation( playing : boolean ) {
 			playThis = pressUp;
 		rotateAngle = anglePlayer( horizontalInput, verticalInput );
 	}
+	swordAnimation.Stop( hitAnim );
 	if( playThis && !playing) {
 		if( multiplier > 1 ) {
 			incrementer += 1;
@@ -109,6 +111,8 @@ function queueAnimation( playing : boolean ) {
 		} else
 			incrementer = 0;
 		backToDefault = true;
+		
+		// Stop any hit animations
 		swordAnimation.Play( playThis );
 		swordSound.Play();
 		rotate.localEulerAngles.z = rotateAngle;
