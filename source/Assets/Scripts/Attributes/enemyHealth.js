@@ -55,9 +55,6 @@ function decreaseHealth( collided : GameObject ) {
 			collide.isTrigger = false;
 			dying = true;
 		} else {
-			var clone : GameObject = Instantiate(
-				projectileAttributes.enemyHit, trans.position, trans.rotation );
-			clone.transform.Rotate( Random.Range(0, 360), 90, 90 );
 			anim.Play( hitAnim );
 			audio.PlayOneShot(hitSound);
 		}
