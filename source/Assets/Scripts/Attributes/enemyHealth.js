@@ -43,7 +43,7 @@ function OnTriggerEnter (other : Collider) {
 
 function decreaseHealth( collided : GameObject ) {
 	//verify what we're colliding with is a sword
-	if( collided.CompareTag( "Sword" ) && collided.renderer.enabled ) {
+	if( collided.CompareTag( "Sword" ) /*&& collided.renderer.enabled*/ ) {
 		health -= 1;
 		hitEffect();
 		if( health <= 0 ) {

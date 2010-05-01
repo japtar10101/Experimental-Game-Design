@@ -1,22 +1,24 @@
-var shieldColor : Material;
-var shieldOn : Renderer;
+var minOpacity : float = 0.5;
+private var shieldColor : Material;
+private var shieldOn : Renderer;
 
 private var change : Color;
-
 function Start() {
-	if( !shieldOn )
-		shieldOn = GetComponent( Renderer );
-	if( !shieldColor )
-		shieldColor = GetComponent( Material );
+	shieldOn = GetComponent( Renderer );
+	shieldColor = shieldOn.material;
 }
 
-function Update () {
+function FixedUpdate () {
 	if( shieldOn.enabled )
 		fade();
 }
 
 function fade() {
 	change = shieldColor.GetColor("_Color");
-	change.a = playerAttributes.shieldDuration / bars.maxShield;
+	var alpha : float = playerAttributes.shieldDuration / bars.maxShield;
+	if(alpha < minOpacity) alpha = minOpacity;
+	else if(alpha > 1) alpha = 1;
+	change.a = alpha;
+	print( "set alpha " + alpha );
 	shieldColor.SetColor("_Color", change);
 }
