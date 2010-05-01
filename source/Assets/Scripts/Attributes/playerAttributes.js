@@ -39,6 +39,9 @@ private var noShield : float = 0;
 static var score : int;
 var scoreMultiplier : int = 49;
 
+//timer for hit face
+private var timer : int = 0;
+
 function Start() {
 	health = maxHealth;
 	shieldDuration = maxShield;
@@ -62,6 +65,10 @@ function Update() {
 		if( !shieldRenderer.enabled && bool )
 			audio.PlayOneShot(shieldSound);
 		shieldRenderer.enabled = bool;
+	}
+	if(Time.frameCount - timer >= 3) {
+		timer = 0;
+		bars.statFaceDraw = bars.statFaceDefault;
 	}
 }
 
@@ -123,6 +130,8 @@ function updateHealth( changeHealth ) {
 			if( !anim.IsPlaying( attackAnim1 ) && !anim.IsPlaying( attackAnim1 ) )
 				anim.Blend( hitAnim );
 			audio.PlayOneShot(hitSound);
+			timer = Time.frameCount;
+			bars.statFaceDraw = bars.statFaceHit;
 		}
 	}
 

@@ -14,7 +14,11 @@ var shieldBar : Texture;
 var faceDefault : Texture;
 var faceAttack : Texture;
 var faceDanger : Texture;
-var faceHit : Texture;
+var faceHit : Texture; 
+var faceDraw : Texture;
+static var statFaceDefault : Texture;
+static var statFaceHit : Texture;
+static var statFaceDraw : Texture;
 
 // animation times
 var timeHit : float = 0.5;
@@ -78,6 +82,10 @@ function Start() {
 	healthFullWidth = healthRect.width;
 	shieldFullWidth = shieldRect.width;
 	
+	statFaceDefault = faceDefault;
+	statFaceHit = faceHit;
+	statFaceDraw = faceDraw;
+	
 }
 
 function OnGUI() {
@@ -120,6 +128,6 @@ function drawFace() {
 	if( playerAttributes.health <= danger )
 		draw = faceDanger;
 	else
-		draw = faceDefault;
+		draw = statFaceDraw;
 	GUI.DrawTexture( faceRect,  draw );
 }
