@@ -14,17 +14,24 @@ private var state : int = 0;
 private var hold : float = -1;
 private var yLimit : float;
 private var rect : Rect;
+private var findProportions : boolean = true;
 
-function Start() {
-	var prop : float = Screen.width / creditTexture.width;
+function calcDimensions() {
+	var prop : float = Screen.width * 1.0 / creditTexture.width;
 	var height : float = prop * creditTexture.height;
-	rect = new Rect( 0, 0, Screen.width, height );
+	//rect = new Rect( 0, 0, Screen.width, height );
+	//rect = new Rect( 0, 0, creditTexture.width, creditTexture.height );
+	rect = new Rect( 0, 0, creditTexture.width * prop, creditTexture.height * prop );
 	yLimit = height - Screen.height;
 	yLimit *= -1;
 }
 
 function OnGUI() {
 	GUI.depth = 2;
+	if( findProportions ) {
+		calcDimensions();
+		findProportions = false;
+	}
 	switch( state ) {
 		case 0:
 			start();
