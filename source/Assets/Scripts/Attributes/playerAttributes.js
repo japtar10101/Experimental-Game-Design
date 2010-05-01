@@ -38,6 +38,9 @@ private var anim : Animation;
 private var noShield : float = 0;
 static var score : int;
 private var trans : Transform;
+
+var blink : int = 3;
+
 function Start() {
 	trans = transform;
 	health = maxHealth;
@@ -131,8 +134,7 @@ function updateHealth( changeHealth : int, pos : Transform ) {
 			var clone : GameObject;
 			if( pos ) {
 				clone = Instantiate( projectileAttributes.hit, pos.position, pos.rotation );
-				//clone.transform.LookAt( trans );
-				clone.transform.Rotate( 270, 0, 0 );
+				clone.transform.Rotate( Random.Range(0, 360), 90, 90 );
 			} else
 				clone = Instantiate( projectileAttributes.hit, trans.position,
 					projectileAttributes.hit.transform.rotation );
@@ -181,29 +183,25 @@ function isShieldOn() {
 }
 
 function playHeal() {
-	mater.color.r = 0;
-	mater.color.g = 1;
-	mater.color.b= 0;
-	yield WaitForSeconds( 0.2 );
-	mater.color = origColor;
-	yield WaitForSeconds( 0.2 );
-	mater.color.r = 0;
-	mater.color.g = 1;
-	mater.color.b= 0;
-	yield WaitForSeconds( 0.2 );
-	mater.color = origColor;
+	var num : int = blink;
+	while( num > 0 ) {
+		mater.color.r = 0;
+		mater.color.g = 1;
+		mater.color.b= 0;
+		yield WaitForSeconds( 0.2 );
+		mater.color = origColor;
+		num -= 1;
+	}
 }
 
 function playHit() {
-	mater.color.r = 1;
-	mater.color.g = 0;
-	mater.color.b= 0;
-	yield WaitForSeconds( 0.2 );
-	mater.color = origColor;
-	yield WaitForSeconds( 0.2 );
-	mater.color.r = 1;
-	mater.color.g = 0;
-	mater.color.b= 0;
-	yield WaitForSeconds( 0.2 );
-	mater.color = origColor;
+	var num : int = blink;
+	while( num > 0 ) {
+		mater.color.r = 1;
+		mater.color.g = 0;
+		mater.color.b= 0;
+		yield WaitForSeconds( 0.2 );
+		mater.color = origColor;
+		num -= 1;
+	}
 }

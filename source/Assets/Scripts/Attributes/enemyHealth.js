@@ -14,6 +14,7 @@ private var spawn : spawnBulletsV2;
 private var collide : Collider;
 private static var initForce : float = 1500;
 private var comboText : TextMesh;
+private var trans : Transform;
 
 function Start() {
 	spawn = GetComponent( spawnBulletsV2 );
@@ -26,6 +27,7 @@ function Start() {
 	}
 	anim[hitAnim].layer = 2;
 	dying = false;
+	trans = transform;
 }
 
 function Update () {
@@ -43,6 +45,7 @@ function decreaseHealth( collided : GameObject ) {
 	//verify what we're colliding with is a sword
 	if( collided.CompareTag( "Sword" ) && collided.renderer.enabled ) {
 		health -= 1;
+		hitEffect();
 		if( health <= 0 ) {
 			explosion();
 			anim.CrossFade( deathAnim );
@@ -52,10 +55,21 @@ function decreaseHealth( collided : GameObject ) {
 			collide.isTrigger = false;
 			dying = true;
 		} else {
+			var clone : GameObject = Instantiate(
+				projectileAttributes.enemyHit, trans.position, trans.rotation );
+			clone.transform.Rotate( Random.Range(0, 360), 90, 90 );
 			anim.Play( hitAnim );
 			audio.PlayOneShot(hitSound);
 		}
 	}
+}
+
+function hitEffect() {
+	var clone : GameObject = Instantiate(
+		projectileAttributes.enemyHit, trans.position, trans.rotation );
+	clone.transform.Rotate( Random.Range(0, 360), 90, 90 );
+	clone.transform.parent = trans;
+	clone.renderer.enabled = true;
 }
 
 function explosion() {
