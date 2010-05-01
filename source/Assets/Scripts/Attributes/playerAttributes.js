@@ -21,7 +21,7 @@ var shieldAnim : String = "playerUnharmed";
 var attackAnim1 : String = "up_attack";
 var attackAnim2 : String = "down_attack";
 var mater : Material;
-var origColor : Color;
+var origColor : Color = new Color( 150, 150, 150 );
 
 // Health-related stuff
 var maxHealth : int = 22;
@@ -37,8 +37,9 @@ private var shieldOn : boolean= false;
 private var anim : Animation;
 private var noShield : float = 0;
 static var score : int;
-
+private var trans : Transform;
 function Start() {
+	trans = transform;
 	health = maxHealth;
 	shieldDuration = maxShield;
 	bars.maxHealth = maxHealth;
@@ -96,7 +97,7 @@ function OnTriggerEnter (other : Collider) {
 		}
 		
 		// Update helth
-		if( updateHealth( decrement ) ) {
+		if( updateHealth( decrement, collided.transform ) ) {
 			// Player died
 			hudAttributes.Gameover( atDeathGoTo );
 		}
@@ -109,7 +110,11 @@ function OnTriggerEnter (other : Collider) {
 }
 
 //Health stuff
-function updateHealth( changeHealth ) {
+function updateHealth( changeHealth : int ) {
+	updateHealth( changeHealth, null );
+}
+
+function updateHealth( changeHealth : int, pos : Transform ) {
 	if( changeHealth == 0 ) {
 		anim.Blend( shieldAnim );
 		audio.PlayOneShot(deflectSound);
@@ -123,6 +128,16 @@ function updateHealth( changeHealth ) {
 			if( !anim.IsPlaying( attackAnim1 ) && !anim.IsPlaying( attackAnim1 ) )
 				anim.Blend( hitAnim );
 			audio.PlayOneShot(hitSound);
+			var clone : GameObject;
+			if( pos ) {
+				clone = Instantiate( projectileAttributes.hit, pos.position, pos.rotation );
+				//clone.transform.LookAt( trans );
+				clone.transform.Rotate( 270, 0, 0 );
+			} else
+				clone = Instantiate( projectileAttributes.hit, trans.position,
+					projectileAttributes.hit.transform.rotation );
+			clone.transform.parent = trans;
+			clone.renderer.enabled = true;
 		}
 	}
 

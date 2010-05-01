@@ -17,10 +17,12 @@ function FixedUpdate () {
 }
 
 function timeDestroy() {
-	ring1.transform.rotation.eulerAngles.z =
-		Random.Range( 0, 360 );
-	ring2.transform.rotation.eulerAngles.z =
-		Random.Range( 0, 360 );
+	if( ring1 )
+		ring1.transform.rotation.eulerAngles.z =
+			Random.Range( 0, 360 );
+	if( ring2 )
+		ring2.transform.rotation.eulerAngles.z =
+			Random.Range( 0, 360 );
 	yield WaitForSeconds( lifeTime );
 	Destroy( gameObject );
 }
