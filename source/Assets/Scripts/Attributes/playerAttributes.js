@@ -140,9 +140,11 @@ function updateHealth( changeHealth : int, pos : Transform ) : boolean {
 			if( pos ) {
 				clone = Instantiate( projectileAttributes.hit, pos.position, pos.rotation );
 				clone.transform.Rotate( Random.Range(0, 360), 90, 90 );
-			} else
+			} else {
 				clone = Instantiate( projectileAttributes.hit, trans.position,
 					projectileAttributes.hit.transform.rotation );
+				clone.transform.Rotate(0, Random.Range(0, 360), 0 );
+			}
 			clone.transform.parent = trans;
 			clone.renderer.enabled = true;
 		}

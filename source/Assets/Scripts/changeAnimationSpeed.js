@@ -25,6 +25,7 @@ function Start() {
 		clone.transform.localScale = trans.localScale;
 		clone.transform.parent = trans;
 		clone.transform.localPosition.z -= countY * cloudBounds.height;
+		addVariance( clone.transform );
 		allClones[index] = clone;
 		index += 1;
 	}
@@ -39,6 +40,7 @@ function Start() {
 			y = countY * cloudBounds.height;
 			clone.transform.localPosition.z -= y;
 			clone.transform.localPosition.x -= countX * cloudBounds.width;
+			addVariance( clone.transform );
 			allClones[index] = clone;
 			index += 1;
 			clone = Instantiate( cloud, cloudPos.position, cloudPos.rotation );
@@ -46,6 +48,7 @@ function Start() {
 			clone.transform.parent = trans;
 			clone.transform.localPosition.z -= y;
 			clone.transform.localPosition.x += countX * cloudBounds.width;
+			addVariance( clone.transform );
 			allClones[index] = clone;
 			index += 1;
 		}
@@ -55,6 +58,13 @@ function Start() {
 	leftBound = rightBound = cloud.transform.localPosition.x;
 	rightBound += cloudBounds.width * (tileX - 1);
 	leftBound -= cloudBounds.width * tileX;
+}
+
+function addVariance( trans : Transform ) : void {
+	trans.localPosition.x += Random.Range(
+		cloudBounds.x * -1, cloudBounds.x );
+	trans.localPosition.z += Random.Range(
+		cloudBounds.y * -1, cloudBounds.y );
 }
 
 function Update() {
