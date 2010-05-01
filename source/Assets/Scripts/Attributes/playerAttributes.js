@@ -38,7 +38,7 @@ private var anim : Animation;
 private var noShield : float = 0;
 static var score : int;
 private var trans : Transform;
-
+var scoreMultiplier : int = 49;
 var blink : int = 3;
 
 function Start() {
@@ -76,7 +76,7 @@ function OnTriggerEnter (other : Collider) {
 	if( collided.CompareTag("Point") ) {
 		Destroy(collided);
 		audio.PlayOneShot(scoreSound);
-		score += 1;
+		score += scoreMultiplier;
 		return;
 	}
 	var isDestructable : boolean = collided.CompareTag("Destructable");
@@ -100,7 +100,12 @@ function OnTriggerEnter (other : Collider) {
 		}
 		
 		// Update helth
-		if( updateHealth( decrement, collided.transform ) ) {
+		var gameover : boolean;
+		if( isDestructable )
+			gameover = updateHealth( decrement, collided.transform );
+		else
+			gameover = updateHealth( decrement );
+		if( gameover ) {
 			// Player died
 			hudAttributes.Gameover( atDeathGoTo );
 		}
@@ -113,11 +118,11 @@ function OnTriggerEnter (other : Collider) {
 }
 
 //Health stuff
-function updateHealth( changeHealth : int ) {
-	updateHealth( changeHealth, null );
+function updateHealth( changeHealth : int ) : boolean {
+	return updateHealth( changeHealth, null );
 }
 
-function updateHealth( changeHealth : int, pos : Transform ) {
+function updateHealth( changeHealth : int, pos : Transform ) : boolean {
 	if( changeHealth == 0 ) {
 		anim.Blend( shieldAnim );
 		audio.PlayOneShot(deflectSound);
@@ -128,7 +133,7 @@ function updateHealth( changeHealth : int, pos : Transform ) {
 			audio.PlayOneShot(healthSound);
 		} else {
 			playHit();
-			if( !anim.IsPlaying( attackAnim1 ) && !anim.IsPlaying( attackAnim1 ) )
+			if( !anim.IsPlaying( attackAnim1 ) && !anim.IsPlaying( attackAnim2 ) )
 				anim.Blend( hitAnim );
 			audio.PlayOneShot(hitSound);
 			var clone : GameObject;
@@ -151,12 +156,12 @@ function updateHealth( changeHealth : int, pos : Transform ) {
 	return isDead();
 }
 
-function isDead() {
+function isDead() : boolean {
 	return health <= 0;
 }
 
 //Shield stuff
-function updateShield( on ) {
+function updateShield( on ) : boolean {
 	// Set the shield variables
 	shieldOn = on;
 	if( on ) {
@@ -175,7 +180,7 @@ function updateShield( on ) {
 	return isShieldOn();
 }
 
-function isShieldOn() {
+function isShieldOn() : boolean {
 	if( shieldDuration <= 0 ) {
 		shieldOn = false;
 	}

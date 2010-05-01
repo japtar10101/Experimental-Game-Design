@@ -16,23 +16,6 @@ var faceAttack : Texture;
 var faceDanger : Texture;
 var faceHit : Texture;
 
-// positions
-var healthOffsetX : int = 205;
-var healthOffsetY : int = 90;
-var shieldOffsetX : int = 205;
-var shieldOffsetY : int = 174;
-var faceOffsetX : int = 38;
-var faceOffsetY : int = 35;
-var scoreOffsetX : int = 205;
-var scoreOffsetY : int = 200;
-var scoreWidth : int = 205;
-var scoreHeight : int = 50;
-
-var comboOffsetX : int = 500;
-var comboOffsetY : int = 200;
-var comboWidth : int = 205;
-var comboHeight : int = 50;
-
 // animation times
 var timeHit : float = 0.5;
 var timeAttack : float = 0.5;
@@ -44,18 +27,16 @@ static var faceID : int;
 //TODO: make rects to store these variables.  Ugh.
 //private var bkgRect : Rect;
 // Coordinates
-private var bkgWidth : int;
-private var bkgHeight : int;
 private var healthFullWidth : int;
-private var healthWidth : int;
-private var healthHeight : int;
 private var shieldFullWidth : int;
-private var shieldWidth : int;
-private var shieldHeight : int;
-private var faceWidth : int;
-private var faceHeight : int;
 private var x : int;
 private var y : int;
+
+//Rects for each HUD member
+private var backgroundRect : Rect;
+var healthRect : Rect;
+var shieldRect : Rect;
+var faceRect : Rect;
 //private var prev : TextAnchor;
 
 function Start() {
@@ -66,57 +47,45 @@ function Start() {
 	var proportion : float = hudHeight / background.height;
 	
 	// set the variables
-	bkgWidth = background.width * proportion;
-	bkgHeight = background.height * proportion;
-	healthWidth = healthBar.width * proportion;
-	healthHeight = healthBar.height * proportion;
-	shieldWidth = shieldBar.width * proportion;
-	shieldHeight = shieldBar.height * proportion;
-	faceWidth = faceDefault.width * proportion;
-	faceHeight = faceDefault.height * proportion;
-	scoreWidth = scoreWidth * proportion;
-	scoreHeight = scoreHeight * proportion;
-	comboWidth = comboWidth * proportion;
-	comboHeight = comboHeight * proportion;
-	healthOffsetX *= proportion;
-	healthOffsetY *= proportion;
-	shieldOffsetX *= proportion;
-	shieldOffsetY *= proportion;
-	faceOffsetX *= proportion;
-	faceOffsetY *= proportion;
-	scoreOffsetX *= proportion;
-	scoreOffsetY *= proportion;
-	comboOffsetX *= proportion;
-	comboOffsetY *= proportion;
+	backgroundRect.width = background.width * proportion;
+	backgroundRect.height = background.height * proportion;
+	healthRect.width = healthBar.width * proportion;
+	healthRect.height = healthBar.height * proportion;
+	shieldRect.width = shieldBar.width * proportion;
+	shieldRect.height = shieldBar.height * proportion;
+	faceRect.width= faceDefault.width * proportion;
+	faceRect.height = faceDefault.height * proportion;
+	healthRect.x *= proportion;
+	healthRect.y *= proportion;
+	shieldRect.x *= proportion;
+	shieldRect.y *= proportion;
+	faceRect.x *= proportion;
+	faceRect.y *= proportion;
 	
 	// shift the coordinates by the offsets
 	x = xOffset * Screen.width;
 	y = yOffset * Screen.height;
-	healthOffsetX += x;
-	healthOffsetY += y;
-	shieldOffsetX += x;
-	shieldOffsetY += y;
-	faceOffsetX += x;
-	faceOffsetY += y;
-	scoreOffsetX += x;
-	scoreOffsetY += y;
-	comboOffsetX += x;
-	comboOffsetY += y;
+	backgroundRect.x = x;
+	backgroundRect.y = y;
+	healthRect.x += x;
+	healthRect.y += y;
+	shieldRect.x += x;
+	shieldRect.y += y;
+	faceRect.x += x;
+	faceRect.y += y;
 	
 	// Store the full width of each texture
-	healthFullWidth = healthWidth;
-	shieldFullWidth = shieldWidth;
+	healthFullWidth = healthRect.width;
+	shieldFullWidth = shieldRect.width;
+	
 }
 
 function OnGUI() {
 	GUI.depth = 1;
-	GUI.DrawTexture( new Rect(x, y, bkgWidth, bkgHeight ),
-		background );
+	GUI.DrawTexture( backgroundRect, background);
 	drawHealth();
 	drawShield();
 	drawFace();
-	drawScore();
-	drawIncrementer();
 }
 
 function drawHealth() {
@@ -130,21 +99,19 @@ function drawHealth() {
 	// Calculate the texture width
 	var health : float = playerAttributes.health;
 	health /= maxHealth;
-	healthWidth = health * healthFullWidth;
+	healthRect.width = health * healthFullWidth;
 	
 	// draw the bar
-	GUI.DrawTexture( new Rect(healthOffsetX, healthOffsetY,
-		healthWidth, healthHeight ), draw );
+	GUI.DrawTexture( healthRect, draw );
 }
 
 function drawShield() {
 	// Calculate the texture width
 	var shield : float = playerAttributes.shieldDuration;
 	shield /= maxShield;
-	shieldWidth = shield * shieldFullWidth;
+	shieldRect.width = shield * shieldFullWidth;
 	
-	GUI.DrawTexture( new Rect(shieldOffsetX, shieldOffsetY,
-		shieldWidth, shieldHeight ), shieldBar );
+	GUI.DrawTexture( shieldRect, shieldBar );
 }
 
 function drawFace() {
@@ -154,18 +121,5 @@ function drawFace() {
 		draw = faceDanger;
 	else
 		draw = faceDefault;
-	GUI.DrawTexture( new Rect(faceOffsetX, faceOffsetY,
-		faceWidth, faceHeight ),  draw );
-}
-
-function drawScore() {
-	GUI.Box( new Rect(scoreOffsetX, scoreOffsetY,
-		scoreWidth, scoreHeight ),  playerAttributes.score.ToString() );
-}
-
-function drawIncrementer() {
-	if(swingControls.incrementer > 0) {
-		GUI.Box( new Rect(comboOffsetX, comboOffsetY,
-			comboWidth, comboHeight ),  swingControls.incrementer.ToString() );
-	}
+	GUI.DrawTexture( faceRect,  draw );
 }
