@@ -1,4 +1,4 @@
-var cloud : GameObject;
+var clouds : GameObject[];
 var cloudBounds : Rect = new Rect( 0,0, 1, 1 );
 var tileX : int = 6;
 var tileY : int = 3;
@@ -7,23 +7,21 @@ var speed : float = 1;
 private var rightBound : float;
 private var leftBound : float;
 private var allClones : GameObject[];
+private var cloudPos : Transform;
+private var trans : Transform;
 
 function Start() {
 	allClones = new GameObject[(tileX - 1) * 2 * tileY + tileY];
 	
 	// First, clone a lot of clouds, and parent it to this.
-	var trans : Transform = transform;
-	var cloudPos : Transform = cloud.transform;
+	trans = transform;
+	cloudPos = clouds[0].transform;
 	var index : int = 0;
 	
 	// Make the middle column
 	var clone : GameObject;
-	allClones[index] = cloud;
-	index += 1;
-	for( var countY : int = 1; countY < tileY; countY += 1 ) {
-		clone = Instantiate( cloud, cloudPos.position, cloudPos.rotation);
-		clone.transform.localScale = trans.localScale;
-		clone.transform.parent = trans;
+	for( var countY : int = 0; countY < tileY; countY += 1 ) {
+		clone = generateClouds();
 		clone.transform.localPosition.z -= countY * cloudBounds.height;
 		addVariance( clone.transform );
 		allClones[index] = clone;
@@ -34,18 +32,14 @@ function Start() {
 	var y : float;
 	for( countY = 0; countY < tileY; countY += 1 ) {
 		for( var countX : int = 1; countX < tileX; countX += 1 ) {
-			clone = Instantiate( cloud, cloudPos.position, cloudPos.rotation );
-			clone.transform.localScale = trans.localScale;
-			clone.transform.parent = trans;
+			clone = generateClouds();
 			y = countY * cloudBounds.height;
 			clone.transform.localPosition.z -= y;
 			clone.transform.localPosition.x -= countX * cloudBounds.width;
 			addVariance( clone.transform );
 			allClones[index] = clone;
 			index += 1;
-			clone = Instantiate( cloud, cloudPos.position, cloudPos.rotation );
-			clone.transform.localScale = trans.localScale;
-			clone.transform.parent = trans;
+			clone = generateClouds();
 			clone.transform.localPosition.z -= y;
 			clone.transform.localPosition.x += countX * cloudBounds.width;
 			addVariance( clone.transform );
@@ -55,9 +49,20 @@ function Start() {
 	}
 	
 	//Calculate the right and left bounds
-	leftBound = rightBound = cloud.transform.localPosition.x;
+	leftBound = rightBound = cloudPos.localPosition.x;
 	rightBound += cloudBounds.width * (tileX - 1);
 	leftBound -= cloudBounds.width * tileX;
+}
+
+function generateClouds() : GameObject {
+	var index : int = Random.Range(0,clouds.length);
+	var clone : GameObject;
+	//Debug.Break();
+	clone = Instantiate( clouds[index], cloudPos.position, cloudPos.rotation);
+	clone.transform.localScale = trans.localScale;
+	clone.transform.parent = trans;
+	clone.renderer.enabled = true;
+	return clone;
 }
 
 function addVariance( trans : Transform ) : void {
@@ -65,6 +70,8 @@ function addVariance( trans : Transform ) : void {
 		cloudBounds.x * -1, cloudBounds.x );
 	trans.localPosition.z += Random.Range(
 		cloudBounds.y * -1, cloudBounds.y );
+	if( Random.Range( 0, 2 ) > 0 )
+		trans.localRotation.eulerAngles.z += 180;
 }
 
 function Update() {
