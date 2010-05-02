@@ -76,6 +76,8 @@ function orientPlayer() {
 		//Now cross-fade to the default animation
 		swordAnimation.CrossFade( defaultAnim );
 		backToDefault = false;
+		if( multiplier == 1 )
+			incrementer = 0;
 	}
 }
 
@@ -107,10 +109,7 @@ function queueAnimation( playing : boolean ) {
 	swordAnimation.Stop( hitAnim );
 	if( playThis && !playing) {
 		swingControls.toIncrement = true;
-		if( multiplier > 1 )
-			multiplier = 1;
-		else
-			incrementer = 0;
+		multiplier = 1;
 		backToDefault = true;
 		
 		// Stop any hit animations
