@@ -1,5 +1,6 @@
 static var multiplier : int;
 static var incrementer : int;
+static var toIncrement : boolean;
 static var limit : int = 16;
 
 var swordRenderer : Renderer;
@@ -16,8 +17,7 @@ var rotate : Transform;
 private var backToDefault : boolean = false;
 
 static function computeScore( score : int ) : int {
-	var result : int = score * multiplier + incrementer;
-	multiplier += 1;
+	var result : int = (score + incrementer) * multiplier;
 	if( result > limit )
 		return limit;
 	else
@@ -27,6 +27,7 @@ static function computeScore( score : int ) : int {
 function Start() {
 	multiplier = 1;
 	incrementer = 0;
+	toIncrement = true;
 	if( !rotate )
 		rotate = GetComponent(Transform);
 	if( !swordAnimation || !swordRenderer ) {
@@ -105,10 +106,10 @@ function queueAnimation( playing : boolean ) {
 	}
 	swordAnimation.Stop( hitAnim );
 	if( playThis && !playing) {
-		if( multiplier > 1 ) {
-			incrementer += 1;
+		swingControls.toIncrement = true;
+		if( multiplier > 1 )
 			multiplier = 1;
-		} else
+		else
 			incrementer = 0;
 		backToDefault = true;
 		

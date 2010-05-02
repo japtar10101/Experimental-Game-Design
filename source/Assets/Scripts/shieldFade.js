@@ -19,6 +19,5 @@ function fade() {
 	if(alpha < minOpacity) alpha = minOpacity;
 	else if(alpha > 1) alpha = 1;
 	change.a = alpha;
-	print( "set alpha " + alpha );
 	shieldColor.SetColor("_Color", change);
 }

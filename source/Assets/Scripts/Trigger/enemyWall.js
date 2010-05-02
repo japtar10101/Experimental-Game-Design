@@ -32,7 +32,7 @@ function Update() {
 function OnTriggerEnter (other : Collider) {
 	//Check if what collided was the player
 	if( other.gameObject.CompareTag( "Player" ) ) {
-		print( "Hit!" );
+//		print( "Hit!" );
 		// Reveal all enemies
 		for( reveal in enemies ) {
 			if( !reveal )

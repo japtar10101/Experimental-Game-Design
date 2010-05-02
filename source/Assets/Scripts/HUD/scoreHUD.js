@@ -10,10 +10,6 @@ var comboBar : Texture;
 var multiBar : Texture;
 var background : Texture;
 
-//TODO: add a variable to track face conditions
-
-//TODO: make rects to store these variables.  Ugh.
-//private var bkgRect : Rect;
 // Coordinates
 private var x : int;
 private var y : int;
@@ -22,18 +18,15 @@ private var y : int;
 var scoreRect : Rect;
 var comboRect : Rect;
 var multiRect : Rect;
-var scoreTextRect : Rect;
-var comboTextRect : Rect;
-var multiTextRect : Rect;
-//private var prev : TextAnchor;
+
+var atHeightChangeFont : int = 700;
+var bigFont : GUIStyle;
+var smallFont : GUIStyle;
 
 function Start() {
-	//prev = GUI.skin.label.alignment = TextAnchor.MiddleLeft;
-	
 	// Find the proportion to resize all textures to
 	var hudHeight : float = Screen.height * screenProportion;
 	var proportion : float = hudHeight / background.height;
-	
 	
 	// set the variables
 	scoreRect.width = scoreBar.width * proportion;
@@ -48,14 +41,7 @@ function Start() {
 	comboRect.y *= proportion;
 	multiRect.x *= proportion;
 	multiRect.y *= proportion;
-	
-	scoreTextRect.width = scoreRect.width;
-	scoreTextRect.height = scoreRect.height;
-	comboTextRect.width = comboRect.width;
-	comboTextRect.height = comboRect.height;
-	multiTextRect.width = multiRect.width;
-	multiTextRect.height = multiRect.height;
-	
+		
 	// shift the coordinates by the offsets
 	x = xOffset * Screen.width;
 	y = yOffset * Screen.height;
@@ -65,15 +51,6 @@ function Start() {
 	comboRect.y += y;
 	multiRect.x += x;
 	multiRect.y += y;
-	scoreTextRect.x = scoreRect.x * 1.109;
-	scoreTextRect.y = scoreRect.y;
-	comboTextRect.x = comboRect.x * 1.109;
-	comboTextRect.y = comboRect.y;
-	multiTextRect.x = multiRect.x * 1.109;
-	multiTextRect.y = multiRect.y;
-	
-	print(scoreTextRect);
-	
 }
 
 function OnGUI() {
@@ -89,17 +66,26 @@ function OnGUI() {
 
 function drawScore() {
 	GUI.DrawTexture( scoreRect, scoreBar);
-	GUI.Label(scoreTextRect, playerAttributes.score.ToString());
+	if(Screen.height < atHeightChangeFont)
+		GUI.Label(scoreRect, playerAttributes.score.ToString(), smallFont);
+	else
+		GUI.Label(scoreRect, playerAttributes.score.ToString(), bigFont);
 }
 
 function drawCombo() {
 	GUI.DrawTexture(comboRect, comboBar);
-	GUI.Label(comboTextRect, swingControls.incrementer.ToString());
+	if(Screen.height < atHeightChangeFont)
+		GUI.Label(comboRect, swingControls.incrementer.ToString(), smallFont);
+	else
+		GUI.Label(comboRect, swingControls.incrementer.ToString(), bigFont);
 }
 
 function drawMulti() {
 	GUI.DrawTexture( multiRect, multiBar);
 	var mult : int = swingControls.multiplier;
 	mult -= 1;
-	GUI.Label(multiTextRect, mult.ToString());
+	if(Screen.height < atHeightChangeFont)
+		GUI.Label(multiRect, mult.ToString(), smallFont);
+	else
+		GUI.Label(multiRect, mult.ToString(), bigFont);
 }

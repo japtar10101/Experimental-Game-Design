@@ -15,9 +15,6 @@ var faceDefault : Texture;
 var faceAttack : Texture;
 var faceDanger : Texture;
 var faceHit : Texture;
-var faceDraw : Texture;
-static var statFaceDefault : Texture;
-static var statFaceHit : Texture;
 static var facetimer : float = -1;
 static var hitFaceLength : float = 1;
 static var attackFaceLength : float = 1;
@@ -30,8 +27,6 @@ var danger : int = 8;
 // face conditions
 static var faceID : int;
 
-//TODO: make rects to store these variables.  Ugh.
-//private var bkgRect : Rect;
 // Coordinates
 private var healthFullWidth : int;
 private var shieldFullWidth : int;
@@ -95,7 +90,6 @@ function Start() {
 	shieldFullWidth = shieldRect.width;
 	statFaceDefault = faceDefault;
 	statFaceHit = faceHit;
-	statFaceDraw = faceDraw;
 }
 
 function OnGUI() {

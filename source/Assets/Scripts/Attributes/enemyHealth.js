@@ -43,7 +43,7 @@ function OnTriggerEnter (other : Collider) {
 
 function decreaseHealth( collided : GameObject ) {
 	//verify what we're colliding with is a sword
-	if( collided.CompareTag( "Sword" ) /*&& collided.renderer.enabled*/ ) {
+	if( collided.CompareTag( "Sword" ) ) {
 		health -= 1;
 		hitEffect();
 		if( health <= 0 ) {
@@ -57,6 +57,11 @@ function decreaseHealth( collided : GameObject ) {
 		} else {
 			anim.Play( hitAnim );
 			audio.PlayOneShot(hitSound);
+		}
+		swingControls.multiplier += 1;
+		if( swingControls.toIncrement ) {
+			swingControls.incrementer += 1;
+			swingControls.toIncrement = false;
 		}
 	}
 }
