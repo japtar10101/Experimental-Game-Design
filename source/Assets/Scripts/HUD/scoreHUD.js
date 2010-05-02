@@ -83,7 +83,7 @@ function OnGUI() {
 	if(swingControls.incrementer > 0)
 		drawCombo();
 		
-	if(swingControls.multiplier > 1)
+	if(swingControls.multiplier > 2)
 		drawMulti();
 }
 
@@ -99,5 +99,7 @@ function drawCombo() {
 
 function drawMulti() {
 	GUI.DrawTexture( multiRect, multiBar);
-	GUI.Label(multiTextRect, swingControls.multiplier.ToString());
+	var mult : int = swingControls.multiplier;
+	mult -= 1;
+	GUI.Label(multiTextRect, mult.ToString());
 }
