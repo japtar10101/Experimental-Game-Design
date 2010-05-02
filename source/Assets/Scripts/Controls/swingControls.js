@@ -109,7 +109,10 @@ function queueAnimation( playing : boolean ) {
 	swordAnimation.Stop( hitAnim );
 	if( playThis && !playing) {
 		swingControls.toIncrement = true;
-		multiplier = 1;
+		if( multiplier == 1 )
+			incrementer = 0;
+		else
+			multiplier = 1;
 		backToDefault = true;
 		
 		// Stop any hit animations
