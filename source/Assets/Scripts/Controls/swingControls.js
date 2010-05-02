@@ -116,6 +116,7 @@ function queueAnimation( playing : boolean ) {
 		swordAnimation.Play( playThis );
 		swordSound.Play();
 		rotate.localEulerAngles.z = rotateAngle;
+		bars.attackFace();
 	}
 }
 

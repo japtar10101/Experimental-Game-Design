@@ -22,6 +22,7 @@ var attackAnim1 : String = "up_attack";
 var attackAnim2 : String = "down_attack";
 var mater : Material;
 var origColor : Color = new Color( 150, 150, 150 );
+var faceTimer : float = 1;
 
 // Health-related stuff
 var maxHealth : int = 22;
@@ -136,6 +137,8 @@ function updateHealth( changeHealth : int, pos : Transform ) : boolean {
 			if( !anim.IsPlaying( attackAnim1 ) && !anim.IsPlaying( attackAnim2 ) )
 				anim.Blend( hitAnim );
 			audio.PlayOneShot(hitSound);
+			timer = faceTimer;
+			bars.hitFace();
 			var clone : GameObject;
 			if( pos ) {
 				clone = Instantiate( projectileAttributes.hit, pos.position, pos.rotation );

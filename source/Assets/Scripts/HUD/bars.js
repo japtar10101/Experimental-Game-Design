@@ -15,13 +15,19 @@ var faceDefault : Texture;
 var faceAttack : Texture;
 var faceDanger : Texture;
 var faceHit : Texture;
+var faceDraw : Texture;
+static var statFaceDefault : Texture;
+static var statFaceHit : Texture;
+static var facetimer : float = -1;
+static var hitFaceLength : float = 1;
+static var attackFaceLength : float = 1;
 
 // animation times
 var timeHit : float = 0.5;
 var timeAttack : float = 0.5;
 var danger : int = 8;
 
-//TODO: add a variable to track face conditions
+// face conditions
 static var faceID : int;
 
 //TODO: make rects to store these variables.  Ugh.
@@ -37,10 +43,20 @@ private var backgroundRect : Rect;
 var healthRect : Rect;
 var shieldRect : Rect;
 var faceRect : Rect;
-//private var prev : TextAnchor;
+
+static function hitFace() {
+	facetimer = hitFaceLength;
+	faceID = 1;
+}
+
+static function attackFace() {
+	facetimer = attackFaceLength;
+	faceID = 2;
+}
 
 function Start() {
-	//prev = GUI.skin.label.alignment = TextAnchor.MiddleLeft;
+	faceID = 0;
+	facetimer = -1;
 	
 	// Find the proportion to resize all textures to
 	var hudHeight : float = Screen.height * screenProportion;
@@ -77,7 +93,9 @@ function Start() {
 	// Store the full width of each texture
 	healthFullWidth = healthRect.width;
 	shieldFullWidth = shieldRect.width;
-	
+	statFaceDefault = faceDefault;
+	statFaceHit = faceHit;
+	statFaceDraw = faceDraw;
 }
 
 function OnGUI() {
@@ -115,11 +133,27 @@ function drawShield() {
 }
 
 function drawFace() {
+	if( facetimer > 0 ) {
+		facetimer -= Time.deltaTime;
+		if( facetimer < 0 || Mathf.Approximately( facetimer, 0 ) ) {
+			facetimer = -1;
+			faceID = 0;
+		}
+	}
 	// Decide on which texture to draw
 	var draw : Texture;
-	if( playerAttributes.health <= danger )
-		draw = faceDanger;
-	else
-		draw = faceDefault;
+	switch( faceID ) {
+		case 1:
+			draw = faceHit;
+			break;
+		case 2:
+			draw = faceAttack;
+			break;
+		default:
+			if( playerAttributes.health <= danger )
+				draw = faceDanger;
+			else
+				draw = faceDefault;
+	}
 	GUI.DrawTexture( faceRect,  draw );
 }
