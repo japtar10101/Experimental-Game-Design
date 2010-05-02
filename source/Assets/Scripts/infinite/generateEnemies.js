@@ -26,10 +26,10 @@ function Update () {
 	
 	// Generate a random enemy
 	if(intervalTime > nextInterval) {
-		GenerateDifficulty();
 		intervalTime = 0;
 		intervalCount += 1;
 		nextInterval = Random.Range( minInterval, maxInterval );
+		GenerateDifficulty(intervalCount > changeDifficulty);
 	}
 	
 	// increase index when necessary
@@ -43,7 +43,7 @@ function Update () {
 	}
 }
 
-function GenerateDifficulty() {
+function GenerateDifficulty( newWave : boolean ) {
 	cloneWall = Instantiate( wall, playPos.position + offset,
 		Quaternion.identity );
 		
@@ -53,6 +53,11 @@ function GenerateDifficulty() {
 	script.enemies = difficulties[index].GetEnemies(
 		points.upperRightLimit, points.lowerLeftLimit);
 	offsetBombs( script.enemies );
+	
+	if( newWave ) {
+		var waveNum : int = index + 2;
+		points.textMesh.text = "Wave " + waveNum;
+	}
 }
 
 function offsetBombs( enemies : GameObject[] ) : void {
