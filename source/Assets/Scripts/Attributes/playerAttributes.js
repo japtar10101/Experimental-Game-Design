@@ -75,9 +75,10 @@ function OnTriggerEnter (other : Collider) {
 	//check to make sure an enemy is colliding
 	var collided : GameObject = other.gameObject;
 	if( collided.CompareTag("Point") ) {
-		Destroy(collided);
+		var script : coinAttributes = collided.GetComponent( coinAttributes );
+		score += script.value * scoreMultiplier;
 		audio.PlayOneShot(scoreSound);
-		score += scoreMultiplier;
+		Destroy(collided);
 		return;
 	}
 	var isDestructable : boolean = collided.CompareTag("Destructable");

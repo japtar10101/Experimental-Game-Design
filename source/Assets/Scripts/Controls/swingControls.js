@@ -1,7 +1,7 @@
 static var multiplier : int;
 static var incrementer : int;
 static var toIncrement : boolean;
-static var limit : int = 16;
+//static var limit : int = 16;
 
 var swordRenderer : Renderer;
 var swordAnimation : Animation;
@@ -18,9 +18,11 @@ private var backToDefault : boolean = false;
 
 static function computeScore( score : int ) : int {
 	var result : int = (score + incrementer) * multiplier;
+	/*
 	if( result > limit )
 		return limit;
 	else
+	*/
 		return result;
 }
 

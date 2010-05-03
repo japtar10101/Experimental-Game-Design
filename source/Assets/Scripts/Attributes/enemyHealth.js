@@ -75,33 +75,54 @@ function hitEffect() {
 }
 
 function explosion() {
-	// Setup variables
-	var rot : Vector3;
 	var trans : Transform = transform;
-	var clone : GameObject;
-	var rigidClone : Rigidbody;
 	
-	// Generate coins
+	// Compute score
 	score = swingControls.computeScore( score );
+	
+	// Generate big coins
+	var numCoins : int = score / projectileAttributes.coinBigVal;
+	score -= numCoins * projectileAttributes.coinBigVal;
+	while( numCoins > 0 ) {
+		generateCoin( projectileAttributes.coinBig, trans );
+		numCoins -= 1;
+	}
+	
+	// Generate medium coins
+	numCoins = score / projectileAttributes.coinMedVal;
+	score -= numCoins * projectileAttributes.coinMedVal;
+	while( numCoins > 0 ) {
+		generateCoin( projectileAttributes.coinMed, trans );
+		numCoins -= 1;
+	}
+	
+	// Generate small coins
 	while( score > 0 ) {
-		clone = Instantiate( projectileAttributes.coin,
-			trans.position, trans.rotation );
-		rot.x = Random.Range( 0, 360 );
-		rot.y = Random.Range( 0, 360 );
-		rot.z = Random.Range( 0, 360 );
-		clone.transform.Rotate( rot );
-		clone.renderer.enabled = true;
-			
-		// Add a constant force to it
-		rigidClone = clone.GetComponent( Rigidbody );
-		rigidClone.AddRelativeForce( Vector3.forward * initForce * -1 );
+		generateCoin( projectileAttributes.coin, trans );
 		score -= 1;
 	}
 	
 	//Generate explosions
-	clone = Instantiate( projectileAttributes.explode,
+	var clone : GameObject = Instantiate( projectileAttributes.explode,
 		trans.position, trans.rotation );
 	clone.renderer.enabled = true;
+}
+
+function generateCoin( coin : GameObject, trans : Transform ) {
+	var rot : Vector3;
+	var clone : GameObject;
+	var rigidClone : Rigidbody;
+	
+	clone = Instantiate( coin, trans.position, trans.rotation );
+	rot.x = Random.Range( 0, 360 );
+	rot.y = Random.Range( 0, 360 );
+	rot.z = Random.Range( 0, 360 );
+	clone.transform.Rotate( rot );
+	clone.renderer.enabled = true;
+			
+	// Add a constant force to it
+	rigidClone = clone.GetComponent( Rigidbody );
+	rigidClone.AddRelativeForce( Vector3.forward * initForce * -1 );
 }
 
 @script RequireComponent(Collision)
