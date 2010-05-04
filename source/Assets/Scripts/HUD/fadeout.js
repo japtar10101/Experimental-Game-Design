@@ -1,4 +1,4 @@
-private static var toFadeout : boolean = false;
+static var toFadeout : boolean = false;
 private static var toFadein : boolean = true;
 private static var loadLevel : String;
 private static var line : String;
