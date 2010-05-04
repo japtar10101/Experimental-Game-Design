@@ -229,7 +229,7 @@ function danger() {
 	if( dangerTime > dangerBlinkTime ) {
 		//Turn red, spit out a hit effect
 		mater.color.r = 1;
-		mater.color.g = 1;
+		mater.color.g = 0.5;
 		mater.color.b= 0;
 		clone = Instantiate( projectileAttributes.dangerHit, trans.position,
 					projectileAttributes.hit.transform.rotation );
