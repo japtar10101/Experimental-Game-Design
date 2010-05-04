@@ -13,6 +13,7 @@ var rotations : Vector3[] = [
 	Vector3( 0, 90, 0 ),
 	Vector3( 0, 270, 0 )
 ];
+var tickSound : AudioSource;
 
 //testing moving bullets
 private var rocketClone;
@@ -36,8 +37,13 @@ function Start() {
 
 function Update () {
 	// If the animation started playing, flag the animation as started
-	if( anim.IsPlaying( timerAnimation ) )
-		timerStart = true;
+	if( anim.IsPlaying( timerAnimation ) ) {
+		if( !timerStart ) {
+			timerStart = true;
+			tickSound.pitch = hackAnimation;
+			tickSound.Play();
+		}
+	}
 	
 	// If the death Animation is playing, reset timer
 	else if( anim.IsPlaying( deathAnimation ) )
