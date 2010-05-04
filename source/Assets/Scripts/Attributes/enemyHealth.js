@@ -59,10 +59,7 @@ function decreaseHealth( collided : GameObject ) {
 			audio.PlayOneShot(hitSound);
 		}
 		swingControls.multiplier += 1;
-		if( swingControls.toIncrement ) {
-			swingControls.incrementer += 1;
-			swingControls.toIncrement = false;
-		}
+		swingControls.incrementer += 1;
 	}
 }
 
@@ -76,12 +73,29 @@ function hitEffect() {
 
 function explosion() {
 	var trans : Transform = transform;
+	var numCoins : int;
 	
 	// Compute score
 	score = swingControls.computeScore( score );
 	
+	// Generate Ultra coins
+	numCoins = score / projectileAttributes.coinUltraVal;
+	score -= numCoins * projectileAttributes.coinUltraVal;
+	while( numCoins > 0 ) {
+		generateCoin( projectileAttributes.coinUltra, trans );
+		numCoins -= 1;
+	}
+	
+	// Generate Mega coins
+	numCoins = score / projectileAttributes.coinMegaVal;
+	score -= numCoins * projectileAttributes.coinMegaVal;
+	while( numCoins > 0 ) {
+		generateCoin( projectileAttributes.coinMega, trans );
+		numCoins -= 1;
+	}
+
 	// Generate big coins
-	var numCoins : int = score / projectileAttributes.coinBigVal;
+	numCoins = score / projectileAttributes.coinBigVal;
 	score -= numCoins * projectileAttributes.coinBigVal;
 	while( numCoins > 0 ) {
 		generateCoin( projectileAttributes.coinBig, trans );

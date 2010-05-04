@@ -48,7 +48,7 @@ function move() {
 	// Move the enemes
 	if( moveEnemies ) {
 		// If we moved far enough, stop the movement
-		if( moveDistance >= distMove ) {
+		if( moveDistance > distMove || Mathf.Approximately( moveDistance, distMove) ) {
 			// Make the enemies fire
 			var script;
 			for( reveal in enemies ) {
@@ -71,6 +71,11 @@ function move() {
 		// Else, move all enemies
 		else {
 			var moveVector = moveMagn * Time.deltaTime;
+			// TODO: make sure it works
+			if( moveDistance + moveVector.magnitude > distMove ) {
+				moveVector.Normalize();
+				moveVector *= (distMove - moveDistance);
+			}
 			for( reveal in enemies ) {
 				if( !reveal )
 					continue;

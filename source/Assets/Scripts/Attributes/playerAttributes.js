@@ -41,6 +41,8 @@ static var score : int;
 private var trans : Transform;
 var scoreMultiplier : int = 49;
 var blink : int = 3;
+var dangerBlinkTime : float = 0.8;
+private var dangerTime : float = 0;
 
 function Start() {
 	trans = transform;
@@ -68,10 +70,14 @@ function Update() {
 			audio.PlayOneShot(shieldSound);
 		shieldRenderer.enabled = bool;
 	}
+	if( health <= bars.dangerHealth )
+		danger();
 }
 
 function OnTriggerEnter (other : Collider) {
-	if( isDead() ) return;
+	if( isDead() )
+		return;
+	
 	//check to make sure an enemy is colliding
 	var collided : GameObject = other.gameObject;
 	if( collided.CompareTag("Point") ) {
@@ -81,6 +87,7 @@ function OnTriggerEnter (other : Collider) {
 		Destroy(collided);
 		return;
 	}
+	
 	var isDestructable : boolean = collided.CompareTag("Destructable");
 	var isHealth : boolean = collided.CompareTag("Health");
 	var shielded : boolean = isShieldOn();
@@ -214,5 +221,23 @@ function playHit() {
 		yield WaitForSeconds( 0.2 );
 		mater.color = origColor;
 		num -= 1;
+	}
+}
+
+function danger() {
+	dangerTime += Time.deltaTime;
+	if( dangerTime > dangerBlinkTime ) {
+		//Turn red, spit out a hit effect
+		mater.color.r = 1;
+		mater.color.g = 1;
+		mater.color.b= 0;
+		clone = Instantiate( projectileAttributes.dangerHit, trans.position,
+					projectileAttributes.hit.transform.rotation );
+		clone.transform.Rotate(0, Random.Range(0, 360), 0 );
+		clone.renderer.enabled = true;
+		dangerTime = 0;
+	} else if( dangerTime > dangerBlinkTime / 2.0 ) {
+		//Revert color
+		mater.color = origColor;
 	}
 }

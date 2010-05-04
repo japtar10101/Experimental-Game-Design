@@ -1,5 +1,6 @@
 static var maxHealth : int;
 static var maxShield : int;
+static var dangerHealth : int;
 
 // These values are all fraction values from 0 to 1
 var xOffset : float = 0.05;
@@ -52,6 +53,7 @@ static function attackFace() {
 function Start() {
 	faceID = 0;
 	facetimer = -1;
+	dangerHealth = danger;
 	
 	// Find the proportion to resize all textures to
 	var hudHeight : float = Screen.height * screenProportion;
