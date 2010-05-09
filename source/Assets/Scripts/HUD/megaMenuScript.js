@@ -10,6 +10,7 @@ var switchTo : AudioSource;
 var quit : button;
 var levels : String[] = ["level", "infinite"];
 var texts : button[];
+var loading : Renderer;
 
 private var toSwitch : boolean = true;
 private var deadButton : float = -1;
@@ -26,6 +27,7 @@ function Start() {
 	faceID = 0;
 	animated = false;
 	index = 0;
+	loading.enabled = false;
 }
 
 function FixedUpdate() {
@@ -51,6 +53,7 @@ function FixedUpdate() {
 			rotateMenu( spinDir );
 			break;
 		default:
+			loading.enabled = true;
 			loadMenu();
 			break;
 	}

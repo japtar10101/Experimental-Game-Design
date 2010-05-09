@@ -50,8 +50,8 @@ function Start() {
 	
 	//Calculate the right and left bounds
 	leftBound = rightBound = cloudPos.localPosition.x;
-	rightBound += cloudBounds.width * (tileX - 1);
-	leftBound -= cloudBounds.width * tileX;
+	rightBound += cloudBounds.width * (tileX - 1) + cloudBounds.x;
+	leftBound -= cloudBounds.width * tileX + cloudBounds.x;
 }
 
 function generateClouds() : GameObject {

@@ -8,6 +8,7 @@ private static var toHold : boolean;
 var fadeoutTime : float = 3;
 var holdTime : float = 1;
 var fadeTo : Texture;
+var bigFont : GUIStyle;
 
 private var height : int;
 private var hold : float = 0;
@@ -58,7 +59,7 @@ function fadeOut() : void {
 		GUI.skin.label.alignment = TextAnchor.MiddleCenter; 
 		rect.height = Screen.height;
 		GUI.DrawTexture( rect, fadeTo );
-		GUI.Label(labelRect, line);
+		GUI.Label(labelRect, line, bigFont);
 		hold += Time.deltaTime;
 		if( !toHold || hold >= holdTime ) {
 			toFadeout = false;

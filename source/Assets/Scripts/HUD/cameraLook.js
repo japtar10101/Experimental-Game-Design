@@ -9,21 +9,40 @@ private var trans : Transform;
 private var retRay : Ray;
 private var difVector : Vector3;
 
+private var zPos : float;
+private var targetPos : Vector3;
+var camObject : GameObject;
+var targetDist : float = 500;
+private var anim : Animation;
+
+function Update () {
+	targetPos = centerObject.transform.position;
+	targetPos.z += targetDist;
+	
+	if( !anim.isPlaying )
+		trans.rotation.eulerAngles.z = 0;
+	//camObject.transform.LookAt(targetPos);
+	
+	trans.localPosition.z = zPos;
+		
+	addForce();
+}
+
 function Start() {
 	retRay = new Ray(Vector3.zero, Vector3.forward );
 	charGame = GetComponent(Rigidbody);
 	trans = transform;
-	if(!trans || !charGame){
+	anim = animation;
+	if(!trans || !charGame || !anim){
 		Destroy(this);
 		return;
 	}
+	
+	zPos = trans.localPosition.z;
+	
 	if( centerObject ) {
 		offset = trans.position - centerObject.transform.position;
 	}
-}
-
-function Update () {
-	addForce();
 }
 
 function addForce() {
@@ -34,8 +53,6 @@ function addForce() {
 }
 
 function retPosition() {
-	return globalAttributes.retPos.transform.position;
-	/*
 	difVector = Camera.main.transform.position -
 		globalAttributes.retPos.transform.position;
 	difVector.Normalize();
@@ -47,5 +64,4 @@ function retPosition() {
 	//return Camera.main.ScreenToWorldPoint( screenPoint );
 	//return globalAttributes.retPos.transform.position;
 	return retRay.GetPoint( 10 );
-	*/
 }

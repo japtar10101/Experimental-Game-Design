@@ -29,6 +29,8 @@ function renderAll( state : boolean ) {
 	var num : int;
 	for( var render : Renderer in allRenderers ) {
 		if( render ) {
+			if( render.enabled )
+				continue;
 			num = 0;
 			while( num < numYields ) {
 				yield;

@@ -40,9 +40,11 @@ private var noShield : float = 0;
 static var score : int;
 private var trans : Transform;
 var scoreMultiplier : int = 49;
-var blink : int = 3;
+var blink : int = 2;
 var dangerBlinkTime : float = 0.8;
 private var dangerTime : float = 0;
+private var hitInvuln : boolean = false;
+var cameraAnm : Animation;
 
 function Start() {
 	trans = transform;
@@ -101,12 +103,15 @@ function OnTriggerEnter (other : Collider) {
 		} else {
 			// health refill, barriers, or no shield, affect the player
 			var hitPower : hitAttributes = collided.GetComponent(hitAttributes);
-			if( hitPower ) {
+			if( hitPower )
 				decrement = hitPower.power;
-			} else {
-				decrement = -10;
-			}
+			else
+				decrement = -4;
 		}
+		
+		// If hit, grant the player temporary invulnerability
+		if( decrement < 0 && hitInvuln )
+			decrement = 0;
 		
 		// Update helth
 		var gameover : boolean;
@@ -206,22 +211,27 @@ function playHeal() {
 		mater.color.r = 0;
 		mater.color.g = 1;
 		mater.color.b= 0;
-		yield WaitForSeconds( 0.2 );
+		yield WaitForSeconds( 0.1 );
 		mater.color = origColor;
+		yield WaitForSeconds( 0.1 );
 		num -= 1;
 	}
 }
 
 function playHit() {
+	cameraAnm.Play();
 	var num : int = blink;
+	hitInvuln = true;
 	while( num > 0 ) {
 		mater.color.r = 1;
 		mater.color.g = 0;
 		mater.color.b= 0;
-		yield WaitForSeconds( 0.2 );
+		yield WaitForSeconds( 0.1 );
 		mater.color = origColor;
+		yield WaitForSeconds( 0.1 );
 		num -= 1;
 	}
+	hitInvuln = false;
 }
 
 function danger() {

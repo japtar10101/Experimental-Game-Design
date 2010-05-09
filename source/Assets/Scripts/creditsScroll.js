@@ -43,7 +43,7 @@ function OnGUI() {
 			end();
 			break;
 		case 3:
-			fadeout.startFade( returnTo, "", false, false);
+			fadeout.startFade( returnTo, "Congratulations!", false, true );
 			state = 4;
 			break;
 		default:
