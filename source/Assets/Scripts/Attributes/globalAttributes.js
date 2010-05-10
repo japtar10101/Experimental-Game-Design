@@ -1,5 +1,6 @@
 static var retPos : GameObject;
 static var charPos : GameObject;
+static var playerPos : Transform;
 static var script : playerAttributes;
 
 var findReticule : String = "bigReticule";
@@ -8,6 +9,7 @@ var findCharacter : String = "character";
 function Start() {
 	retPos = GameObject.Find( findReticule );
 	charPos = GameObject.Find( findCharacter );
+	playerPos = transform;
 	if( !retPos || !charPos ) {
 		print( "Positions not set, game will probably freak out." );
 		return;

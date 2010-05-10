@@ -45,7 +45,7 @@ function Start() {
 function Update () {
 	if( index >= 0 && anim.IsPlaying( timerAnimation ) ) {
 		if( playerOffset == Vector3.zero )
-			playerOffset = trans.position - Camera.main.transform.position;
+			playerOffset = trans.position - globalAttributes.playerPos.transform.position;
 		animate();
 	}
 }
@@ -54,7 +54,7 @@ function animate() {
 	// move the character
 	var moveVector = mag * Time.deltaTime;
 	playerOffset += moveVector;
-	trans.position = Camera.main.transform.position + playerOffset;
+	trans.position = globalAttributes.playerPos.transform.position + playerOffset;
 	
 	// Increment distance
 	displace += moveVector.magnitude;

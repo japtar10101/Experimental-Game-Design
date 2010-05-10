@@ -1,3 +1,6 @@
+static var minDistance : float = 6;
+static var highMultiple : float= 200;
+
 // Strength of this script's force
 var multiple : float= 500;
 var centerObject : GameObject;
@@ -21,11 +24,10 @@ function Update () {
 	
 	if( !anim.isPlaying )
 		trans.rotation.eulerAngles.z = 0;
-	//camObject.transform.LookAt(targetPos);
+	camObject.transform.LookAt(targetPos);
 	
-	trans.localPosition.z = zPos;
-		
 	addForce();
+	trans.localPosition.z = zPos;
 }
 
 function Start() {
@@ -46,22 +48,17 @@ function Start() {
 }
 
 function addForce() {
-	difVector = retPosition() - trans.position;
+	var retPos : Vector3 = retPosition();
+	difVector = retPos - trans.position;
 	difVector += offset;
 	difVector.z = 0;
-	charGame.AddForce(difVector*multiple);
+	if( difVector.magnitude > minDistance ) {
+		charGame.AddForce(difVector*highMultiple);
+	} else {
+		charGame.AddForce(difVector*multiple);
+	}
 }
 
-function retPosition() {
-	difVector = Camera.main.transform.position -
-		globalAttributes.retPos.transform.position;
-	difVector.Normalize();
-	retRay.origin = globalAttributes.retPos.transform.position;
-	retRay.direction = difVector;
-	//TODO: somehow get the orthoganol back location of the reticule
-	// First, get the screen point
-	//var screenPoint = Camera.main.WorldToScreenPoint( globalAttributes.retPos.transform.position );
-	//return Camera.main.ScreenToWorldPoint( screenPoint );
-	//return globalAttributes.retPos.transform.position;
-	return retRay.GetPoint( 10 );
+function retPosition() : Vector3 {
+	return globalAttributes.retPos.transform.position;
 }
