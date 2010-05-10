@@ -10,7 +10,7 @@ function Start() {
 	retPos = GameObject.Find( findReticule );
 	charPos = GameObject.Find( findCharacter );
 	playerPos = transform;
-	if( !retPos || !charPos ) {
+	if( !retPos || !charPos) {
 		print( "Positions not set, game will probably freak out." );
 		return;
 	}

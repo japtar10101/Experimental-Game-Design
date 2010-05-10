@@ -41,7 +41,7 @@ function Update () {
 		return;
 	} else if( onFire.startFire ) {
 		if( playerOffset == Vector3.zero )
-			playerOffset = pos.position - Camera.main.transform.position;
+			playerOffset = pos.position - globalAttributes.playerPos.transform.position;
 		animate();
 	}
 }
@@ -55,7 +55,7 @@ function animate() {
 	// move the character
 	if( followPlayer ) {
 		playerOffset += moveVector;
-		pos.position = Camera.main.transform.position + playerOffset;
+		pos.position = globalAttributes.playerPos.transform.position + playerOffset;
 	} else {
 		pos.position += moveVector;
 	}
