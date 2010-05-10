@@ -1,8 +1,8 @@
-static var minDistance : float = 6;
+static var minDistance : float = 5;
 static var highMultiple : float= 200;
 
 // Strength of this script's force
-var multiple : float= 500;
+var multiple : float= 80;
 var centerObject : GameObject;
 
 //character Game object
@@ -15,7 +15,7 @@ private var difVector : Vector3;
 private var zPos : float;
 private var targetPos : Vector3;
 var camObject : GameObject;
-var targetDist : float = 500;
+var targetDist : float = 100;
 private var anim : Animation;
 
 function Update () {
